@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>All Publishers</title>
+{% endblock %}
+{% block body %}
+    {% for publisher in pubs %}
+        <p>{{ publisher }}</p>
+    {% endfor %}
+{% endblock %}

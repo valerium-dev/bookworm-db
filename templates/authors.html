@@ -1,10 +1,41 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>All Authors</title>
+<title>All Books</title>
 {% endblock %}
 {% block body %}
-    {% for author in authors %}
-        <p>{{ author }}</p>
-    {% endfor %}
+    <div class="card-columns m-5">
+        <div class="card">
+            <img class="card-img-top" src="{{ url_for('static', filename= '3534.jpg') }}" alt="A picture of Toni Morrison">
+            <div class="card-body">
+                <h4 class="card-title">Toni Morrison</h4>
+                <a href="#" class="stretched-link"></a>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="{{ url_for('static', filename= 'lev-grossman.jpg') }}" alt="A picture of Lev Grossman">
+            <div class="card-body">
+                <h4 class="card-title">Lev Grossman</h4>
+                <a href="#" class="stretched-link"></a>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="{{ url_for('static', filename= 'luciano_ramalho.jpg') }}" alt="A picture of Luciano Ramalho">
+            <div class="card-body">
+                <h4 class="card-title">Luciano Ramalho</h4>
+                <a href="#" class="stretched-link"></a>
+            </div>
+        </div>
+        <!--
+        {% for author in authors %}
+        <div class="card">
+            <img class="card-img-top" src="{{ author.img_url_attribute }}" alt="{{ author.alt_text_for_img_attribute }}">
+            <div class="card-body">
+                <h4 class="card-title">{{ author.name }}</h4>
+                <a href="/authors/{{ author.id }}" class="stretched-link"></a>
+            </div>
+        </div>
+        {% endfor %}
+        -->
+    </div>
 {% endblock %}

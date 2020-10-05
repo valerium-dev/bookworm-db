@@ -4,7 +4,42 @@
 <title>All Books</title>
 {% endblock %}
 {% block body %}
-    {% for book in books %}
-        <p>{{ book }}</p>
-    {% endfor %}
+    <div class="card-columns m-5">
+        <div class="card">
+            <img class="card-img-top" src="{{ url_for('static', filename= 'Ohio-Beloved-Toni-Morrison.jpg') }}" alt="Book cover for Beloved by Toni Morrison">
+            <div class="card-body">
+                <h4 class="card-title">Beloved</h4>
+                <h5 class="card-text">Toni Morrison</h5>
+                <a href="#" class="stretched-link"></a>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="{{ url_for('static', filename= 'the-magicians-book-cover.jpg') }}" alt="Book cover for The Magicians by Lev Grossman">
+            <div class="card-body">
+                <h4 class="card-title">The Magicians</h4>
+                <h5 class="card-text">Lev Grossman</h5>
+                <a href="#" class="stretched-link"></a>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="{{ url_for('static', filename= '250w.jpg') }}" alt="Book cover for Fluent Python by Luciano Ramalho">
+            <div class="card-body">
+                <h4 class="card-title">Fluent Python</h4>
+                <h5 class="card-text">Luciano Ramalho</h5>
+                <a href="#" class="stretched-link"></a>
+            </div>
+        </div>
+        <!--
+        {% for book in books %}
+        <div class="card">
+            <img class="card-img-top" src="{{ book.cover_img_url_attribute }}" alt="{{ book.alt_text_for_cover_img_attribute }}">
+            <div class="card-body">
+                <h4 class="card-title">{{ book.title }}</h4>
+                <h5 class="card-text">{{ book.author }}</h5>
+                <a href="/books/{{ book.id }}" class="stretched-link"></a>
+            </div>
+        </div>
+        {% endfor %}
+        -->
+    </div>
 {% endblock %}

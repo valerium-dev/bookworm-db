@@ -33,7 +33,7 @@ def authors():
 #       Phase II - Fetch pub data from DB
 @app.route('/publishers/', methods=['GET'])
 def publishers():
-    publishers = ['Alfred A. Knopf', '', '']
+    publishers = ['Alfred A. Knopf', 'Viking Press', "O'Reilly"]
     return render_template('publishers.html', publishers=publishers)
 
 

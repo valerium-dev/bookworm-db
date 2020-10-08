@@ -27,6 +27,13 @@ def book_instance(book_name):
     book = dict()
     if book_name == 'beloved':
         book['title'] = ' '.join(book_name.split('-')).title()
+        book['author'] = "Toni Morrison"
+        book['publisher'] = "Alfred A. Knopf"
+        book['published_date'] = "2019"
+        book['description'] = "Upon the original publication of Beloved, John Leonard wrote in the Los Angeles Times: \"I can't imagine American literature without it.\" Nearly two decades later, The New York Times chose Beloved as the best American novel of the previous fifty years. Toni Morrison's magnificent Pulitzer Prize-winning work--first published in 1987--brought the wrenching experience of slavery into the literature of our time, enlarging our comprehension of America's original sin. Set in post-Civil War Ohio, it is the story of Sethe, an escaped slave who has lost a husband and buried a child; who has withstood savagery and not gone mad. Sethe, who now lives in a small house on the edge of town with her daughter, Denver, her mother-in-law, Baby Suggs, and a disturbing, mesmerizing apparition who calls herself Beloved. Sethe works at \"beating back the past,\" but it makes itself heard and felt incessantly: in her memory; in Denver's fear of the world outside the house; in the sadness that consumes Baby Suggs; in the arrival of Paul D, a fellow former slave; and, most powerfully, in Beloved, whose childhood belongs to the hideous logic of slavery and who has now come from the \"place over there\" to claim retribution for what she lost and for what was taken from her. Sethe's struggle to keep Beloved from gaining possession of the present--and to throw off the long-dark legacy of the past--is at the center of this spellbinding novel. But it also moves beyond its particulars, combining imagination and the vision of legend with the unassailable truths of history."
+        book['isbn13'] = "9780525659273"
+        book['genre'] = "Fiction"
+        book['thumbnail_url'] = "http://books.google.com/books/content?id=5xG_DwAAQBAJ&printsec=frontcover&img=1&source=gbs_api"
     elif book_name == 'the-magicians':
         book['title'] = ' '.join(book_name.split('-')).title()
     else:
@@ -61,7 +68,7 @@ def author_instance(author_name):
 #       Phase II - Fetch pub data from DB
 @app.route('/publishers/', methods=['GET'])
 def publishers():
-    publishers = ['Alfred A. Knopf', 'Viking Press', "O'Reilly"]
+    publishers = ['Alfred A. Knopf', 'Penguin', "O'Reilly"]
     return render_template('publishers.html', publishers=publishers)
 
 

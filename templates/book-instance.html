@@ -4,5 +4,18 @@
 <title>{{ book['title'] }}</title>
 {% endblock %}
 {% block body %}
-
+    <div class="container-fluid p-4" id="team-info">
+        <div class="row">
+            <div class="col-sm-4 col-xl-3 py-2">
+                <img src="{{ book['thumbnail_url'] }}" class="img-fluid rounded">
+            </div>
+            <div class="col-sm-8 py-2">
+                <h1>{{ book['title'] }}</h1>
+                <h4>by {{ book['author'] }}</h4>
+                <p>{{ book['description'] }}</p>
+                <p>Publisher: {{ book['publisher'] }}, {{ book['published_date'] }}</p>
+                <p>Genre: {{ book['genre'] }} | ISBN-13: {{ book['isbn13'] }}</p>
+            </div>
+        </div>
+    </div>
 {% endblock %}

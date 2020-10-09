@@ -4,7 +4,48 @@
 <title>All Publishers</title>
 {% endblock %}
 {% block body %}
-    {% for publisher in pubs %}
-        <p>{{ publisher }}</p>
-    {% endfor %}
+    <div class="container-fluid p-4" id="team-info">
+        <div class="row">
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card">
+                    <img class="card-img-top" src="{{ url_for('static', filename= 'Knopf.png') }}" alt="Logo for Alfred A. Knopf">
+                    <div class="card-body">
+                        <h4 class="card-title">Alfred A. Knopf</h4>
+                        <a href="/publishers/alfred-a-knopf" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card">
+                    <img class="card-img-top" src="{{ url_for('static', filename= 'Viking-press-logo.jpg') }}" alt="Logo for Viking Press">
+                    <div class="card-body">
+                        <h4 class="card-title">Penguin</h4>
+                        <a href="/publishers/viking-press" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card">
+                    <img class="card-img-top" src="{{ url_for('static', filename= 'OReilly_logo_rgb.svg') }}" alt="Logo for O'Reilly">
+                    <div class="card-body">
+                        <h4 class="card-title">O'Reilly</h4>
+                        <a href="/publishers/o-reilly" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
+            <!--
+            {% for publisher in publishers %}
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2>
+                <div class="card">
+                    <img class="card-img-top" src="{{ publisher.img_url_attribute }}" alt="{{ publisher.alt_text_for_img_attribute }}">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ publisher.name }}</h4>
+                        <a href="/publishers/{{ publisher.id }}" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            -->
+        </div>
+    </div>
 {% endblock %}

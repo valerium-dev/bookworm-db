@@ -4,5 +4,93 @@
 <title>About Bookworm DB</title>
 {% endblock %}
 {% block body %}
-<p>Some text about the website and the team</p>
+    <div class="jumbotron text-center">
+        <h1>About Bookworm DB</h1>
+        <p>Some nice bs about how this DB is the premier solution for getting your book information</p>
+    </div>
+    <div class="container-fluid p-4 text-center" id="team-info">
+        <h2>Meet the Team</h2>
+        <div class="row">
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card h-100">
+                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename="/avi/avi.png") }}" alt="">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Jaelyn Bethea</h3>
+                        <h4 class="card-text">Front-End Development</h4>
+                        <p class="card-text" hidden="true">Bio text</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card h-100">
+                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename="/avi/avi.png") }}" alt="">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Carlos Borja</h3>
+                        <h4 class="card-text">Front-End Development</h4>
+                        <p class="card-text" hidden="true">Bio text</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card h-100">
+                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename="/avi/avi.png") }}" alt="">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Mrugank Parab</h3>
+                        <h4 class="card-text">Back-End Development</h4>
+                        <p class="card-text" hidden="true">Bio text</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card h-100">
+                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename="/avi/avi.png") }}" alt="">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Santhosh Saravanan</h3>
+                        <h4 class="card-text">Back-End Development</h4>
+                        <p class="card-text" hidden="true">Bio text</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid p-4 text-center" id="data-srcs">
+        <h2>Data Sources</h2>
+        <p>Description of how data was obtained and stored.</p>
+        <div class="row align-items-center">
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <a href="https://www.goodreads.com/api" class="stretched-link">
+                    <img src="{{ url_for('static', filename="/api-logos/goodreads.png") }}" class="img-fluid" alt="Logo for Goodreads">
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <a href="https://developers.google.com/books" class="stretched-link">
+                    <img src="{{ url_for('static', filename="/api-logos/google-books.png") }}" class="img-fluid" alt="Logo for Google Books">
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <a href="https://developer.nytimes.com/docs/books-product/1/overview" class="stretched-link">
+                    <img src="{{ url_for('static', filename="/api-logos/nyt.jpg") }}" class="img-fluid" alt="Logo for New York Times">
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <a href="https://openlibrary.org/developers/api" class="stretched-link">
+                    <img src="{{ url_for('static', filename="/api-logos/open-library.svg") }}" class="img-fluid" alt="Logo for Open Library">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid p-4 text-center" id="website-tech">
+        <h2>Website Stack</h2>
+        <div class="align-items-center">
+            <img src="{{ url_for('static', filename="/tech-logos/python.png") }}" class="m-3" alt="">
+            <img src="{{ url_for('static', filename="/tech-logos/flask.png") }}" class="m-3" alt="">
+            <img src="{{ url_for('static', filename="/tech-logos/mongodb.png") }}" class="m-3" alt="">
+            <img src="{{ url_for('static', filename="/tech-logos/bootstrap.png") }}" class="mt-3 ml-3 mb-3 mr-4" alt="">
+            <img src="{{ url_for('static', filename="/tech-logos/github.png") }}" class="m-3" alt="">
+            <img src="{{ url_for('static', filename="/tech-logos/aws.png") }}" class="m-3" alt="">
+        </div>
+    </div>
+    <div class="container-fluid text-center my-5">
+        <a class="btn btn-primary" href="https://github.com/UT-SWLab/TeamE4">GitHub Link</a>
+    </div>
 {% endblock %}

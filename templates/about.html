@@ -2,11 +2,48 @@
 
 {% block head %}
 <title>About Bookworm DB</title>
+
+
+<style>
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #9494b8;
+}
+
+.card-body:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+</style>
+
 {% endblock %}
 {% block body %}
     <div class="jumbotron text-center">
         <h1>About Bookworm DB</h1>
-        <p>Some nice bs about how this DB is the premier solution for getting your book information</p>
+        <p>Bookworm DB is the up and coming popular source for any and everything book, author, or publisher related. Bookworm DB was
+           created for book lovers all around the world to explore new books and learn more about the authors and publishers. Our database
+           contains books from a variety of generes: romance, history, non-fiction, etc. For book readers with a favorite author, Bookworm DB allows you to search an author and all the books they've written. If you want to know more about publishers, you can also search specific publishers. Use
+           Bookworm DB to further grow and expand your book collection!</p>
     </div>
     <div class="container-fluid p-4 text-center" id="team-info">
         <h2>Meet the Team</h2>
@@ -18,6 +55,9 @@
                         <h3 class="card-title">Jaelyn Bethea</h3>
                         <h4 class="card-text">Front-End Development</h4>
                         <p class="card-text" hidden="true">Bio text</p>
+                        <div class="overlay">
+                            <div class="text">Hello! My name is Jaelyn Bethea and I am a Senior ECE student with a primary technical core in Software Engineering and Design. I use she/her/hers pronouns. I am from Grand Prairie, TX and I come from a family of four where I am the youngest.  I will graduate in the summer of 2021 and I look forward to the many opportunities that are ahead of me.</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -28,6 +68,9 @@
                         <h3 class="card-title">Carlos Borja</h3>
                         <h4 class="card-text">Front-End Development</h4>
                         <p class="card-text" hidden="true">Bio text</p>
+                        <div class="overlay">
+                            <div class="text">Hello! My name is Carlos Borja. I am a Senior in Electrical and Computer Engineering slated to graduate in December 2021. Born and raised by the South Texas border in Laredo, TX. </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -38,6 +81,9 @@
                         <h3 class="card-title">Mrugank Parab</h3>
                         <h4 class="card-text">Back-End Development</h4>
                         <p class="card-text" hidden="true">Bio text</p>
+                        <div class="overlay">
+                            <div class="text">Hello! My name is Jaelyn Bethea and I am a Senior ECE student with a primary technical core in Software Engineering and Design. I use she/her/hers pronouns. I am from Grand Prairie, TX and I come from a family of four where I am the youngest.  I will graduate in the summer of 2021 and I look forward to the many opportunities that are ahead of me.</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -48,6 +94,9 @@
                         <h3 class="card-title">Santhosh Saravanan</h3>
                         <h4 class="card-text">Back-End Development</h4>
                         <p class="card-text" hidden="true">Bio text</p>
+                        <div class="overlay">
+                            <div class="text">Hello! My name is Jaelyn Bethea and I am a Senior ECE student with a primary technical core in Software Engineering and Design. I use she/her/hers pronouns. I am from Grand Prairie, TX and I come from a family of four where I am the youngest.  I will graduate in the summer of 2021 and I look forward to the many opportunities that are ahead of me.</div>
+                        </div>
                     </div>
                 </div>
             </div>

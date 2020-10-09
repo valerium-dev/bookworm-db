@@ -2,6 +2,12 @@
 
 {% block head %}
 <title>{{ book['title'] }}</title>
+<style>
+    p{
+        font-family:lucinda
+    }
+
+</style>
 {% endblock %}
 {% block body %}
     <div class="container-fluid p-4" id="team-info">
@@ -10,14 +16,14 @@
                 <img src="{{ book['thumbnail_url'] }}" class="img-fluid rounded">
             </div>
             <div class="col-sm-8 py-2">
-                <h1>{{ book['title'] }}</h1>
-                <h4>by {{ book['author'] }}</h4>
+                <h1 style="font-family:sans=serif;"><strong>{{ book['title'] }}</strong></h1>
+                <h4 style="font-family:sans=serif;">by {{ book['author'] }}</h4>
                 <p>{{ book['description'] }}</p>
-                <p>Maturity: {{ book['maturity'] }} </p>
-                <p>Language: {{ book['language'] }} </p>
-                <p>Page Count:{{ book['page_count'] }}</p>
-                <p>Publisher: {{ book['publisher'] }}, {{ book['published_date'] }}</p>
-                <p>Genre: {{ book['genre'] }} | ISBN-13: {{ book['isbn13'] }}</p>
+                <p class ="m-0"><strong>Maturity: </strong>{{ book['maturity'] }} </p>
+                <p class ="m-0"><strong>Language: </strong>{{ book['lang'] }} </p>
+                <p class="m-0"><strong>Page Count: </strong>{{ book['page_count'] }}</p>
+                <p class="m-0"><strong>Publisher: </strong>{{ book['publisher'] }}, {{ book['published_date'] }}</p>
+                <p class="m-0"><strong>Genre: </strong>{{ book['genre'] }} | <strong>ISBN-13: </strong>{{ book['isbn13'] }}</p>
 
             </div>
         </div>

@@ -126,14 +126,17 @@ def publisher_instance(pub_name):
         pub['name'] = ' '.join(pub_name.split('-')).title()
         pub['location'] = "New York City, New York, United States"
         pub['description'] = "Alfred A. Knopf, Inc. is an American publishing house that was founded by Alfred A. Knopf Sr. and Blanche Knopf in 1915.[1] Blanche and Alfred traveled abroad regularly and were known for publishing European, Asian, and Latin American writers in addition to leading American literary trends. It was acquired by Random House in 1960, and is now part of the Knopf Doubleday Publishing Group division of Penguin Random House which is owned by the German conglomerate Bertelsmann.[2][3] The Knopf publishing house is associated with its borzoi colophon, which was designed by co-founder Blanche Knopf in 1925."
+        pub['logo_url'] = url_for('static', filename='/publisher-logos/Knopf.png')
     elif pub_name == 'penguin':
         pub['name'] = ' '.join(pub_name.split('-')).title()
         pub['location'] = "City of Westminster, London, England"
         pub['description'] = "Penguin Books is a British publishing house. It was co-founded in 1935 by Sir Allen Lane with his brothers Richard and John,[3] as a line of the publishers The Bodley Head, only becoming a separate company the following year.[4] Penguin revolutionised publishing in the 1930s through its inexpensive paperbacks, sold through Woolworths and other high street stores for sixpence, bringing high-quality paperback fiction and non-fiction to the mass market.[5] Penguin's success demonstrated that large audiences existed for serious books. Penguin also had a significant impact on public debate in Britain, through its books on culture, politics, the arts, and science"
+        pub['logo_url'] = url_for('static', filename='/publisher-logos/penguin.jpg')
     else:
         pub['name'] = ' '.join(pub_name.split('-')).title()
-        pub['location'] = " Sebastopol, CA, United States"
-        pub['description'] = "One of the world's leading computer and technical book publishers. O’Reilly Media spreads the knowledge of innovators through its books, online services, magazines, research, and conferences. Since 1978, O’Reilly has been a chronicler and catalyst of leading-edge development, homing in on the technology trends that really matter and galvanizing their adoption by amplifying “faint signals” from the alpha geeks who are creating the future. An active participant in the technology community, the company has a long history of advocacy, meme-making, and evangelism"
+        pub['location'] = "Boston, MA, United States"
+        pub['description'] = "As a global learning company, HMH specializes in pre-K–12 education content, services and cutting edge technology solutions for today’s changing landscape.\nHMH creates engaging, dynamic and effective educational content and experiences from early childhood to K-12 and beyond the classroom, serving more than 50 million students in more than 150 countries. Available through multiple media, our content meets the needs of students, teachers, parents and lifelong learners, no matter where and how they learn.\nOur renowned and awarded children's books, novels, nonfiction, and reference titles are enjoyed by readers throughout the world. Our distinguished author list, from Ralph Waldo Emerson to Philip Roth, and brands from Curious George to The Lord of the Rings, includes 10 Nobel Prize winners, 48 Pulitzer Prize winners, 15 National Book Award winners, and more than 100 Caldecott, Newbery, Printz and Sibert Medal and Honor recipients. "
+        pub['logo_url'] = url_for('static', filename='/publisher-logos/hmh.jpg')
 
     return render_template('publisher-instance.html', publisher=pub)
 

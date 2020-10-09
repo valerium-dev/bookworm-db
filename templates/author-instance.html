@@ -7,12 +7,16 @@
     <div class="container-fluid p-4" id="team-info">
         <div class="row">
             <div class="col-sm-4 col-xl-3 py-2">
-                <img src="{{ }}" class="img-fluid rounded">
+                <img src="{{ author['thumbnail_url'] }}" class="img-fluid rounded">
             </div>
             <div class="col-sm-8 py-2">
-                <h1>{{ }}</h1>
-                <h4>{{ }}</h4>
-                <p>{{ }}</p>
+                <h1>{{ author['name'] }}</h1>
+                <h2>History:</h2>
+                <p> {{ author['history'] }}</p>
+                <h3>Place of Birth: {{ author['place_of_birth'] }}</h3>
+                <h4>Year Born: {{ author['born'] }}</h4>
+                <h4>Year Died: {{ author['died'] }}</h4>
+                <h4>Other books written by author: {{ author['other_books'] }}</h4>
             </div>
         </div>
     </div>

@@ -5,6 +5,12 @@
 
 
 <style>
+.card-img-top {
+width: 100%;
+height: 40vh;
+object-fit: cover;
+}
+
 .overlay {
   position: absolute;
   top: 0;
@@ -50,7 +56,7 @@
         <div class="row">
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <div class="card h-100">
-                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename="/avi/avi.png") }}" alt="">
+                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename='jae.jpg') }}" alt="">
                     <div class="card-body text-center">
                         <h3 class="card-title">Jaelyn Bethea</h3>
                         <h4 class="card-text">Front-End Development</h4>
@@ -89,13 +95,13 @@
             </div>
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <div class="card h-100">
-                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename="/avi/avi.png") }}" alt="">
+                    <img class="card-img-top img-fluid img-responsive" src="{{ url_for('static', filename='san.png') }}" alt="">
                     <div class="card-body text-center">
                         <h3 class="card-title">Santhosh Saravanan</h3>
                         <h4 class="card-text">Back-End Development</h4>
                         <p class="card-text" hidden="true">Bio text</p>
                         <div class="overlay">
-                            <div class="text">Hello! My name is Jaelyn Bethea and I am a Senior ECE student with a primary technical core in Software Engineering and Design. I use she/her/hers pronouns. I am from Grand Prairie, TX and I come from a family of four where I am the youngest.  I will graduate in the summer of 2021 and I look forward to the many opportunities that are ahead of me.</div>
+                            <div class="text">My name is Santhosh Saravanan and I’m a junior ECE student with a primary technical score in Software Engineering. I am from San Diego, California and I came from a family of five where I am the only boy. I’m looking forward to take advantage of being more comfortable with back-end and front-end development as a whole in the near future. </div>
                         </div>
                     </div>
                 </div>
@@ -130,15 +136,22 @@
     </div>
     <div class="container-fluid p-4 text-center" id="website-tech">
         <h2>Website Stack</h2>
+        <p style="text-align:center">Click on an icon to learn more about it's role in Bookworm DB!</p>
         <div class="align-items-center">
-            <img src="{{ url_for('static', filename="/tech-logos/python.png") }}" class="m-3" alt="">
-            <img src="{{ url_for('static', filename="/tech-logos/flask.png") }}" class="m-3" alt="">
-            <img src="{{ url_for('static', filename="/tech-logos/mongodb.png") }}" class="m-3" alt="">
-            <img src="{{ url_for('static', filename="/tech-logos/bootstrap.png") }}" class="mt-3 ml-3 mb-3 mr-4" alt="">
-            <img src="{{ url_for('static', filename="/tech-logos/github.png") }}" class="m-3" alt="">
-            <img src="{{ url_for('static', filename="/tech-logos/aws.png") }}" class="m-3" alt="">
+            <img src="{{ url_for('static', filename="/tech-logos/python.png") }}" data-toggle="popover" title="Python" data-content="Some content inside the popover.alll this extreakadjflkajsdf;alsdklllllllllllllllllllllllllllllllllllllll" class="m-3" alt="">
+            <img src="{{ url_for('static', filename="/tech-logos/flask.png") }}" data-toggle="popover" title="Flask" data-content="S"class="m-3" alt="">
+            <img src="{{ url_for('static', filename="/tech-logos/mongodb.png") }}" data-toggle="popover" title="MongoDB" data-content="S" class="m-3" alt="">
+            <img src="{{ url_for('static', filename="/tech-logos/bootstrap.png") }}" data-toggle="popover" title="Bootstrap" data-content="S" class="mt-3 ml-3 mb-3 mr-4" alt="">
+            <img src="{{ url_for('static', filename="/tech-logos/github.png") }}" data-toggle="popover" title="Github" data-content="S" class="m-3" alt="">
+            <img src="{{ url_for('static', filename="/tech-logos/aws.png") }}" data-toggle="popover" title="AWS" data-content="S" class="m-3" alt="">
         </div>
     </div>
+
+    <script>
+        $(document).ready(function(){
+          $('[data-toggle="popover"]').popover();
+        });
+    </script>
     <div class="container-fluid text-center my-5">
         <a class="btn btn-primary" href="https://github.com/UT-SWLab/TeamE4">GitHub Link</a>
     </div>

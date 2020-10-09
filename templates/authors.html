@@ -2,6 +2,14 @@
 
 {% block head %}
 <title>All Authors</title>
+<style>
+.card-img-top {
+ width: 100%;
+ height: 40vh;
+ object-fit: cover;
+}
+
+</style>
 {% endblock %}
 {% block body %}
     <div class="container-fluid p-4" id="team-info">
@@ -10,7 +18,7 @@
                 <div class="card">
                     <img class="card-img-top" src="{{ url_for('static', filename= '3534.jpg') }}" alt="A picture of Toni Morrison">
                     <div class="card-body">
-                        <h4 class="card-title">Toni Morrison</h4>
+                        <h4 style="text-align:center;" class="card-title">Toni Morrison</h4>
                         <a href="/authors/toni-morrison" class="stretched-link"></a>
                     </div>
                 </div>
@@ -19,17 +27,17 @@
                 <div class="card">
                     <img class="card-img-top" src="{{ url_for('static', filename= 'lev-grossman.jpg') }}" alt="A picture of Lev Grossman">
                     <div class="card-body">
-                        <h4 class="card-title">Lev Grossman</h4>
+                        <h4 style="text-align:center;" class="card-title">Lev Grossman</h4>
                         <a href="/authors/lev-grossman" class="stretched-link"></a>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= 'luciano_ramalho.jpg') }}" alt="A picture of Luciano Ramalho">
+                    <img class="card-img-top" src="{{ url_for('static', filename= 'george.jpg') }}" alt="A picture of George Orwell">
                     <div class="card-body">
-                        <h4 class="card-title">Luciano Ramalho</h4>
-                        <a href="/authors/luciano-ramalho" class="stretched-link"></a>
+                        <h4 style="text-align:center;"class="card-title">George Orwell</h4>
+                        <a href="/authors/george-orwell" class="stretched-link"></a>
                     </div>
                 </div>
             </div>

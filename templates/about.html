@@ -2,44 +2,43 @@
 
 {% block head %}
 <title>About Bookworm DB</title>
-
-
 <style>
-.card-img-top {
-width: 100%;
-height: 40vh;
-object-fit: cover;
-}
+    .card-img-top {
+        width: 100%;
+        height: 40vh;
+        object-fit: cover;
+    }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background-color: #9494b8;
-}
+    .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        transition: .5s ease;
+        background-color: #9494b8;
+        padding: 16px;
+    }
 
-.card-body:hover .overlay {
-  opacity: 1;
-}
+    .card-body:hover .overlay {
+        opacity: 1;
+    }
 
-.text {
-  color: white;
-  font-size: 20px;
-  position: relative;
-  top: 50%;
-  left: 50%;
+    .text {
+        color: white;
+        font-size: 20px;
+        position: relative;
+        top: 50%;
+        left: 50%;
 
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
 </style>
 
 {% endblock %}
@@ -62,33 +61,46 @@ object-fit: cover;
                         <h4 class="card-text">Front-End Development</h4>
                         <p class="card-text" hidden="true">Bio text</p>
                         <div class="overlay">
-                            <div class="text">Hello! My name is Jaelyn Bethea and I am a Senior ECE student with a primary technical core in Software Engineering and Design. I use she/her/hers pronouns. I am from Grand Prairie, TX and I come from a family of four where I am the youngest.  I will graduate in the summer of 2021 and I look forward to the many opportunities that are ahead of me.</div>
+                            <div class="text">
+                                Hello! My name is Jaelyn Bethea and I am a Senior ECE student with a primary technical
+                                core in Software Engineering and Design. I use she/her/hers pronouns. I am from Grand
+                                Prairie, TX and I come from a family of four where I am the youngest.  I will graduate
+                                in the summer of 2021 and I look forward to the many opportunities that are ahead of me.
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <div class="card h-100">
-                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename="/avi/avi.png") }}" alt="">
+                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename='/avi/avi.png') }}" alt="">
                     <div class="card-body text-center">
                         <h3 class="card-title">Carlos Borja</h3>
                         <h4 class="card-text">Front-End Development</h4>
                         <p class="card-text" hidden="true">Bio text</p>
                         <div class="overlay">
-                            <div class="text">Hello! My name is Carlos Borja. I am a Senior in Electrical and Computer Engineering slated to graduate in December 2021. Born and raised by the South Texas border in Laredo, TX. </div>
+                            <div class="text">
+                                Hello! My name is Carlos Borja. I am a Senior in Electrical and Computer Engineering
+                                slated to graduate in December 2021. I was born and raised at the South Texas border
+                                in Laredo, TX. I enjoy playing RPGs in my free time, and I play the ocarina to relax.
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <div class="card h-100">
-                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename="/avi/avi.png") }}" alt="">
+                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename='/avi/avi.png') }}" alt="">
                     <div class="card-body text-center">
                         <h3 class="card-title">Mrugank Parab</h3>
                         <h4 class="card-text">Back-End Development</h4>
                         <p class="card-text" hidden="true">Bio text</p>
                         <div class="overlay">
-                            <div class="text">Hey! My name is Mrugank Parab.  I'm a Senior ECE student in the Software Engineering track graduating in Spring 2021. I'm from Dallas, TX and I love programming and playing video games</div>
+                            <div class="text">
+                                Hey! My name is Mrugank Parab.  I'm a Senior ECE student in the Software Engineering
+                                track graduating in Spring 2021. I'm from Dallas, TX and I love programming and playing
+                                video games
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,7 +113,12 @@ object-fit: cover;
                         <h4 class="card-text">Back-End Development</h4>
                         <p class="card-text" hidden="true">Bio text</p>
                         <div class="overlay">
-                            <div class="text">My name is Santhosh Saravanan and I’m a junior ECE student with a primary technical score in Software Engineering. I am from San Diego, California and I came from a family of five where I am the only boy. I’m looking forward to take advantage of being more comfortable with back-end and front-end development as a whole in the near future. </div>
+                            <div class="text">
+                                My name is Santhosh Saravanan and I’m a junior ECE student with a primary technical
+                                score in Software Engineering. I am from San Diego, California and I came from a family
+                                of five where I am the only boy. I’m looking forward to take advantage of being more
+                                comfortable with back-end and front-end development as a whole in the near future.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,36 +131,36 @@ object-fit: cover;
         <div class="row align-items-center">
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <a href="https://www.goodreads.com/api" class="stretched-link">
-                    <img src="{{ url_for('static', filename="/api-logos/goodreads.png") }}" class="img-fluid" alt="Logo for Goodreads">
+                    <img src="{{ url_for('static', filename='/api-logos/goodreads.png') }}" class="img-fluid" alt="Logo for Goodreads">
                 </a>
             </div>
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <a href="https://developers.google.com/books" class="stretched-link">
-                    <img src="{{ url_for('static', filename="/api-logos/google-books.png") }}" class="img-fluid" alt="Logo for Google Books">
+                    <img src="{{ url_for('static', filename='/api-logos/google-books.png') }}" class="img-fluid" alt="Logo for Google Books">
                 </a>
             </div>
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <a href="https://developer.nytimes.com/docs/books-product/1/overview" class="stretched-link">
-                    <img src="{{ url_for('static', filename="/api-logos/nyt.jpg") }}" class="img-fluid" alt="Logo for New York Times">
+                    <img src="{{ url_for('static', filename='/api-logos/nyt.jpg') }}" class="img-fluid" alt="Logo for New York Times">
                 </a>
             </div>
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <a href="https://openlibrary.org/developers/api" class="stretched-link">
-                    <img src="{{ url_for('static', filename="/api-logos/open-library.svg") }}" class="img-fluid" alt="Logo for Open Library">
+                    <img src="{{ url_for('static', filename='/api-logos/open-library.svg') }}" class="img-fluid" alt="Logo for Open Library">
                 </a>
             </div>
         </div>
     </div>
     <div class="container-fluid p-4 text-center" id="website-tech">
         <h2>Website Stack</h2>
-        <p style="text-align:center">Click on an icon to learn more about it's role in Bookworm DB!</p>
+        <p style="text-align:center">Click on an icon to learn more about the tech used in Bookworm DB!</p>
         <div class="align-items-center">
-            <img src="{{ url_for('static', filename="/tech-logos/python.png") }}" data-toggle="popover" title="Python" data-content="Some content inside the popover.alll this extreakadjflkajsdf;alsdklllllllllllllllllllllllllllllllllllllll" class="m-3" alt="">
-            <img src="{{ url_for('static', filename="/tech-logos/flask.png") }}" data-toggle="popover" title="Flask" data-content="S"class="m-3" alt="">
-            <img src="{{ url_for('static', filename="/tech-logos/mongodb.png") }}" data-toggle="popover" title="MongoDB" data-content="S" class="m-3" alt="">
-            <img src="{{ url_for('static', filename="/tech-logos/bootstrap.png") }}" data-toggle="popover" title="Bootstrap" data-content="S" class="mt-3 ml-3 mb-3 mr-4" alt="">
-            <img src="{{ url_for('static', filename="/tech-logos/github.png") }}" data-toggle="popover" title="Github" data-content="S" class="m-3" alt="">
-            <img src="{{ url_for('static', filename="/tech-logos/aws.png") }}" data-toggle="popover" title="AWS" data-content="S" class="m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/python.png') }}" data-toggle="popover" title="Python" data-content="Some content inside the popover.alll this extreakadjflkajsdf;alsdklllllllllllllllllllllllllllllllllllllll" class="m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/flask.png') }}" data-toggle="popover" title="Flask" data-content="S"class="m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/mongodb.png') }}" data-toggle="popover" title="MongoDB" data-content="S" class="m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/bootstrap.png') }}" data-toggle="popover" title="Bootstrap" data-content="S" class="mt-3 ml-3 mb-3 mr-4" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/github.png') }}" data-toggle="popover" title="Github" data-content="S" class="m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/aws.png') }}" data-toggle="popover" title="AWS" data-content="S" class="m-3" alt="">
         </div>
     </div>
 

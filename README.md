@@ -45,5 +45,5 @@ Learning about GoogleBooks API and its use | 2 hrs | 3.5 hrs
 Learning about Goodreads API and recognizing its limitations | 3 hrs | 4.5 hrs
 Learning about Wikipedia API and its use  | 2.5 hrs | 45 minutes
 Learning about setting up MongoDB server instance | 3.5 hrs | 2.5 hrs 
-Settuing up a Google Cloud Platform for website hosting | 2.5 hrs | 2 hrs
+Setting up a Google Cloud Platform for website hosting | 2.5 hrs | 2 hrs
 

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>{{ author['name'] }}</title>
+<style>
+    p{
+        font-family:lucinda
+    }
+
+</style>
+
+{% endblock %}
+{% block body %}
+    <div class="container-fluid p-4" id="team-info">
+        <div class="row">
+            <div class="col-sm-4 col-xl-2 py-1">
+                <img src="{{ author['thumbnail_url'] }}" class="img-fluid ">
+            </div>
+            <div class="col-sm-8 py-2">
+                <h1 style="font-family:sans=serif;"><strong>{{ author['name'] }}</strong></h1>
+                <p class ="m-0"><strong>Born: </strong>{{ author['born'] }}</p>
+                <p class ="m-0"><strong>Place of Birth: </strong>{{ author['place_of_birth'] }}</p>
+                <p><strong> Died: </strong>{{ author['died'] }}</p>
+                <p> {{ author['history'] }}</p>
+                <h3 style="font-family:sans=serif;">Other Books By {{ author['name'] }}</h3>
+                <p>{{ author['other_books'] }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

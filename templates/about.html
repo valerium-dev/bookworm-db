@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>About Bookworm DB</title>
+<style>
+    .card-img-top {
+        width: 100%;
+        height: 40vh;
+        object-fit: cover;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        transition: .5s ease;
+        background-color: #343a40;
+        padding: 16px;
+    }
+
+    .card-body:hover .overlay {
+        opacity: 1;
+    }
+
+    .text {
+        color: white;
+        font-size: 20px;
+        position: relative;
+        top: 50%;
+        left: 50%;
+
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+</style>
+
+{% endblock %}
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1>About Bookworm DB</h1>
+        <p>Bookworm DB is the up and coming popular source for any and everything book, author, or publisher related. Bookworm DB was
+           created for book lovers all around the world to explore new books and learn more about the authors and publishers. Our database
+           contains books from a variety of generes: romance, history, non-fiction, etc. For book readers with a favorite author, Bookworm DB allows you to search an author and all the books they've written. If you want to know more about publishers, you can also search specific publishers. Use
+           Bookworm DB to further grow and expand your book collection!</p>
+    </div>
+    <div class="container-fluid p-4 text-center" id="team-info">
+        <h2>Meet the Team</h2>
+        <div class="row">
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card h-100">
+                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename='/avi/jae.jpg') }}" alt="">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Jaelyn Bethea</h3>
+                        <h4 class="card-text">Front-End Development</h4>
+                        <p class="card-text" hidden="true">Bio text</p>
+                        <div class="overlay">
+                            <div class="text">
+                                Hello! My name is Jaelyn Bethea and I am a Senior ECE student with a primary technical
+                                core in Software Engineering and Design. I use she/her/hers pronouns. I am from Grand
+                                Prairie, TX and I come from a family of four where I am the youngest.  I will graduate
+                                in the summer of 2021 and I look forward to the many opportunities that are ahead of me.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card h-100">
+                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename='/avi/carlos.jpg') }}" alt="">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Carlos Borja</h3>
+                        <h4 class="card-text">Front-End Development</h4>
+                        <p class="card-text" hidden="true">Bio text</p>
+                        <div class="overlay">
+                            <div class="text">
+                                Hi! My name is Carlos Borja. I am a Senior in Electrical and Computer Engineering
+                                slated to graduate in December 2021. I was born and raised at the South Texas border
+                                in Laredo, TX. I enjoy playing RPGs in my free time, and I play the ocarina to relax.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card h-100">
+                    <img class="card-img-top img-fluid" src="{{ url_for('static', filename='/avi/mrugank.png') }}" alt="">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Mrugank Parab</h3>
+                        <h4 class="card-text">Back-End Development</h4>
+                        <p class="card-text" hidden="true">Bio text</p>
+                        <div class="overlay">
+                            <div class="text">
+                                Hey! My name is Mrugank Parab.  I'm a Senior ECE student in the Software Engineering
+                                track graduating in Spring 2021. I'm from Dallas, TX and I love programming and playing
+                                video games
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <div class="card h-100">
+                    <img class="card-img-top img-fluid img-responsive" src="{{ url_for('static', filename='/avi/san.png') }}" alt="">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Santhosh Saravanan</h3>
+                        <h4 class="card-text">Back-End Development</h4>
+                        <p class="card-text" hidden="true">Bio text</p>
+                        <div class="overlay">
+                            <div class="text">
+                                My name is Santhosh Saravanan and I’m a junior ECE student with a primary technical
+                                score in Software Engineering. I am from San Diego, California and I came from a family
+                                of five where I am the only boy. I’m looking forward to take advantage of being more
+                                comfortable with back-end and front-end development as a whole in the near future.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid p-4 text-center" id="data-srcs">
+        <h2>Data Sources</h2>
+        <p class="w-50 mx-auto">The data on this website was obtained from the sources below. Currently, the information was manually fetched
+            and added to the site for the 1.0 release. Version 2.0 of the website will automate the information gathering. Click on the icon
+            of the source you are interested in to learn more about their API and available data.
+        </p>
+        <div class="row align-items-center">
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <a href="https://www.goodreads.com/api" class="stretched-link">
+                    <img src="{{ url_for('static', filename='/api-logos/goodreads.png') }}" class="img-fluid" alt="Logo for Goodreads">
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <a href="https://developers.google.com/books" class="stretched-link">
+                    <img src="{{ url_for('static', filename='/api-logos/google-books.png') }}" class="img-fluid" alt="Logo for Google Books">
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <a href="https://developer.nytimes.com/docs/books-product/1/overview" class="stretched-link">
+                    <img src="{{ url_for('static', filename='/api-logos/nyt.jpg') }}" class="img-fluid" alt="Logo for New York Times">
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                <a href="https://openlibrary.org/developers/api" class="stretched-link">
+                    <img src="{{ url_for('static', filename='/api-logos/open-library.svg') }}" class="img-fluid" alt="Logo for Open Library">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid p-4 text-center" id="website-tech">
+        <h2>Website Stack</h2>
+        <p style="text-align:center">Hover over an icon to learn more about the tech used in Bookworm DB!</p>
+        <div class="align-items-center">
+            <img src="{{ url_for('static', filename='/tech-logos/python.png') }}" data-toggle="popover" title="Python" data-placement="bottom" data-content="Python the site's primary programming language. Python helps power the Flask framework and it also helps us design our back-end API to interface with our NoSQL database." class="m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/flask.png') }}" data-toggle="popover" title="Flask" data-placement="bottom" data-content="Flask is a micro web framework that allowed us to build Bookworm DB and serve our content dynamically" class="m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/bootstrap.png') }}" data-toggle="popover" title="Bootstrap" data-placement="bottom" data-content="Bootstrap is the framework we used to design the website's layout and appearance. Bootstrap helped us build a responsive, mobile-first site." class="mt-3 ml-3 mb-3 mr-4" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/github.png') }}" data-toggle="popover" title="Github" data-placement="bottom" data-content="Github is where our source code revisions are managed. Our team used Github as our main means of code sharing too." class="m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/aws.png') }}" data-toggle="popover" title="AWS" data-placement="bottom" data-content="Amazon Web Services (AWS) is what we use to deploy our application." class="m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/mongodb.png') }}" data-toggle="popover" title="MongoDB" data-placement="bottom" data-content="MongoDB was used to create our application database. MongoDB allows for scalability and flexibility, making querying and indexing our database fast and efficient." class="m-3" alt="">
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+          $('[data-toggle="popover"]').popover({
+              trigger: 'hover'
+          });
+        });
+    </script>
+    <div class="container-fluid text-center my-5">
+        <a class="btn btn-primary" href="https://github.com/UT-SWLab/TeamE4">GitHub Link</a>
+    </div>
+{% endblock %}

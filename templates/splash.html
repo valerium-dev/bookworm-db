@@ -14,26 +14,19 @@
     <!-- The slideshow -->
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <!-- Populate with NYT Bestsellers 
-             Incld: Array of Book cards
-        -->
-          <a href="/books/" class="stretched-link"></a>
-        <img src="{{ url_for('static', filename='e-books.png') }}" alt="">
+          <a href="/books/" class="stretched-link">
+              <img class="img-fluid" src="{{ url_for('static', filename='e-books.png') }}" alt="">
+          </a>
       </div>
       <div class="carousel-item">
-        <!-- Most Viewed Book pages in the last x days
-             Incld: Array of Book cards
-        -->
-          <a href="/authors/" class="stretched-link"></a>
-        <img src="{{ url_for('static', filename='e-authors.png') }}" alt="">
+          <a href="/authors/" class="stretched-link">
+              <img class="img-fluid" src="{{ url_for('static', filename='e-authors.png') }}" alt="">
+          </a>
       </div>
       <div class="carousel-item">
-        <!-- Book of the Day 
-             Incld: Book card AND
-                    Reviews OR Accolades OR Quote from BotD
-        -->
-          <a href="/publishers/" class="stretched-link"></a>
-        <img src="{{ url_for('static', filename='e-publishers.png') }}" alt="">
+          <a href="/publishers/" class="stretched-link">
+              <img class="img-fluid" src="{{ url_for('static', filename='e-publishers.png') }}" alt="">
+          </a>
       </div>
     </div>
   
@@ -44,6 +37,15 @@
     <a class="carousel-control-next" href="#splash" data-slide="next">
       <span class="carousel-control-next-icon"></span>
     </a>
-  
 </div>
+<!-- Populate with NYT Bestsellers
+             Incld: Array of Book cards
+        -->
+<!-- Most Viewed Book pages in the last x days
+             Incld: Array of Book cards
+        -->
+<!-- Book of the Day
+             Incld: Book card AND
+                    Reviews OR Accolades OR Quote from BotD
+        -->
 {% endblock %}

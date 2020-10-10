@@ -144,7 +144,7 @@ def publisher_instance(pub_name):
 # TODO: Back-end work. Implement search algo
 @app.route('/search/', methods=['GET', 'POST'])
 def search():
-    return "Search Results"
+    return render_template('search.html')
 
 
 if __name__ == '__main__':

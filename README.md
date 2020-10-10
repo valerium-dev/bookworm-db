@@ -4,7 +4,7 @@ Name | EID | GitHub ID
 Jaelyn Bethea | jnb2634 | jaelynbethea
 Carlos Borja | cab6523 | valerium-dev
 Mrugank Parab | mp44675 | mp44675
-Santhosh Saravanan | | santhosh2000
+Santhosh Saravanan |sks3648 | santhosh2000
 
 **[Link to Website](https://bookworm-db.herokuapp.com/)**
 

@@ -1,7 +1,7 @@
 # Team E4
 Name | EID | GitHub ID
 --- | --- | ---
-Jaelyn Bethea | | jaelynbethea
+Jaelyn Bethea | jnb2634 | jaelynbethea
 Carlos Borja | cab6523 | valerium-dev
 Mrugank Parab | mp44675 | mp44675
 Santhosh Saravanan | | santhosh2000

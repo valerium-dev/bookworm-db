@@ -8,6 +8,23 @@ Santhosh Saravanan | | santhosh2000
 
 **[Link to Website](https://bookworm-db.herokuapp.com/)**
 
+## Running a local instance
+**Pre-requisites**  
+- Python >= 3.6  
+You can check if the correct Python version is already installed by running `python -V`
+
+**Installation**
+1. Clone the repository:  
+`git clone https://github.com/UT-SWLab/TeamE4.git`
+2. Create a new virtual environment:  
+`python3 -m venv env` or `python -m venv env` (depending on your Python installation)
+3. Activate the virtual environment.
+4. Install the program requirements:
+`pip install -r requirements.txt`
+5. Run the program:
+`python app.py`
+
+
 ## Phase I - Time Measurements
 *Front-end: Jaelyn & Carlos*
 

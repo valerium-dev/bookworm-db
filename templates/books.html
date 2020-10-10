@@ -2,13 +2,20 @@
 
 {% block head %}
 <title>All Books</title>
+<style>
+.card-img-top {
+width: 100%;
+height: 55vh;
+object-fit: cover;
+}
+</style>
 {% endblock %}
 {% block body %}
     <div class="container-fluid p-4" id="team-info">
         <div class="row">
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= 'Ohio-Beloved-Toni-Morrison.jpg') }}" alt="Book cover for Beloved by Toni Morrison">
+                    <img class="card-img-top" src="{{ url_for('static', filename= '/book-covers/beloved.png') }}" alt="Book cover for Beloved by Toni Morrison">
                     <div class="card-body">
                         <h4 class="card-title">Beloved</h4>
                         <h5 class="card-text">Toni Morrison</h5>
@@ -18,7 +25,7 @@
             </div>
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= 'the-magicians-book-cover.jpg') }}" alt="Book cover for The Magicians by Lev Grossman">
+                    <img class="card-img-top" src="{{ url_for('static', filename= '/book-covers/the-magicians.jpg') }}" alt="Book cover for The Magicians by Lev Grossman">
                     <div class="card-body">
                         <h4 class="card-title">The Magicians</h4>
                         <h5 class="card-text">Lev Grossman</h5>
@@ -28,11 +35,11 @@
             </div>
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                 <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= '250w.jpg') }}" alt="Book cover for Fluent Python by Luciano Ramalho">
+                    <img class="card-img-top" src="{{ url_for('static', filename= '/book-covers/1984.png') }}" alt="Book cover for 1984 by George Orwell">
                     <div class="card-body">
-                        <h4 class="card-title">Fluent Python</h4>
-                        <h5 class="card-text">Luciano Ramalho</h5>
-                        <a href="/books/fluent-python" class="stretched-link"></a>
+                        <h4 class="card-title">1984</h4>
+                        <h5 class="card-text">George Orwell</h5>
+                        <a href="/books/1984" class="stretched-link"></a>
                     </div>
                 </div>
             </div>

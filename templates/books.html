@@ -13,50 +13,23 @@ object-fit: cover;
 {% block body %}
     <div class="container-fluid p-4" id="team-info">
         <div class="row">
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= '/book-covers/beloved.png') }}" alt="Book cover for Beloved by Toni Morrison">
-                    <div class="card-body">
-                        <h4 class="card-title">Beloved</h4>
-                        <h5 class="card-text">Toni Morrison</h5>
-                        <a href="/books/beloved" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= '/book-covers/the-magicians.jpg') }}" alt="Book cover for The Magicians by Lev Grossman">
-                    <div class="card-body">
-                        <h4 class="card-title">The Magicians</h4>
-                        <h5 class="card-text">Lev Grossman</h5>
-                        <a href="/books/the-magicians" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= '/book-covers/1984.png') }}" alt="Book cover for 1984 by George Orwell">
-                    <div class="card-body">
-                        <h4 class="card-title">1984</h4>
-                        <h5 class="card-text">George Orwell</h5>
-                        <a href="/books/1984" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div>
-            <!--
             {% for book in books %}
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2>
-                <div class="card">
-                    <img class="card-img-top" src="{{ book.cover_img_url_attribute }}" alt="{{ book.alt_text_for_cover_img_attribute }}">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ book.title }}</h4>
-                        <h5 class="card-text">{{ book.author }}</h5>
-                        <a href="/books/{{ book.id }}" class="stretched-link"></a>
+                <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ book['thumbnail_url'] }}" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ book['title'] }}</h4>
+                            <h5 class="card-text">
+                                {% for author in book['authors'] %}
+                                    {{ author }}
+                                {% endfor %}
+                            </h5>
+                            <p class="card-text">{{ " ".join(book['genre'].split('-')) }}</p>
+                            <a href="/books/{{ book['_id'] }}" class="stretched-link"></a>
+                        </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
-            -->
         </div>
     </div>
 {% endblock %}

@@ -32,7 +32,7 @@ def books():
     if page_number is None and per_page is None:
         num_pages = books_collection.estimated_document_count() // 10
         book_list = []
-        for book in books_collection.find({"_id":ObjectId("5f932cb187f700c50ebb04cd")}).limit(10):
+        for book in books_collection.find().limit(10):
             temp = dict()
             temp['_id'] = book['_id']
             temp['title'] = book['title']
@@ -46,7 +46,7 @@ def books():
         per_page = int(per_page)
         num_pages = books_collection.estimated_document_count() // per_page
         book_list = []
-        for book in books_collection.find({"_id":ObjectId("5f932cb187f700c50ebb04cd")}).skip(page_number * per_page).limit(per_page):
+        for book in books_collection.find().skip(page_number * per_page).limit(per_page):
             temp = dict()
             temp['_id'] = book['_id']
             temp['title'] = book['title']
@@ -57,12 +57,9 @@ def books():
         return render_template('books.html', books=book_list, pageNumber=page_number, perPage=per_page, numPages=num_pages)
 
 
-
 @app.route('/books/<string:book_id>')
 def book_instance(book_id):
-
     book = books_collection.find_one({"_id":ObjectId(book_id)})
-    pprint(book)
     return render_template('book-instance.html', book=book)
 
 

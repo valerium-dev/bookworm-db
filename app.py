@@ -1,12 +1,15 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
 
+
 atlas_user = os.getenv("ATLAS_USER")
 atlas_pwd = os.getenv("ATLAS_PASSWD")
-mongo = MongoClient(f'mongodb+srv://{atlas_user}:{atlas_pwd}@cluster0.rh1w0.mongodb.net/book_worm_database?retryWrites=true&w=majority')
+print(atlas_user)
+print(atlas_pwd)
+mongo = MongoClient(f'mongodb+srv://jaelyn:pAfx0ac8a6xLJKvP@cluster0.rh1w0.mongodb.net/book_worm_database?retryWrites=true&w=majority')
 books_collection = mongo.book_worm_database.Books
 authors_collection = mongo.book_worm_database.Authors
 publishers_collection = mongo.book_worm_database.Publishers
@@ -25,17 +28,23 @@ def about():
 #       Phase II - Fetch book data from DB
 @app.route('/books/', methods=['GET'])
 def books():
-    book_list = []
-    for book in books_collection.find():
-        temp = dict()
-        temp['_id'] = book['_id']
-        temp['title'] = book['title']
-        temp['authors'] = book['authors']
-        temp['genre'] = book['genre']
-        temp['thumbnail_url'] = book['thumbnail_url']
-        book_list.append(temp)
+    page_number = request.args.get('pageNumber')
+    per_page = request.args.get('perPage')
+    if(page_number is None and per_page is None):
+        book_list = []
+        for book in books_collection.find():
+            temp = dict()
+            temp['_id'] = book['_id']
+            temp['title'] = book['title']
+            temp['authors'] = book['authors']
+            temp['genre'] = book['genre']
+            temp['thumbnail_url'] = book['thumbnail_url']
+            book_list.append(temp)
+            print(len(book_list))
+            if(len(book_list) == 10):
+                break
+        return render_template('books.html', books=book_list, pageNumber = page_number, perPage = per_page)
 
-    return render_template('books.html', books=book_list)
 
 
 # TODO: Change route to use book id instead of book name in P.II

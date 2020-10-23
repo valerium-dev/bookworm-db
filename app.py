@@ -1,6 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, request
 from pymongo import MongoClient
 import os
+from bson.objectid import ObjectId
+from pprint import pprint
 
 app = Flask(__name__)
 
@@ -22,8 +24,7 @@ def about():
     return render_template('about.html')
 
 
-# TODO: Phase I - Fetch book data from APIs
-#       Phase II - Fetch book data from DB
+
 @app.route('/books', methods=['GET'])
 def books():
     page_number = request.args.get('pageNumber')
@@ -31,13 +32,13 @@ def books():
     if page_number is None and per_page is None:
         num_pages = books_collection.estimated_document_count() // 10
         book_list = []
-        for book in books_collection.find().limit(10):
+        for book in books_collection.find({"_id":ObjectId("5f932cb187f700c50ebb04cd")}).limit(10):
             temp = dict()
             temp['_id'] = book['_id']
             temp['title'] = book['title']
             temp['authors'] = book['authors']
             temp['genre'] = book['genre']
-            temp['thumbnail_url'] = book['thumbnail_url']
+            temp['thumbnail_url'] = book['thumbnail']
             book_list.append(temp)
         return render_template('books.html', books=book_list, pageNumber=0, perPage=10, numPages=num_pages)
     else:
@@ -45,22 +46,23 @@ def books():
         per_page = int(per_page)
         num_pages = books_collection.estimated_document_count() // per_page
         book_list = []
-        for book in books_collection.find().skip(page_number * per_page).limit(per_page):
+        for book in books_collection.find({"_id":ObjectId("5f932cb187f700c50ebb04cd")}).skip(page_number * per_page).limit(per_page):
             temp = dict()
             temp['_id'] = book['_id']
             temp['title'] = book['title']
             temp['authors'] = book['authors']
             temp['genre'] = book['genre']
-            temp['thumbnail_url'] = book['thumbnail_url']
+            temp['thumbnail_url'] = book['thumbnail']
             book_list.append(temp)
         return render_template('books.html', books=book_list, pageNumber=page_number, perPage=per_page, numPages=num_pages)
 
 
 
-# TODO: Change route to use book id instead of book name in P.II
-@app.route('/books/<string:book_name>')
-def book_instance(book_name):
+@app.route('/books/<string:book_id>')
+def book_instance(book_id):
 
+    book = books_collection.find_one({"_id":ObjectId(book_id)})
+    pprint(book)
     return render_template('book-instance.html', book=book)
 
 
@@ -70,7 +72,6 @@ def book_instance(book_name):
 def authors():
     authors = ['Toni Morrison', 'Lev Grossman', 'George Orwell']
     return render_template('authors.html', authors=authors)
-
 
 # TODO: Change route to use author id instead of author name in P.II
 @app.route('/authors/<string:author_name>')

@@ -60,5 +60,34 @@ object-fit: cover;
                 </div>
             {% endfor %}
         </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+              {% if pageNumber == 0 %}
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a></li>
+              {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="/books?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+              {% endif %}
+
+              {% for p in range(numPages) %}
+                <li class="page-item">
+                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                </li>
+              {% endfor %}
+
+              {% if pageNumber == numPages - 1 %}
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>
+              {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="/books?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+              {% endif %}
+          </ul>
+        </nav>
     </div>
 {% endblock %}

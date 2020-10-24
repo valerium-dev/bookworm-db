@@ -62,7 +62,6 @@ def books():
 def book_instance(book_id):
 
     book = books_collection.find_one({"_id":ObjectId(book_id)})
-    pprint(book)
     return render_template('book-instance.html', book=book)
 
 
@@ -113,31 +112,39 @@ def author_instance(author_name):
 #       Phase II - Fetch pub data from DB
 @app.route('/publishers', methods=['GET'])
 def publishers():
-    publishers = ['Alfred A. Knopf', 'Penguin', "Houghton Mifflin Harcourt"]
-    return render_template('publishers.html', publishers=publishers)
-
+    page_number = request.args.get('pageNumber')
+    per_page = request.args.get('perPage')
+    if page_number is None and per_page is None:
+        num_pages = publishers_collection.estimated_document_count() // 10
+        publisher_list = []
+        for publisher in publishers_collection.find().limit(10):
+            temp = dict()
+            temp['_id'] = publisher['_id']
+            temp['name'] = publisher['name']
+            temp['logo'] = publisher['logo']
+            temp['hq_location'] = publisher['hqLocation']
+            publisher_list.append(temp)
+        return render_template('publishers.html', publishers=publisher_list, pageNumber=0, perPage=10, numPages=num_pages)
+    else:
+        page_number = int(page_number)
+        per_page = int(per_page)
+        num_pages = publishers_collection.estimated_document_count() // per_page
+        publisher_list = []
+        for publisher in publishers_collection.find().skip(page_number * per_page).limit(per_page):
+            temp = dict()
+            temp['_id'] = publisher['_id']
+            temp['name'] = publisher['name']
+            temp['logo'] = publisher['logo']
+            temp['hq_location'] = publisher['hqLocation']
+            publisher_list.append(temp)
+        return render_template('publishers.html', publishers=publisher_list, pageNumber=page_number, perPage=10, numPages=num_pages)
 
 # TODO: Change route to use publisher id instead of publisher name in P.II
-@app.route('/publishers/<string:pub_name>')
-def publisher_instance(pub_name):
-    pub = dict()
-    if pub_name == 'alfred-a-knopf':
-        pub['name'] = ' '.join(pub_name.split('-')).title()
-        pub['location'] = "New York City, New York, United States"
-        pub['description'] = "Alfred A. Knopf, Inc. is an American publishing house that was founded by Alfred A. Knopf Sr. and Blanche Knopf in 1915.[1] Blanche and Alfred traveled abroad regularly and were known for publishing European, Asian, and Latin American writers in addition to leading American literary trends. It was acquired by Random House in 1960, and is now part of the Knopf Doubleday Publishing Group division of Penguin Random House which is owned by the German conglomerate Bertelsmann.[2][3] The Knopf publishing house is associated with its borzoi colophon, which was designed by co-founder Blanche Knopf in 1925."
-        pub['logo_url'] = url_for('static', filename='/publisher-logos/Knopf.png')
-    elif pub_name == 'penguin':
-        pub['name'] = ' '.join(pub_name.split('-')).title()
-        pub['location'] = "City of Westminster, London, England"
-        pub['description'] = "Penguin Books is a British publishing house. It was co-founded in 1935 by Sir Allen Lane with his brothers Richard and John,[3] as a line of the publishers The Bodley Head, only becoming a separate company the following year.[4] Penguin revolutionised publishing in the 1930s through its inexpensive paperbacks, sold through Woolworths and other high street stores for sixpence, bringing high-quality paperback fiction and non-fiction to the mass market.[5] Penguin's success demonstrated that large audiences existed for serious books. Penguin also had a significant impact on public debate in Britain, through its books on culture, politics, the arts, and science"
-        pub['logo_url'] = url_for('static', filename='/publisher-logos/penguin.jpg')
-    else:
-        pub['name'] = ' '.join(pub_name.split('-')).title()
-        pub['location'] = "Boston, MA, United States"
-        pub['description'] = "As a global learning company, HMH specializes in pre-K–12 education content, services and cutting edge technology solutions for today’s changing landscape.\nHMH creates engaging, dynamic and effective educational content and experiences from early childhood to K-12 and beyond the classroom, serving more than 50 million students in more than 150 countries. Available through multiple media, our content meets the needs of students, teachers, parents and lifelong learners, no matter where and how they learn.\nOur renowned and awarded children's books, novels, nonfiction, and reference titles are enjoyed by readers throughout the world. Our distinguished author list, from Ralph Waldo Emerson to Philip Roth, and brands from Curious George to The Lord of the Rings, includes 10 Nobel Prize winners, 48 Pulitzer Prize winners, 15 National Book Award winners, and more than 100 Caldecott, Newbery, Printz and Sibert Medal and Honor recipients. "
-        pub['logo_url'] = url_for('static', filename='/publisher-logos/hmh.jpg')
-
-    return render_template('publisher-instance.html', publisher=pub)
+@app.route('/publishers/<string:pub_id>')
+def publisher_instance(pub_id):
+    publisher = publishers_collection.find_one({"_id":ObjectId(pub_id)})
+    pprint(publisher)
+    return render_template('publisher-instance.html', publisher=publisher)
 
 
 # TODO: Back-end work. Implement search algo

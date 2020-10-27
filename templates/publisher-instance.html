@@ -13,16 +13,21 @@
                 <h1>{{ publisher['name'] }}</h1>
                 <h4>{{ publisher['location'] }}</h4>
                 <p>{{ publisher['description']}}</p>
-                <h4 style="font-family:sans=serif;">Authors Published:
-                    {% for author in publisher['authors'] %}
-                        <a href="/authors/{{ author['_id'] }}" class="stretched-link">{{ author }}</a>
+                <h4 class="position-relative">Authors Published:
+                    {% for author in authorList %}
+                        <a href="/authors/{{ author['id'] }}" class="position-relative stretched-link">{{ author['name'] }}</a>
                     {% endfor %}
                 </h4>
-                <h4 style="font-family:sans=serif;">Books Published:
-                    {% for book in publisher['books'] %}
-                        <a href="/books/{{ publisher['books_id_list'] }}" class="stretched-link">{{ book }}</a>
+                <h4 class="position-relative">Books Published
+                    {% for book in bookList %}
+                       <a href="/books/{{ book['id'] }}" class="position-relative stretched-link">{{ book['name'] }}</a>
                     {% endfor %}
                 </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>placeholder for google maps embed</h1>
             </div>
         </div>
     </div>

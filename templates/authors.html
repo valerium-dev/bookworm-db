@@ -13,48 +13,78 @@
 {% endblock %}
 {% block body %}
     <div class="container-fluid p-4" id="team-info">
-        <div class="row">
+        <nav >
+          <ul class="pagination justify-content-center pagination-sm">
+              {% if pageNumber == 0 %}
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a></li>
+              {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="/authors?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+              {% endif %}
 
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= '/profile/toni-morrison.jpg') }}" alt="A picture of Toni Morrison">
-                    <div class="card-body">
-                        <h4 style="text-align:center;" class="card-title">Toni Morrison</h4>
-                        <a href="/authors/toni-morrison" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= '/profile/lev-grossman.jpg') }}" alt="A picture of Lev Grossman">
-                    <div class="card-body">
-                        <h4 style="text-align:center;" class="card-title">Lev Grossman</h4>
-                        <a href="/authors/lev-grossman" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= '/profile/george-orwell.jpg') }}" alt="A picture of George Orwell">
-                    <div class="card-body">
-                        <h4 style="text-align:center;"class="card-title">George Orwell</h4>
-                        <a href="/authors/george-orwell" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div>
-            <!--
+              {% for p in range(numPages) %}
+                <li class="page-item">
+                  <a class="page-link" href="/authors?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                </li>
+              {% endfor %}
+
+              {% if pageNumber == numPages - 1 %}
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>
+              {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="/authors?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+              {% endif %}
+          </ul>
+        </nav>
+        <div class="row">
             {% for author in authors %}
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2>
-                <div class="card">
-                    <img class="card-img-top" src="{{ author.img_url_attribute }}" alt="{{ author.alt_text_for_img_attribute }}">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ author.name }}</h4>
-                        <a href="/authors/{{ author.id }}" class="stretched-link"></a>
+                <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ author['thumbnail_url'] }}" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ author['name'] }}</h4>
+                            <h4 class="card-title">{{ author['age'] }}</h4>
+                            <h4 class="card-title">{{ author['hometown'] }}</h4>
+                            <a href="/authors/{{ author['_id'] }}" class="stretched-link"></a>
+                        </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
-            -->
         </div>
+        <nav>
+          <ul class="pagination justify-content-center pagination-sm">
+              {% if pageNumber == 0 %}
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a></li>
+              {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="/authors?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+              {% endif %}
+
+              {% for p in range(numPages) %}
+                <li class="page-item">
+                  <a class="page-link" href="/authors?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                </li>
+              {% endfor %}
+
+              {% if pageNumber == numPages - 1 %}
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>
+              {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="/authors?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+              {% endif %}
+          </ul>
+        </nav>
     </div>
 {% endblock %}

@@ -11,7 +11,7 @@ atlas_pwd = os.getenv("ATLAS_PASSWD")
 mongo = MongoClient(
     f'mongodb+srv://{atlas_user}:{atlas_pwd}@cluster0.rh1w0.mongodb.net/book_worm_database?retryWrites=true&w=majority')
 books_collection = mongo.book_worm_database.SharBooks
-authors_collection = mongo.book_worm_database.SharAuthors
+authors_collection = mongo.book_worm_database.Authors
 publishers_collection = mongo.book_worm_database.SharPub
 
 

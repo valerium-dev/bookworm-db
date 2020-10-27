@@ -16,11 +16,17 @@
                 <h4 class="position-relative">Authors Published:
                     {% for author in publisher['authors'] %}
                         <a href="/authors/{{ author['id'] }}" class="position-relative stretched-link">{{ author['name'] }}</a>
+                        {%- if not loop.last  -%}
+                           ,
+                        {% endif %}
                     {% endfor %}
                 </h4>
                 <h4 class="position-relative">Books Published
                     {% for book in publisher['books'] %}
                        <a href="/books/{{ book['id'] }}" class="position-relative stretched-link">{{ book['name'] }}</a>
+                       {%- if not loop.last  -%}
+                            ,
+                       {% endif %}
                     {% endfor %}
                 </h4>
             </div>

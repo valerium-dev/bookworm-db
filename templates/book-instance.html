@@ -55,11 +55,15 @@
                 <h4 class="position-relative">by
                     {% for author in book['authors'] %}
                         <a href="/authors/{{ author['id'] }}" class="position-relative stretched-link">{{ author['name'] }}</a>
+                    {%- if not loop.last  -%}
+                                        ,
+                    {% endif %}
                     {% endfor %}
                 </h4>
                 <h6 class="position-relative">Publishers:
                     {% for publisher in book['publishers'] %}
                         <a href="/publishers/{{ publisher['id'] }}" class="position-relative stretched-link" >{{ publisher['name'] }}</a>
+
                     {% endfor %}
                 </h6>
 

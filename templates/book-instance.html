@@ -50,24 +50,24 @@
                 <img src="{{ book['thumbnail'] }}" class="img-fluid rounded">
             </div>
             <div class="col-sm-8 py-2">
-                <h1 style="font-family:sans=serif;"><strong>{{ book['title'] }}</strong></h1>
+                <h1 style="font-family:sans-serif;"><strong>{{ book['title'] }}</strong></h1>
 
                 <h4 class="position-relative">by
-                    {% for author in authorList %}
+                    {% for author in book['authors'] %}
                         <a href="/authors/{{ author['id'] }}" class="position-relative stretched-link">{{ author['name'] }}</a>
                     {% endfor %}
                 </h4>
                 <h6 class="position-relative">Publishers:
-                    {% for publisher in publisherList %}
+                    {% for publisher in book['publishers'] %}
                         <a href="/publishers/{{ publisher['id'] }}" class="position-relative stretched-link" >{{ publisher['name'] }}</a>
                     {% endfor %}
                 </h6>
 
-                <p>{{ book['description'] }}</p>
+                <p>{{ book['description']|safe }}</p>
                 <p class ="m-0"><strong>Maturity: </strong>{{ book['contentRating'] }} </p>
                 <p class="m-0"><strong>Page Count: </strong>{{ book['pageCount'] }}</p>
                 <p class="m-0"><strong>Publishing Date: </strong>{{ book['publishingDate'] }}</p>
-                 <p class="m-0"><strong>Genre: </strong>{{ book['genre'] }} | <strong>ISBN-13: </strong>{{ book['isbn13'] }}</p>
+                <p class="m-0"><strong>Genre: </strong>{{ book['genre'] }} | <strong>ISBN-13: </strong>{{ book['isbn13'] }}</p>
 
             </div>
         </div>
@@ -75,7 +75,7 @@
             <div class="col-sm-12">
                 <h1>placeholder for book preview from googlebooks api</h1>
                 <h1>placeholder for api widget from goodreads api</h1>
-                <h1>placeholder for book reviews</h1>
+                <h1>placeholder for similar books</h1>
             </div>
         </div>
 

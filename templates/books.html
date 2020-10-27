@@ -15,27 +15,46 @@ object-fit: cover;
         <nav>
           <ul class="pagination justify-content-center pagination-sm">
               {% if pageNumber == 0 %}
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a></li>
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
               {% else %}
                 <li class="page-item">
                     <a class="page-link" href="/books?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-chevron-left"></i>
+                        <i class="fas fa-angle-left"></i>
                     </a>
                 </li>
               {% endif %}
 
-              {% for p in range(numPages) %}
+              {% for p in range(0, 4) if not p > numPages %}
                 <li class="page-item">
                   <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
                 </li>
               {% endfor %}
 
-              {% if pageNumber == numPages - 1 %}
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>
+              <li class="page-item">
+                    <a class="page-link" href="">...</a>
+              </li>
+
+              {% if pageNumber > 3 and pageNumber < numPages - 3 %}
+              <li class="page-item">
+                    <a class="page-link" href="/books?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber+1 }}</a>
+              </li>
+              <li class="page-item">
+                    <a class="page-link" href="">...</a>
+              </li>
+              {% endif %}
+
+              {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
+                <li class="page-item">
+                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                </li>
+              {% endfor %}
+
+              {% if pageNumber == numPages %}
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
               {% else %}
                 <li class="page-item">
                     <a class="page-link" href="/books?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-chevron-right"></i>
+                        <i class="fas fa-angle-right"></i>
                     </a>
                 </li>
               {% endif %}
@@ -50,10 +69,19 @@ object-fit: cover;
                             <h4 class="card-title">{{ book['title'] }}</h4>
                             <h5 class="card-text">
                                 {% for author in book['authors'] %}
-                                    {{ author }}
+                                    {{ author['name'] }}
+                                    {%- if not loop.last  -%}
+                                        ,
+                                    {% endif %}
                                 {% endfor %}
                             </h5>
-
+                            <p class="card-text">
+                                <strong>Genre: </strong>{{ book['genre'] }} |</strong>
+                                <strong> Rating: </strong>
+                                {% if book['rating'] %}
+                                    {{ book['rating'] }}/5.0
+                                {% endif %}
+                            </p>
                             <a href="/books/{{ book['_id'] }}" class="stretched-link"></a>
                         </div>
                     </div>

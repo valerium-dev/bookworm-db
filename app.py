@@ -6,13 +6,14 @@ from pprint import pprint
 
 app = Flask(__name__)
 
-
 atlas_user = os.getenv("ATLAS_USER")
 atlas_pwd = os.getenv("ATLAS_PASSWD")
-mongo = MongoClient(f'mongodb+srv://{atlas_user}:{atlas_pwd}@cluster0.rh1w0.mongodb.net/book_worm_database?retryWrites=true&w=majority')
+mongo = MongoClient(
+    f'mongodb+srv://{atlas_user}:{atlas_pwd}@cluster0.rh1w0.mongodb.net/book_worm_database?retryWrites=true&w=majority')
 books_collection = mongo.book_worm_database.SharBooks
 authors_collection = mongo.book_worm_database.SharAuthors
 publishers_collection = mongo.book_worm_database.SharPub
+
 
 @app.route('/')
 def splash():
@@ -22,7 +23,6 @@ def splash():
 @app.route('/about')
 def about():
     return render_template('about.html')
-
 
 
 @app.route('/books', methods=['GET'])
@@ -38,6 +38,7 @@ def books():
             temp['title'] = book['title']
             temp['authors'] = book['authors']
             temp['genre'] = book['genre']
+            temp['rating'] = book['rating']
             temp['thumbnail_url'] = book['thumbnail']
             book_list.append(temp)
         return render_template('books.html', books=book_list, pageNumber=0, perPage=10, numPages=num_pages)
@@ -54,25 +55,15 @@ def books():
             temp['genre'] = book['genre']
             temp['thumbnail_url'] = book['thumbnail']
             book_list.append(temp)
-        return render_template('books.html', books=book_list, pageNumber=page_number, perPage=per_page, numPages=num_pages)
+        return render_template('books.html', books=book_list, pageNumber=page_number, perPage=per_page,
+                               numPages=num_pages)
 
 
 @app.route('/books/<string:book_id>')
 def book_instance(book_id):
-    book = books_collection.find_one({"_id":ObjectId(book_id)})
-    author_list = []
-    publisher_list = []
-    for publisher in book['publishers']:
-        temp = dict()
-        temp['name'] = list(publisher.keys())[0]
-        temp['id'] = list(publisher.values())[0]
-        publisher_list.append(temp)
-    for author in book['authors']:
-        temp = dict()
-        temp['name'] = list(author.keys())[0]
-        temp['id'] = list(author.values())[0]
-        author_list.append(temp)
-    return render_template('book-instance.html', book=book, publisherList=publisher_list, authorList=author_list)
+    book = books_collection.find_one({"_id": ObjectId(book_id)})
+    pprint(book)
+    return render_template('book-instance.html', book=book)
 
 
 # TODO: Phase I - Fetch author data from APIs
@@ -88,9 +79,10 @@ def authors():
             temp = dict()
             temp['_id'] = author['_id']
             temp['name'] = author['name']
-            temp['age'] = author['age']
-            temp['hometown'] = author['hometown']
-            temp['thumbnail_url'] = author['thumbnail']
+            temp['age'] = author['age'] if author['age'] else "___"
+            temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
+            temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static', filename='/avi'
+                                                                                                               '/avi.png')
             author_list.append(temp)
         return render_template('authors.html', authors=author_list, pageNumber=0, perPage=10, numPages=num_pages)
     else:
@@ -102,16 +94,20 @@ def authors():
             temp = dict()
             temp['_id'] = author['_id']
             temp['name'] = author['name']
-            temp['age'] = author['age']
-            temp['hometown'] = author['hometown']
-            temp['thumbnail_url'] = author['thumbnail']
+            temp['age'] = author['age'] if author['age'] else "___"
+            temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
+            temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',
+                                                                                            filename='/avi/avi.png')
             author_list.append(temp)
-        return render_template('authors.html', authors=author_list, pageNumber=page_number, perPage=per_page, numPages=num_pages)
+        return render_template('authors.html', authors=author_list, pageNumber=page_number, perPage=per_page,
+                               numPages=num_pages)
+
 
 # TODO: Change route to use author id instead of author name in P.II
 @app.route('/authors/<string:author_id>')
 def author_instance(author_id):
-    author = authors_collection.find_one({"_id":ObjectId(author_id)})
+    author = authors_collection.find_one({"_id": ObjectId(author_id)})
+    pprint(author)
     return render_template('author-instance.html', author=author)
 
 
@@ -130,8 +126,10 @@ def publishers():
             temp['name'] = publisher['name']
             temp['logo'] = publisher['logo']
             temp['hq_location'] = publisher['hqLocation']
+            temp['estYear'] = publisher['estYear']
             publisher_list.append(temp)
-        return render_template('publishers.html', publishers=publisher_list, pageNumber=0, perPage=10, numPages=num_pages)
+        return render_template('publishers.html', publishers=publisher_list, pageNumber=0, perPage=10,
+                               numPages=num_pages)
     else:
         page_number = int(page_number)
         per_page = int(per_page)
@@ -143,27 +141,18 @@ def publishers():
             temp['name'] = publisher['name']
             temp['logo'] = publisher['logo']
             temp['hq_location'] = publisher['hqLocation']
+            temp['estYear'] = publisher['estYear']
             publisher_list.append(temp)
-        return render_template('publishers.html', publishers=publisher_list, pageNumber=page_number, perPage=10, numPages=num_pages)
+        return render_template('publishers.html', publishers=publisher_list, pageNumber=page_number, perPage=10,
+                               numPages=num_pages)
+
 
 # TODO: Change route to use publisher id instead of publisher name in P.II
 @app.route('/publishers/<string:pub_id>')
 def publisher_instance(pub_id):
-    publisher = publishers_collection.find_one({"_id":ObjectId(pub_id)})
-    book_list = []
-    author_list = []
-    for book in publisher['books']:
-        temp = dict()
-        pprint(type(book))
-        temp['name'] = list(book.keys())[0]
-        temp['id'] = list(book.values())[0]
-        book_list.append(temp)
-    for author in publisher['authors']:
-        temp = dict()
-        temp['name'] = list(author.keys())[0]
-        temp['id'] = list(author.values())[0]
-        author_list.append(temp)
-    return render_template('publisher-instance.html', publisher=publisher, bookList=book_list, authorList=author_list)
+    publisher = publishers_collection.find_one({"_id": ObjectId(pub_id)})
+    pprint(publisher)
+    return render_template('publisher-instance.html', publisher=publisher)
 
 
 # TODO: Back-end work. Implement search algo

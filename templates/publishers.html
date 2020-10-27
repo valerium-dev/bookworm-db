@@ -41,9 +41,8 @@
                         <img class="card-img-top" src="{{ publisher['logo'] }}" alt="">
                         <div class="card-body">
                             <h4 class="card-title">{{ publisher['name'] }}</h4>
-                            <h5 class="card-text">
-                                {{publisher['hq_location']}}
-                            </h5>
+                            <h5 class="card-text">{{ publisher['hq_location'] }}</h5>
+                            <p class="card-text">Established {{ publisher['estYear'] }}</p>
                             <a href="/publishers/{{ publisher['_id'] }}" class="stretched-link"></a>
                         </div>
                     </div>

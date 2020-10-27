@@ -49,8 +49,8 @@
                         <img class="card-img-top" src="{{ author['thumbnail_url'] }}" alt="">
                         <div class="card-body">
                             <h4 class="card-title">{{ author['name'] }}</h4>
-                            <h4 class="card-title">{{ author['age'] }}</h4>
-                            <h4 class="card-title">{{ author['hometown'] }}</h4>
+                            <h5 class="card-text">Age: {{ author['age'] }}</h5>
+                            <p class="card-text">{{ author['hometown'] }}</p>
                             <a href="/authors/{{ author['_id'] }}" class="stretched-link"></a>
                         </div>
                     </div>

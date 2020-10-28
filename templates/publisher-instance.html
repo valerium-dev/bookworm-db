@@ -10,8 +10,8 @@
                 <img src="{{ publisher['logo'] }}" class="img-fluid rounded">
             </div>
             <div class="col-sm-8 py-2">
-                <h1>{{ publisher['name'] }}</h1>
-                <h4>{{ publisher['location'] }}</h4>
+                <h1><strong>{{ publisher['name'] }}</strong></h1>
+                <h4>Location: {{ publisher['location'] }}</h4>
                 <p>{{ publisher['description']|safe }}</p>
                 <h4 class="position-relative">Authors Published:
                     {% for author in publisher['authors'] %}

@@ -2,35 +2,31 @@
 
 {% block head %}
 <title>{{ author['name'] }}</title>
-<style>
-    p{
-        font-family:lucinda
-    }
-
-</style>
-
 {% endblock %}
+
 {% block body %}
     <div class="container-fluid p-4" id="team-info">
         <div class="row">
             <div class="col-sm-4 col-xl-2 py-1">
-                <img src="{{ author['thumbnail'] }}" class="img-fluid ">
+                <img src="{{ author['thumbnail'] }}" class="img-fluid">
             </div>
             <div class="col-sm-8 py-2">
                 <h1><strong>{{ author['name'] }}</strong></h1>
-                <h1><strong>{{ author['age'] }}</strong></h1>
-                <h1><strong>{{ author['hometown'] }}</strong></h1>
-                <p class ="m-0"><strong>Born: </strong>{{ author['dob'] }}</p>
+                <h4>Age: {{ author['age'] }} | Hometown: {{ author['hometown'] }}</h4>
+
+                <p class="m-0"><strong>Born: </strong>{{ author['dob'] }}</p>
                 {% if author['dod'] %}
                     <p><strong> Died: </strong>{{ author['dod'] }}</p>
                 {% endif %}
+
                 <p> {{ author['biography']|safe }}</p>
+
                 <h4 class="position-relative">Other Books by {{ author['name'] }}:
                     {% for book in author['books'] %}
                         <a href="/books/{{ book['id'] }}" class="stretched-link">{{ book['name'] }}</a>
                     {% endfor %}
                 </h4>
-                <h4 class="position-relative">Publishers:
+                <h4 class="position-relative">Publisher(s):
                     {% for publisher in author['publishers'] %}
                         <a href="/publishers/{{ publisher['id'] }}" class="stretched-link">{{ publisher['name'] }}</a>
                     {% endfor %}

@@ -39,6 +39,10 @@
         transform: translate(-50%, -50%);
         text-align: center;
     }
+
+    .logo {
+        height: 120px;
+    }
 </style>
 
 {% endblock %}
@@ -158,12 +162,29 @@
         <h2>Website Stack</h2>
         <p style="text-align:center">Hover over an icon to learn more about the tech used in Bookworm DB!</p>
         <div class="align-items-center">
-            <img src="{{ url_for('static', filename='/tech-logos/python.png') }}" data-toggle="popover" title="Python" data-placement="bottom" data-content="Python the site's primary programming language. Python helps power the Flask framework and it also helps us design our back-end API to interface with our NoSQL database." class="m-3" alt="">
-            <img src="{{ url_for('static', filename='/tech-logos/flask.png') }}" data-toggle="popover" title="Flask" data-placement="bottom" data-content="Flask is a micro web framework that allowed us to build Bookworm DB and serve our content dynamically" class="m-3" alt="">
-            <img src="{{ url_for('static', filename='/tech-logos/bootstrap.png') }}" data-toggle="popover" title="Bootstrap" data-placement="bottom" data-content="Bootstrap is the framework we used to design the website's layout and appearance. Bootstrap helped us build a responsive, mobile-first site." class="mt-3 ml-3 mb-3 mr-4" alt="">
-            <img src="{{ url_for('static', filename='/tech-logos/github.png') }}" data-toggle="popover" title="Github" data-placement="bottom" data-content="Github is where our source code revisions are managed. Our team used Github as our main means of code sharing too." class="m-3" alt="">
-            <img src="{{ url_for('static', filename='/tech-logos/aws.png') }}" data-toggle="popover" title="AWS" data-placement="bottom" data-content="Amazon Web Services (AWS) is what we use to deploy our application." class="m-3" alt="">
-            <img src="{{ url_for('static', filename='/tech-logos/mongodb.png') }}" data-toggle="popover" title="MongoDB" data-placement="bottom" data-content="MongoDB was used to create our application database. MongoDB allows for scalability and flexibility, making querying and indexing our database fast and efficient." class="m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/python.svg') }}"
+                 data-toggle="popover" title="Python" data-placement="bottom"
+                 data-content="Python the site's primary programming language. Python helps power the Flask framework
+                 and it also helps us design our back-end API to interface with our NoSQL database."
+                 class="logo m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/flask.svg') }}" data-toggle="popover" title="Flask"
+                 data-placement="bottom" data-content="Flask is a micro web framework that allowed us to build Bookworm
+                 DB and serve our content dynamically" class="logo m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/bootstrap.svg') }}" data-toggle="popover"
+                 title="Bootstrap" data-placement="bottom" data-content="Bootstrap is the framework we used to design
+                 the website's layout and appearance. Bootstrap helped us build a responsive, mobile-first site."
+                 class="logo m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/github.png') }}" data-toggle="popover" title="Github"
+                 data-placement="bottom" data-content="Github is where our source code revisions are managed. Our team
+                 used Github as our main means of code sharing too." class="logo m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/heroku.svg') }}" data-toggle="popover" title="Heroku"
+                 data-placement="bottom" data-content="Heroku is the hosting service for the application. We use it to
+                 serve our website on the internet. It's also used for testing our website before deployment"
+                 class="logo m-3" alt="">
+            <img src="{{ url_for('static', filename='/tech-logos/mongo.svg') }}" data-toggle="popover" title="MongoDB"
+                 data-placement="bottom" data-content="MongoDB was used to create our application database. MongoDB
+                 allows for scalability and flexibility, making querying and indexing our database fast and efficient."
+                 class="logo m-3" alt="">
         </div>
     </div>
 
@@ -175,6 +196,6 @@
         });
     </script>
     <div class="container-fluid text-center my-5">
-        <a class="btn btn-primary" href="https://github.com/UT-SWLab/TeamE4">GitHub Link</a>
+        <a class="btn btn-primary my-5" href="https://github.com/UT-SWLab/TeamE4">Source Code <i class="fas fa-external-link-alt"></i></a>
     </div>
 {% endblock %}

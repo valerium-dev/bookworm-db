@@ -5,7 +5,7 @@
 <style>
     .card-img-top {
         width: 100%;
-        height: 55vh;
+        height: 40vh;
         object-fit: cover;
     }
 </style>
@@ -63,7 +63,7 @@
         <div class="row">
             {% for book in books %}
                 <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                    <div class="card">
+                    <div class="card h-100">
                         <img class="card-img-top" src="{{ book['thumbnail_url'] }}" alt="">
                         <div class="card-body">
                             <h4 class="card-title">{{ book['title'] }}</h4>

@@ -3,12 +3,11 @@
 {% block head %}
 <title>All Authors</title>
 <style>
-.card-img-top {
- width: 100%;
- height: 40vh;
- object-fit: cover;
-}
-
+    .card-img-top {
+        width: 100%;
+        height: 40vh;
+        object-fit: cover;
+    }
 </style>
 {% endblock %}
 {% block body %}
@@ -19,7 +18,7 @@
                 <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
               {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
+                    <a class="page-link" href="/authors?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
                         <i class="fas fa-angle-left"></i>
                     </a>
                 </li>
@@ -27,7 +26,7 @@
 
               {% for p in range(0, 4) if not p > numPages %}
                 <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                  <a class="page-link" href="/authors?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
                 </li>
               {% endfor %}
 
@@ -37,7 +36,7 @@
 
               {% if pageNumber > 3 and pageNumber < numPages - 3 %}
               <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber+1 }}</a>
+                    <a class="page-link" href="/authors?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber+1 }}</a>
               </li>
               <li class="page-item">
                     <a class="page-link" href="">...</a>
@@ -46,7 +45,7 @@
 
               {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
                 <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                  <a class="page-link" href="/authors?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
                 </li>
               {% endfor %}
 
@@ -54,7 +53,7 @@
                 <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
               {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
+                    <a class="page-link" href="/authors?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
                         <i class="fas fa-angle-right"></i>
                     </a>
                 </li>
@@ -64,7 +63,7 @@
         <div class="row">
             {% for author in authors %}
                 <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                    <div class="card">
+                    <div class="card h-100">
                         <img class="card-img-top" src="{{ author['thumbnail_url'] }}" alt="">
                         <div class="card-body">
                             <h4 class="card-title">{{ author['name'] }}</h4>
@@ -76,13 +75,13 @@
                 </div>
             {% endfor %}
         </div>
- <nav>
+        <nav>
           <ul class="pagination justify-content-center pagination-sm">
               {% if pageNumber == 0 %}
                 <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
               {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
+                    <a class="page-link" href="/authors?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
                         <i class="fas fa-angle-left"></i>
                     </a>
                 </li>
@@ -90,7 +89,7 @@
 
               {% for p in range(0, 4) if not p > numPages %}
                 <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                  <a class="page-link" href="/authors?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
                 </li>
               {% endfor %}
 
@@ -100,7 +99,7 @@
 
               {% if pageNumber > 3 and pageNumber < numPages - 3 %}
               <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber+1 }}</a>
+                    <a class="page-link" href="/authors?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber+1 }}</a>
               </li>
               <li class="page-item">
                     <a class="page-link" href="">...</a>
@@ -109,7 +108,7 @@
 
               {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
                 <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                  <a class="page-link" href="/authors?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
                 </li>
               {% endfor %}
 
@@ -117,7 +116,7 @@
                 <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
               {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
+                    <a class="page-link" href="/authors?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
                         <i class="fas fa-angle-right"></i>
                     </a>
                 </li>

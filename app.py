@@ -11,7 +11,7 @@ atlas_pwd = os.getenv("ATLAS_PASSWD")
 mongo = MongoClient(
     f'mongodb+srv://{atlas_user}:{atlas_pwd}@cluster0.rh1w0.mongodb.net/book_worm_database?retryWrites=true&w=majority')
 books_collection = mongo.book_worm_database.SharBooks
-authors_collection = mongo.book_worm_database.Authors
+authors_collection = mongo.book_worm_database.SharAuthorsv2
 publishers_collection = mongo.book_worm_database.SharPub
 
 
@@ -107,6 +107,7 @@ def authors():
 @app.route('/authors/<string:author_id>')
 def author_instance(author_id):
     author = authors_collection.find_one({"_id": ObjectId(author_id)})
+    author['thumbnail'] = author['thumbnail'] if author['thumbnail'] else url_for('static', filename='/avi/avi.png')
     pprint(author)
     return render_template('author-instance.html', author=author)
 

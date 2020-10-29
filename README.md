@@ -61,8 +61,8 @@ Writing, validating, and running test [user story: 7] | 1.5 hrs | 4.0 hrs
 Task | Estimated | Actual
 --- | --- | ---
 Learning about extra features in Goodreads AP & populating authors database | 5 hrs | 16 hrs
-Learning how to use the Selenium bot to extract image urls in a google search for publisher logos | 10 hrs | 12 hrs
-Learning how to use the GoogleBooks API and Goodreads API in conjunction  to extract all features for a particular instance [user stories: 8,9,10]   | 5 hrs | 3hrs
+Learning how to use the Selenium bot to extract image urls in a google search for publisher logos [user story: 10] | 10 hrs | 12 hrs
+Learning how to use the GoogleBooks API and Goodreads API in conjunction  to extract all features for a particular instance [user stories: 8,9]   | 5 hrs | 3hrs
 Learning the advanced and intermediate commands for mongoDB for collection clustering  | 5 hrs | 8 hrs 
 Researching a new API to use for authors and making modifications to the data clusters to meet front-end requirements | 6 hrs | 17 hrs
 

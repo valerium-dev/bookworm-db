@@ -3,28 +3,70 @@
 {% block head %}
 <title>{{ book['title'] }}</title>
 <style>
-    p{
-        font-family:lucinda
+    .card-img-top {
+        width: 100%;
+        height: 30vh;
+        object-fit: scale-down;
     }
-
 </style>
 {% endblock %}
 {% block body %}
     <div class="container-fluid p-4" id="team-info">
         <div class="row">
             <div class="col-sm-4 col-xl-3 py-2">
-                <img src="{{ book['thumbnail_url'] }}" class="img-fluid rounded">
+                <img src="{{ book['thumbnail'] }}" class="img-fluid rounded">
             </div>
             <div class="col-sm-8 py-2">
-                <h1 style="font-family:sans=serif;"><strong>{{ book['title'] }}</strong></h1>
-                <h4 style="font-family:sans=serif;">by {{ book['author'] }}</h4>
-                <p>{{ book['description'] }}</p>
-                <p class ="m-0"><strong>Maturity: </strong>{{ book['maturity'] }} </p>
-                <p class ="m-0"><strong>Language: </strong>{{ book['lang'] }} </p>
-                <p class="m-0"><strong>Page Count: </strong>{{ book['page_count'] }}</p>
-                <p class="m-0"><strong>Publisher: </strong>{{ book['publisher'] }}, {{ book['published_date'] }}</p>
+                <h1><strong>{{ book['title'] }}</strong></h1>
+
+                <h4 class="position-relative">by
+                    {% for author in book['authors'] %}
+                        <a href="/authors/{{ author['id'] }}" class="position-relative stretched-link">{{ author['name'] }}</a>
+                    {%- if not loop.last  -%}
+                                        ,
+                    {% endif %}
+                    {% endfor %}
+                </h4>
+                <h6 class="position-relative">Publisher(s):
+                    {% for publisher in book['publishers'] %}
+                        <a href="/publishers/{{ publisher['id'] }}" class="position-relative stretched-link" >{{ publisher['name'] }}</a>
+                    {% endfor %}
+                </h6>
+
+                <p>{{ book['description']|safe }}</p>
+                <p class ="m-0"><strong>Maturity: </strong>{{ book['contentRating'] }} </p>
+                <p class="m-0"><strong>Page Count: </strong>{{ book['pageCount'] }}</p>
+                <p class="m-0"><strong>Publishing Date: </strong>{{ book['publishingDate'] }}</p>
                 <p class="m-0"><strong>Genre: </strong>{{ book['genre'] }} | <strong>ISBN-13: </strong>{{ book['isbn13'] }}</p>
 
+            </div>
+        </div>
+        <div class="container-fluid p-4">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3>Reviews for {{ book['title'] }}</h3>
+                    <div class="container"  style="background-color:black;opacity:0.25"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
+                </div>
+                <div class="col-sm-6">
+                    <h3>Preview from Google Books</h3>
+                    <div class="container"  style="background-color:black;opacity:0.25"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid p-4">
+            <h3>If you liked {{ book['title'] }}, try one of these books!</h3>
+            <div class="row">
+                {% for n in range(0,4) %}
+                    <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                        <div class="card">
+                            <img class="card-img-top" src="http://books.google.com/books/content?printsec=frontcover&img=1&source=gbs_api" alt="">
+                            <div class="card-body">
+                                <h4 class="card-title">Book Title</h4>
+                                <a href="/books/#" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

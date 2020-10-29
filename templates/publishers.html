@@ -2,50 +2,130 @@
 
 {% block head %}
 <title>All Publishers</title>
+<style>
+    .card-img-top {
+        width: 100%;
+        height: 40vh;
+        object-fit: scale-down;
+    }
+</style>
 {% endblock %}
 {% block body %}
+    <div class="container-fluid p-4">
+        <h1>All Publishers</h1>
+        <h6 id="entriesText">Showing entries {{ pageNumber * perPage + 1 }}-{{ pageNumber * perPage + perPage }}</h6>
+    </div>
     <div class="container-fluid p-4" id="team-info">
+        <nav>
+          <ul class="pagination justify-content-center pagination-sm">
+              {% if pageNumber == 0 %}
+                <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
+              {% else %}
+                <li class="page-item">
+                    <a class="page-link" id="prevPage" href="/publishers?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+                </li>
+              {% endif %}
+
+              {% for p in range(0, 4) if not p > numPages %}
+                <li class="page-item">
+                  <a class="page-link" href="/publishers?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                </li>
+              {% endfor %}
+
+              <li class="page-item">
+                    <a class="page-link" href="">...</a>
+              </li>
+
+              {% if pageNumber > 3 and pageNumber < numPages - 3 %}
+              <li class="page-item">
+                    <a class="page-link" href="/publishers?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber+1 }}</a>
+              </li>
+              <li class="page-item">
+                    <a class="page-link" href="">...</a>
+              </li>
+              {% endif %}
+
+              {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
+                <li class="page-item">
+                  <a class="page-link" href="/publishers?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                </li>
+              {% endfor %}
+
+              {% if pageNumber == numPages %}
+                <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
+              {% else %}
+                <li class="page-item">
+                    <a class="page-link" id="nextPage" href="/publishers?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </li>
+              {% endif %}
+          </ul>
+        </nav>
         <div class="row">
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= '/publisher-logos/Knopf.png') }}" alt="Logo for Alfred A. Knopf">
-                    <div class="card-body">
-                        <h4 class="card-title">Alfred A. Knopf</h4>
-                        <a href="/publishers/alfred-a-knopf" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= '/publisher-logos/penguin.jpg') }}" alt="Logo for Penguin">
-                    <div class="card-body">
-                        <h4 class="card-title">Penguin</h4>
-                        <a href="/publishers/penguin" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename= '/publisher-logos/hmh.jpg') }}" alt="Logo for O'Reilly">
-                    <div class="card-body">
-                        <h4 class="card-title">Houghton Mifflin Harcourt</h4>
-                        <a href="/publishers/houghton-mifflin-harcourt" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div>
-            <!--
             {% for publisher in publishers %}
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2>
-                <div class="card">
-                    <img class="card-img-top" src="{{ publisher.img_url_attribute }}" alt="{{ publisher.alt_text_for_img_attribute }}">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ publisher.name }}</h4>
-                        <a href="/publishers/{{ publisher.id }}" class="stretched-link"></a>
+                <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="{{ publisher['logo'] }}" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ publisher['name'] }}</h4>
+                            <h5 class="card-text">{{ publisher['hq_location'] }}</h5>
+                            <p class="card-text">Established {{ publisher['estYear'] }}</p>
+                            <a href="/publishers/{{ publisher['_id'] }}" class="stretched-link"></a>
+                        </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
-            -->
         </div>
+        <nav>
+          <ul class="pagination justify-content-center pagination-sm">
+              {% if pageNumber == 0 %}
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+              {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="/publishers?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+                </li>
+              {% endif %}
+
+              {% for p in range(0, 4) if not p > numPages %}
+                <li class="page-item">
+                  <a class="page-link" href="/publishers?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                </li>
+              {% endfor %}
+
+              <li class="page-item">
+                    <a class="page-link" href="">...</a>
+              </li>
+
+              {% if pageNumber > 3 and pageNumber < numPages - 3 %}
+              <li class="page-item">
+                    <a class="page-link" href="/publishers?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber+1 }}</a>
+              </li>
+              <li class="page-item">
+                    <a class="page-link" href="">...</a>
+              </li>
+              {% endif %}
+
+              {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
+                <li class="page-item">
+                  <a class="page-link" href="/publishers?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                </li>
+              {% endfor %}
+
+              {% if pageNumber == numPages %}
+                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+              {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="/publishers?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </li>
+              {% endif %}
+          </ul>
+        </nav>
     </div>
 {% endblock %}

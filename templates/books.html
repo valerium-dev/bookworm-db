@@ -13,16 +13,16 @@
 {% block body %}
     <div class="container-fluid p-4">
         <h1>All Books</h1>
-        <h6>Showing entries {{ pageNumber * perPage + 1 }}-{{ pageNumber * perPage + perPage }}</h6>
+        <h6 id="entriesText">Showing entries {{ pageNumber * perPage + 1 }}-{{ pageNumber * perPage + perPage }}</h6>
     </div>
     <div class="container-fluid p-4" id="team-info">
         <nav>
           <ul class="pagination justify-content-center pagination-sm">
               {% if pageNumber == 0 %}
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+                <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
               {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
+                    <a class="page-link" id="prevPage" href="/books?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
                         <i class="fas fa-angle-left"></i>
                     </a>
                 </li>
@@ -30,7 +30,7 @@
 
               {% for p in range(0, 4) if not p > numPages %}
                 <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
                 </li>
               {% endfor %}
 
@@ -40,7 +40,7 @@
 
               {% if pageNumber > 3 and pageNumber < numPages - 3 %}
               <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber+1 }}</a>
+                    <a class="page-link" href="/books?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber + 1 }}</a>
               </li>
               <li class="page-item">
                     <a class="page-link" href="">...</a>
@@ -48,16 +48,22 @@
               {% endif %}
 
               {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
+                  {% if not loop.last %}
                 <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
                 </li>
+                      {% else %}
+                      <li class="page-item">
+                  <a class="page-link" id="lastPageBtn" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
+                </li>
+                  {% endif %}
               {% endfor %}
 
               {% if pageNumber == numPages %}
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+                <li class="page-item disabled" id="nextPage"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
               {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
+                    <a class="page-link" id="nextPage" href="/books?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
                         <i class="fas fa-angle-right"></i>
                     </a>
                 </li>
@@ -106,7 +112,7 @@
 
               {% for p in range(0, 4) if not p > numPages %}
                 <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
                 </li>
               {% endfor %}
 
@@ -116,7 +122,7 @@
 
               {% if pageNumber > 3 and pageNumber < numPages - 3 %}
               <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber+1 }}</a>
+                    <a class="page-link" href="/books?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber + 1 }}</a>
               </li>
               <li class="page-item">
                     <a class="page-link" href="">...</a>
@@ -125,7 +131,7 @@
 
               {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
                 <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
+                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
                 </li>
               {% endfor %}
 

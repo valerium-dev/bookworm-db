@@ -60,7 +60,7 @@
               {% endfor %}
 
               {% if pageNumber == numPages %}
-                <li class="page-item disabled" id="nextPage"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+                <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
               {% else %}
                 <li class="page-item">
                     <a class="page-link" id="nextPage" href="/books?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">

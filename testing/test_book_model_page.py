@@ -2,26 +2,26 @@ import unittest
 import os
 
 from selenium import webdriver
+from selenium.common.exceptions import ElementClickInterceptedException
 from pymongo import MongoClient
 
 
 class BookModelPage(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(cls):
+    def setUp(self):
         # Setup selenium driver
-        cls.driver = webdriver.Firefox(executable_path=os.getenv("GECKO_PATH"))
-        cls.base_url = 'http://127.0.0.1:5000/books'
+        self.driver = webdriver.Firefox(executable_path=os.getenv("GECKO_PATH"))
+        self.base_url = 'http://127.0.0.1:5000/books'
 
         # Connect to database
         # Testing the GUI requires knowing the number of documents in our database
         atlas_user = os.getenv("ATLAS_USER")
         atlas_pwd = os.getenv("ATLAS_PASSWD")
-        cls.mongo = MongoClient(
+        self.mongo = MongoClient(
     f'mongodb+srv://{atlas_user}:{atlas_pwd}@cluster0.rh1w0.mongodb.net/book_worm_database?retryWrites=true&w=majority')
-        cls.books_collection = cls.mongo.book_worm_database.SharBooks
-        cls.books_per_page = 10
-        cls.num_pages = cls.books_collection.estimated_document_count() // cls.books_per_page
+        self.books_collection = self.mongo.book_worm_database.SharBooks
+        self.books_per_page = 10
+        self.num_pages = self.books_collection.estimated_document_count() // self.books_per_page
 
     def tearDown(self):
         self.driver.close()
@@ -43,22 +43,41 @@ class BookModelPage(unittest.TestCase):
     def test_next_page(self):
         # From the first page
         self.driver.get(f'{self.base_url}?pageNumber=0&perPage={self.books_per_page}')
+        next_btn = self.driver.find_element_by_id('nextPage')
+        next_btn.click()
+        self.assertEqual(f'{self.base_url}?pageNumber=1&perPage={self.books_per_page}', self.driver.current_url)
 
         # From an arbitrary page
         self.driver.get(f'{self.base_url}?pageNumber=6&perPage={self.books_per_page}')
+        next_btn = self.driver.find_element_by_id('nextPage')
+        next_btn.click()
+        self.assertEqual(f'{self.base_url}?pageNumber=7&perPage={self.books_per_page}', self.driver.current_url)
 
         # From the last page
         self.driver.get(f'{self.base_url}?pageNumber={self.num_pages}&perPage={self.books_per_page}')
+        next_btn = self.driver.find_element_by_id('nextPage')
+        with self.assertRaises(ElementClickInterceptedException):
+            next_btn.click()
 
     def test_prev_page(self):
         # From the first page
         self.driver.get(f'{self.base_url}?pageNumber=0&perPage={self.books_per_page}')
+        prev_btn = self.driver.find_element_by_id('prevPage')
+        with self.assertRaises(ElementClickInterceptedException):
+            prev_btn.click()
 
         # From an arbitrary page
         self.driver.get(f'{self.base_url}?pageNumber=6&perPage={self.books_per_page}')
+        prev_btn = self.driver.find_element_by_id('prevPage')
+        prev_btn.click()
+        self.assertEqual(f'{self.base_url}?pageNumber=5&perPage={self.books_per_page}', self.driver.current_url)
 
         # From the last page
         self.driver.get(f'{self.base_url}?pageNumber={self.num_pages}&perPage={self.books_per_page}')
+        prev_btn = self.driver.find_element_by_id('prevPage')
+        prev_btn.click()
+        self.assertEqual(f'{self.base_url}?pageNumber={self.num_pages - 1}&perPage={self.books_per_page}',
+                         self.driver.current_url)
 
 
 if __name__ == '__main__':

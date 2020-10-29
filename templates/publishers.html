@@ -13,16 +13,16 @@
 {% block body %}
     <div class="container-fluid p-4">
         <h1>All Publishers</h1>
-        <h6>Showing entries {{ pageNumber * perPage + 1 }}-{{ pageNumber * perPage + perPage }}</h6>
+        <h6 id="entriesText">Showing entries {{ pageNumber * perPage + 1 }}-{{ pageNumber * perPage + perPage }}</h6>
     </div>
     <div class="container-fluid p-4" id="team-info">
         <nav>
           <ul class="pagination justify-content-center pagination-sm">
               {% if pageNumber == 0 %}
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+                <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
               {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="/publishers?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
+                    <a class="page-link" id="prevPage" href="/publishers?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
                         <i class="fas fa-angle-left"></i>
                     </a>
                 </li>
@@ -54,10 +54,10 @@
               {% endfor %}
 
               {% if pageNumber == numPages %}
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+                <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
               {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="/publishers?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
+                    <a class="page-link" id="nextPage" href="/publishers?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
                         <i class="fas fa-angle-right"></i>
                     </a>
                 </li>

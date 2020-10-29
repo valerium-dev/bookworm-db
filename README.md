@@ -50,21 +50,12 @@ Setting up a Google Cloud Platform for website hosting | 2.5 hrs | 2 hrs
 ## Phase II - Time Measurements
 *Front-end: Jaelyn & Carlos*
 
-Task | Estimated | Actual
---- | --- | ---
-Splash Page | 1 hr | 2.5 hrs
-About Page | 1 hr | 3 hrs
-Books Page | 50 min | 48 min
-Authors Page | 50 min | 10 min
-Publishers Page | 50 min | 10 min
-Instance Pages | 4.5 hrs | 6.5 hrs
-
 *Back-end: Mrugank & Santhosh*
 
 Task | Estimated | Actual
 --- | --- | ---
 Learning about extra features in Goodreads AP & populating authors database | 5 hrs | 16 hrs
-Learning about how to use the Selenium bot to extract image urls in a google search for publisher logos | 10 hrs | 12 hrs
+Learning how to use the Selenium bot to extract image urls in a google search for publisher logos | 10 hrs | 12 hrs
 Learning how to use the GoogleBooks API and Goodreads API in conjunction  to extract all features for a particular book   | 5 hrs | 3hrs
 Learning the advanced and intermediate commands for mongoDB for collection clustering  | 5 hrs | 8 hrs 
 Researching a new API to use for authors and making modifications to the data clusters to meet front-end requirements | 6 hrs | 17 hrs

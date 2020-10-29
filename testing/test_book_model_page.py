@@ -37,7 +37,7 @@ class BookModelPage(unittest.TestCase):
         self.driver.get(f'{self.base_url}?pageNumber={self.num_pages}&perPage={self.books_per_page}')
         entries_elem = self.driver.find_element_by_id('entriesText')
         output = entries_elem.text
-        self.assertEqual(f'Showing entries {self.num_pages * self.books_per_page}-{self.books_collection.estimated_document_count()}',
+        self.assertEqual(f'Showing entries {self.num_pages * self.books_per_page + 1}-{self.books_collection.estimated_document_count()}',
                          output, "Last page entries test failed")
 
     def test_next_page(self):

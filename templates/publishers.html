@@ -15,7 +15,30 @@
         <h1>All Publishers</h1>
         <h6 id="entriesText">Showing entries {{ pageNumber * perPage + 1 }}-{{ pageNumber * perPage + perPage }}</h6>
     </div>
-    <div class="container-fluid p-4" id="team-info">
+    <div class="container-fluid d-flex pl-4 pr-4">
+        <div class="dropdown mr-auto">
+            Show
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">10
+            <span class="caret"></span></button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item active" href="#">10</a>
+                <a class="dropdown-item" href="#">25</a>
+                <a class="dropdown-item" href="#">50</a>
+            </div>
+            items per page
+        </div>
+        <div class="dropdown ml-auto">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Sort by: Default
+            <span class="caret"></span></button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item active" href="/publishers">Default</a>
+                <a class="dropdown-item" href="#">Name</a>
+                <a class="dropdown-item" href="#">Location</a>
+                <a class="dropdown-item" href="#">Established Year</a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid p-4">
         <nav>
           <ul class="pagination justify-content-center pagination-sm">
               {% if pageNumber == 0 %}

@@ -15,61 +15,85 @@
         <h1>All Books</h1>
         <h6 id="entriesText">Showing entries {{ pageNumber * perPage + 1 }}-{{ pageNumber * perPage + perPage }}</h6>
     </div>
-    <div class="container-fluid p-4" id="team-info">
-        <nav>
-          <ul class="pagination justify-content-center pagination-sm">
-              {% if pageNumber == 0 %}
-                <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
-              {% else %}
-                <li class="page-item">
-                    <a class="page-link" id="prevPage" href="/books?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-angle-left"></i>
-                    </a>
-                </li>
-              {% endif %}
+    <div class="container-fluid d-flex pl-4 pr-4">
+        <div class="dropdown mr-auto">
+            Show
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">10
+            <span class="caret"></span></button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item active" href="#">10</a>
+                <a class="dropdown-item" href="#">25</a>
+                <a class="dropdown-item" href="#">50</a>
+            </div>
+            items per page
+        </div>
+        <div class="dropdown ml-auto">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Sort by: Default
+            <span class="caret"></span></button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item active" href="#">Default</a>
+                <a class="dropdown-item" href="#">Title</a>
+                <a class="dropdown-item" href="#">Author</a>
+                <a class="dropdown-item" href="#">Genre</a>
+                <a class="dropdown-item" href="#">Rating</a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid p-4">
+        <div class="row">
+            <ul class="pagination pagination-sm mx-auto">
+                {% if pageNumber == 0 %}
+                    <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" id="prevPage" href="/books?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
+                            <i class="fas fa-angle-left"></i>
+                        </a>
+                    </li>
+                {% endif %}
 
-              {% for p in range(0, 4) if not p > numPages %}
-                <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
-                </li>
-              {% endfor %}
+                {% for p in range(0, 4) if not p > numPages %}
+                    <li class="page-item">
+                        <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
+                    </li>
+                {% endfor %}
 
-              <li class="page-item">
+                <li class="page-item">
                     <a class="page-link" href="">...</a>
-              </li>
-
-              {% if pageNumber > 3 and pageNumber < numPages - 3 %}
-              <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber + 1 }}</a>
-              </li>
-              <li class="page-item">
-                    <a class="page-link" href="">...</a>
-              </li>
-              {% endif %}
-
-              {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
-                  {% if not loop.last %}
-                <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
                 </li>
-                      {% else %}
-                      <li class="page-item">
-                  <a class="page-link" id="lastPageBtn" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
-                </li>
-                  {% endif %}
-              {% endfor %}
 
-              {% if pageNumber == numPages %}
-                <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
-              {% else %}
-                <li class="page-item">
-                    <a class="page-link" id="nextPage" href="/books?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-angle-right"></i>
-                    </a>
-                </li>
-              {% endif %}
-          </ul>
-        </nav>
+                {% if pageNumber > 3 and pageNumber < numPages - 3 %}
+                    <li class="page-item">
+                        <a class="page-link" href="/books?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber + 1 }}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="">...</a>
+                    </li>
+                {% endif %}
+
+                {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
+                    {% if not loop.last %}
+                        <li class="page-item">
+                            <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" id="lastPageBtn" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if pageNumber == numPages %}
+                    <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" id="nextPage" href="/books?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
         <div class="row">
             {% for book in books %}
                 <div class="col-md-6 col-lg-4 col-xl-3 py-2">
@@ -98,7 +122,7 @@
                 </div>
             {% endfor %}
         </div>
-        <nav>
+        <div class="row justify-content-center">
           <ul class="pagination justify-content-center pagination-sm">
               {% if pageNumber == 0 %}
                 <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
@@ -145,6 +169,6 @@
                 </li>
               {% endif %}
           </ul>
-        </nav>
+        </div>
     </div>
 {% endblock %}

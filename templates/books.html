@@ -18,12 +18,24 @@
     <div class="container-fluid d-flex pl-4 pr-4">
         <div class="dropdown mr-auto">
             Show
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">10
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">{{ perPage }}
             <span class="caret"></span></button>
             <div class="dropdown-menu">
-                <a class="dropdown-item active" href="#">10</a>
-                <a class="dropdown-item" href="#">25</a>
-                <a class="dropdown-item" href="#">50</a>
+                {% if perPage == 10 %}
+                    <a class="dropdown-item active" href="/books?pageNumber={{ pageNumber }}&perPage=10">10</a>
+                {% else %}
+                    <a class="dropdown-item" href="/books?pageNumber={{ pageNumber }}&perPage=10">10</a>
+                {% endif %}
+                {% if perPage == 25 %}
+                    <a class="dropdown-item active" href="/books?pageNumber={{ pageNumber }}&perPage=25">25</a>
+                {% else %}
+                    <a class="dropdown-item" href="/books?pageNumber={{ pageNumber }}&perPage=25">25</a>
+                {% endif %}
+                {% if perPage == 50 %}
+                    <a class="dropdown-item active" href="/books?pageNumber={{ pageNumber }}&perPage=50">50</a>
+                {% else %}
+                    <a class="dropdown-item" href="/books?pageNumber={{ pageNumber }}&perPage=50">50</a>
+                {% endif %}
             </div>
             items per page
         </div>

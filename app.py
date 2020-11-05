@@ -66,8 +66,6 @@ def book_instance(book_id):
     return render_template('book-instance.html', book=book)
 
 
-# TODO: Phase I - Fetch author data from APIs
-#       Phase II - Fetch author data from DB
 @app.route('/authors', methods=['GET'])
 def authors():
     page_number = request.args.get('pageNumber')
@@ -103,7 +101,6 @@ def authors():
                                numPages=num_pages)
 
 
-# TODO: Change route to use author id instead of author name in P.II
 @app.route('/authors/<string:author_id>')
 def author_instance(author_id):
     author = authors_collection.find_one({"_id": ObjectId(author_id)})
@@ -112,8 +109,7 @@ def author_instance(author_id):
     return render_template('author-instance.html', author=author)
 
 
-# TODO: Phase I - Fetch pub data from APIs
-#       Phase II - Fetch pub data from DB
+
 @app.route('/publishers', methods=['GET'])
 def publishers():
     page_number = request.args.get('pageNumber')
@@ -144,11 +140,10 @@ def publishers():
             temp['hq_location'] = publisher['hqLocation']
             temp['estYear'] = publisher['estYear']
             publisher_list.append(temp)
-        return render_template('publishers.html', publishers=publisher_list, pageNumber=page_number, perPage=10,
+        return render_template('publishers.html', publishers=publisher_list, pageNumber=page_number, perPage=per_page,
                                numPages=num_pages)
 
 
-# TODO: Change route to use publisher id instead of publisher name in P.II
 @app.route('/publishers/<string:pub_id>')
 def publisher_instance(pub_id):
     publisher = publishers_collection.find_one({"_id": ObjectId(pub_id)})

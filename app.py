@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
 from pymongo import MongoClient
 import os
 from bson.objectid import ObjectId
@@ -10,9 +10,9 @@ atlas_user = os.getenv("ATLAS_USER")
 atlas_pwd = os.getenv("ATLAS_PASSWD")
 mongo = MongoClient(
     f'mongodb+srv://{atlas_user}:{atlas_pwd}@cluster0.rh1w0.mongodb.net/book_worm_database?retryWrites=true&w=majority')
-books_collection = mongo.book_worm_database.SharBooks
-authors_collection = mongo.book_worm_database.SharAuthorsv2
-publishers_collection = mongo.book_worm_database.SharPub
+books_collection = mongo.book_worm_database.Golden_Books
+authors_collection = mongo.book_worm_database.Golden_Authors
+publishers_collection = mongo.book_worm_database.Golden_Publishers
 
 
 @app.route('/')
@@ -41,7 +41,8 @@ def books():
             temp['rating'] = book['rating']
             temp['thumbnail_url'] = book['thumbnail']
             book_list.append(temp)
-        return render_template('books.html', books=book_list, pageNumber=0, perPage=10, numPages=num_pages)
+        return render_template('books.html', books=book_list, pageNumber=0, perPage=10, numPages=num_pages,
+                               sortType=None)
     else:
         page_number = int(page_number)
         per_page = int(per_page)
@@ -53,10 +54,51 @@ def books():
             temp['title'] = book['title']
             temp['authors'] = book['authors']
             temp['genre'] = book['genre']
+            temp['rating'] = book['rating']
             temp['thumbnail_url'] = book['thumbnail']
             book_list.append(temp)
         return render_template('books.html', books=book_list, pageNumber=page_number, perPage=per_page,
-                               numPages=num_pages)
+                               numPages=num_pages, sortType=None)
+
+
+@app.route('/books', methods=['POST'])
+def books_form_submit():
+    form_values = request.form
+    per_page = int(form_values['perPage'])
+
+    try:
+        page_number = int(form_values['pageNumber'])
+    except KeyError:
+        page_number = 0
+
+    num_pages = books_collection.estimated_document_count() // per_page
+    sort_type = form_values['sort-type'] if form_values['sort-type'] != 'Default' else None
+
+    book_list = []
+    if sort_type is not None:
+        for book in books_collection.find().sort(sort_type).skip(page_number * per_page).limit(per_page):
+            temp = dict()
+            temp['_id'] = book['_id']
+            temp['title'] = book['title']
+            temp['authors'] = book['authors']
+            temp['genre'] = book['genre']
+            temp['rating'] = book['rating']
+            temp['thumbnail_url'] = book['thumbnail']
+            book_list.append(temp)
+        return render_template('books.html', books=book_list, pageNumber=page_number, perPage=per_page,
+                               numPages=num_pages, sortType=sort_type)
+    else:
+        for book in books_collection.find().skip(page_number * per_page).limit(per_page):
+            temp = dict()
+            temp['_id'] = book['_id']
+            temp['title'] = book['title']
+            temp['authors'] = book['authors']
+            temp['genre'] = book['genre']
+            temp['rating'] = book['rating']
+            temp['thumbnail_url'] = book['thumbnail']
+            book_list.append(temp)
+        return render_template('books.html', books=book_list, pageNumber=page_number, perPage=per_page,
+                               numPages=num_pages, sortType=sort_type)
 
 
 @app.route('/books/<string:book_id>')
@@ -107,7 +149,6 @@ def author_instance(author_id):
     author['thumbnail'] = author['thumbnail'] if author['thumbnail'] else url_for('static', filename='/avi/avi.png')
     pprint(author)
     return render_template('author-instance.html', author=author)
-
 
 
 @app.route('/publishers', methods=['GET'])

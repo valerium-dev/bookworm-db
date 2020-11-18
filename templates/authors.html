@@ -39,15 +39,20 @@
             </div>
             items per page
         </div>
-        <div class="dropdown ml-auto">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Sort by: Default
-            <span class="caret"></span></button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item active" href="/authors">Default</a>
-                <a class="dropdown-item" hrefgit ="#">Name</a>
-                <a class="dropdown-item" href="#">Age</a>
-                <a class="dropdown-item" href="#">Hometown</a>
-            </div>
+        <div class="form-group form-inline">
+            <label for="sort-types">Sort by</label>
+            <form action="/authors" method="post">
+                <select class="form-control ml-1" id="sort-types" onchange="this.form.submit()">
+                    <option value="">Default</option>
+                    <option value="name">Name</option>
+                    <option value="hometown">Hometown</option>
+                </select>
+                {% if descending %} <!-- Z to A, high to low -->
+                    <button type="button" class="btn" value="asc" onclick="this.form.submit()"><span class="fas fa-arrow-down"></span></button>
+                {% else %} <!-- A to Z, low to high -->
+                    <button type="button" class="btn" value="desc" onclick="this.form.submit()"><span class="fas fa-arrow-up"></span></button>
+                {% endif %}
+            </form>
         </div>
     </div>
     <div class="container-fluid p-4">
@@ -102,7 +107,7 @@
         <div class="row">
             {% for author in authors %}
                 <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                    <div class="card h-100">
+                    <div class="card h-100 test-author-item">
                         <img class="card-img-top" src="{{ author['thumbnail_url'] }}" alt="">
                         <div class="card-body">
                             <h4 class="card-title">{{ author['name'] }}</h4>

@@ -221,6 +221,44 @@ def publishers():
                                numPages=num_pages)
 
 
+@app.route('/publishers', methods=['POST'])
+def publishers_form_submit():
+    form_values = request.form
+    per_page = int(form_values['perPage'])
+
+    try:
+        page_number = int(form_values['pageNumber'])
+    except KeyError:
+        page_number = 0
+
+    num_pages = publishers_collection.estimated_document_count() // per_page
+    sort_type = form_values['sort-type'] if form_values['sort-type'] != 'Default' else None
+
+    publisher_list = []
+    if sort_type is not None:
+        for publisher in publishers_collection.find().sort(sort_type).skip(page_number * per_page).limit(per_page):
+            temp = dict()
+            temp['_id'] = publisher['_id']
+            temp['name'] = publisher['name']
+            temp['logo'] = publisher['logo']
+            temp['hq_location'] = publisher['hqLocation']
+            temp['estYear'] = publisher['estYear']
+            publisher_list.append(temp)
+        return render_template('publishers.html', publishers=publisher_list, pageNumber=page_number, perPage=per_page,
+                               numPages=num_pages, sortType=sort_type)
+    else:
+        for publisher in publishers_collection.find().skip(page_number * per_page).limit(per_page):
+            temp = dict()
+            temp['_id'] = publisher['_id']
+            temp['name'] = publisher['name']
+            temp['logo'] = publisher['logo']
+            temp['hq_location'] = publisher['hqLocation']
+            temp['estYear'] = publisher['estYear']
+            publisher_list.append(temp)
+        return render_template('publishers.html', publishers=publisher_list, pageNumber=page_number, perPage=per_page,
+                               numPages=num_pages, sortType=sort_type)
+
+
 @app.route('/publishers/<string:pub_id>')
 def publisher_instance(pub_id):
     publisher = publishers_collection.find_one({"_id": ObjectId(pub_id)})

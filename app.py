@@ -119,7 +119,6 @@ def authors():
             temp = dict()
             temp['_id'] = author['_id']
             temp['name'] = author['name']
-            temp['age'] = author['age'] if author['age'] else "___"
             temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
             temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static', filename='/avi'
                                                                                                                '/avi.png')
@@ -134,13 +133,50 @@ def authors():
             temp = dict()
             temp['_id'] = author['_id']
             temp['name'] = author['name']
-            temp['age'] = author['age'] if author['age'] else "___"
             temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
             temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',
                                                                                             filename='/avi/avi.png')
             author_list.append(temp)
         return render_template('authors.html', authors=author_list, pageNumber=page_number, perPage=per_page,
                                numPages=num_pages)
+
+
+@app.route('/authors', methods=['POST'])
+def authors_form_submit():
+    form_values = request.form
+    per_page = int(form_values['perPage'])
+
+    try:
+        page_number = int(form_values['pageNumber'])
+    except KeyError:
+        page_number = 0
+
+    num_pages = authors_collection.estimated_document_count() // per_page
+    sort_type = form_values['sort-type'] if form_values['sort-type'] != 'Default' else None
+
+    author_list = []
+    if sort_type is not None:
+        for author in authors_collection.find().sort(sort_type).skip(page_number * per_page).limit(per_page):
+            temp = dict()
+            temp['_id'] = author['_id']
+            temp['name'] = author['name']
+            temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
+            temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',
+                                                                                            filename='/avi/avi.png')
+            author_list.append(temp)
+        return render_template('authors.html', authors=author_list, pageNumber=page_number, perPage=per_page,
+                               numPages=num_pages, sortType=sort_type)
+    else:
+        for author in authors_collection.find().skip(page_number * per_page).limit(per_page):
+            temp = dict()
+            temp['_id'] = author['_id']
+            temp['name'] = author['name']
+            temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
+            temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',
+                                                                                            filename='/avi/avi.png')
+            author_list.append(temp)
+        return render_template('authors.html', authors=author_list, pageNumber=page_number, perPage=per_page,
+                               numPages=num_pages, sortType=sort_type)
 
 
 @app.route('/authors/<string:author_id>')

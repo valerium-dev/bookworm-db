@@ -123,6 +123,75 @@
             </ul>
         </div>
         <div class="row">
+                <div class="col">
+                <form action ="/filterPub" method ="post">
+                <div class="card">
+                     <article class="filter-group">
+                     <header class="card-header"> <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" class="collapsed" aria-expanded="false"> <i class="icon-control fa fa-chevron-down"></i>
+                             <h6 class="title">U.S Publishers </h6>
+                         </a> </header>
+                     <div class="filter-content collapse" id="collapse_aside4" style="">
+                         <div class="card-body">
+                             <label class="custom-control">
+                                 <input type="checkbox" name=California class="custom-control-input">
+                                 <div class="custom-control-label">California </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=Illinois class="custom-control-input">
+                                 <div class="custom-control-label">Illinois</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=Pennsylvania class="custom-control-input">
+                                 <div class="custom-control-label">Pennsylvania</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=Newyork class="custom-control-input">
+                                 <div class="custom-control-label">New York</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=Boston class="custom-control-input">
+                                 <div class="custom-control-label">Massachusetts</div>
+                             </label> </div>
+                     </div>
+                 </article>
+                 <article class="filter-group">
+                     <header class="card-header"> <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" class="collapsed" aria-expanded="false"> <i class="icon-control fa fa-chevron-down"></i>
+                             <h6 class="title">International Publishers </h6>
+                         </a> </header>
+                     <div class="filter-content collapse" id="collapse_aside4" style="">
+                         <div class="card-body">
+                             <label class="custom-control">
+                                 <input type="checkbox" name="London" class="custom-control-input">
+                                 <div class="custom-control-label">London </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Madrid" class="custom-control-input">
+                                 <div class="custom-control-label">Madrid</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=Paris class="custom-control-input">
+                                 <div class="custom-control-label">Paris </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=Toronto class="custom-control-input">
+                                 <div class="custom-control-label">Toronto </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=Oxford class="custom-control-input">
+                                 <div class="custom-control-label">Oxford </div>
+                             </label>
+                         </div>
+                     </div>
+                 </article>
+             </div>
+
+                    <input class="btn btn-primary"  type="submit" value="Submit">
+                </form>
+
+            </div>
+
+            <div class="container">
+            <div class="row">
             {% for publisher in publishers %}
                 <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                     <div class="card h-100 test-publisher-item">
@@ -136,6 +205,7 @@
                     </div>
                 </div>
             {% endfor %}
+
         </div>
         <div class="row">
             <ul class="pagination pagination-sm mx-auto">
@@ -199,5 +269,6 @@
                 {% endif %}
             </ul>
         </div>
+
     </div>
 {% endblock %}

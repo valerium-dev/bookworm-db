@@ -123,19 +123,85 @@
             </ul>
         </div>
         <div class="row">
+             <div class="col">
+                <form action ="/filterAuthor" method="post">
+                <div class="card">
+                     <article class="filter-group">
+                     <header class="card-header"> <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" class="collapsed" aria-expanded="false"> <i class="icon-control fa fa-chevron-down"></i>
+                             <h6 class="title">Author's in Genre </h6>
+                         </a> </header>
+                     <div class="filter-content collapse" id="collapse_aside4" style="">
+                         <div class="card-body">
+                             <label class="custom-control">
+                                 <input type="checkbox" name="History" class="custom-control-input">
+                                 <div class="custom-control-label">History </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Religion" class="custom-control-input">
+                                 <div class="custom-control-label">Religion </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Fiction" class="custom-control-input">
+                                 <div class="custom-control-label">Fiction</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Nonfiction" class="custom-control-input">
+                                 <div class="custom-control-label">Nonfiction</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Philosophy" class="custom-control-input">
+                                 <div class="custom-control-label">Philosophy</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Humor" class="custom-control-input">
+                                 <div class="custom-control-label">Humor</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Poetry" class="custom-control-input">
+                                 <div class="custom-control-label">Poetry</div>
+                             </label>
+                         </div>
+                     </div>
+                 </article>
+                 <article class="filter-group">
+                     <header class="card-header"> <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" class="collapsed" aria-expanded="false"> <i class="icon-control fa fa-chevron-down"></i>
+                             <h6 class="title">Author</h6>
+                         </a> </header>
+                     <div class="filter-content collapse" id="collapse_aside4" style="">
+                         <div class="card-body">
+                             <label class="custom-control">
+                                 <input type="checkbox" name="alive" class="custom-control-input">
+                                 <div class="custom-control-label">Alive </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="dead" class="custom-control-input">
+                                 <div class="custom-control-label">Deceased</div>
+                             </label>
+                         </div>
+                     </div>
+                 </article>
+             </div>
+
+                    <input class="btn btn-primary"  type="submit" value="Submit">
+              </form>
+            </div>
+
+        <div class="container">
+            <div class="row">
             {% for author in authors %}
                 <div class="col-md-6 col-lg-4 col-xl-3 py-2">
                     <div class="card h-100 test-author-item">
                         <img class="card-img-top" src="{{ author['thumbnail_url'] }}" alt="">
                         <div class="card-body">
                             <h4 class="card-title">{{ author['name'] }}</h4>
-                            <h5 class="card-text">Age: {{ author['age'] }}</h5>
                             <p class="card-text">{{ author['hometown'] }}</p>
+                            <p class="card-text">Genres: {{ author['genres'] }} </p>
                             <a href="/authors/{{ author['_id'] }}" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
+            </div>
         </div>
         <div class="row">
             <ul class="pagination pagination-sm mx-auto">

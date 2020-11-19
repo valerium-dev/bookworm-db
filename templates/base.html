@@ -40,11 +40,12 @@
                     <a class="nav-link" href="/about">About BDB</a>
                 </li>
             </ul>
-            <form action="/search" class="form-inline ml-auto pt-2 pb-2">
+            <form action="/search" method='post' class="form-inline ml-auto pt-2 pb-2" id="navbar-search-form">
+                <input type="hidden" name="origin" value="navbar">
                 <div class="input-group md-form form-sm form-2 pl-0">
-                    <input class="form-control my-0 py-1" type="text" placeholder="Search" id="search-text">
+                    <input class="form-control my-0 py-1" type="text" placeholder="Search" id="search-text" name="search-text">
                     <div class="input-group-append">
-                        <button type="submit" class="input-group-text">Search</button>
+                        <button type="submit" class="input-group-text"><span class="fas fa-search"></span></button>
                     </div>
                 </div>
             </form>

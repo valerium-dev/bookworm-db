@@ -1,10 +1,243 @@
 {% extends 'base.html' %}
 {% block head %}
-<title>Search Results</title>
+    <title>Search Results</title>
+    <style>
+        .card-img-top {
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-<div class="container my-5 mx-auto text-center">
-    <h1>The search feature is still under construction.</h1>
-</div>
+    <form action="/search" method="post" id="page-controls">
+        <input type="hidden" name="origin" value="search-page">
+        <input id="search-type" type="hidden" name="search-type" value="{{ searchType }}">
+        <input id="pageNumber" type="hidden" name="pageNumber" value="{{ pageNumber }}">
+    </form>
+
+    <div class="container-fluid pt-4 pl-4 pr-4">
+        <h1>Search Results</h1>
+        <div class="form-group">
+            <div class="input-group">
+                <input class="form-control" type="text" form="page-controls" placeholder="Search" id="search-text" name="search-text" value="{{ searchQuery }}">
+                <div class="input-group-append">
+                    <button type="submit" form="page-controls" class="input-group-text" onclick="resetSearchParams();"><span class="fas fa-search"></span></button>
+                </div>
+            </div>
+            <div class="input-group mt-2">
+                {% if searchType == 'books' %}
+                    <button type="submit" form="page-controls" class="btn btn-secondary mr-2" onclick="updateSearchType('books'); this.form.submit();">Books</button>
+                {% else %}
+                    <button type="submit" form="page-controls" class="btn btn-outline-secondary mr-2" onclick="updateSearchType('books'); this.form.submit();">Books</button>
+                {% endif %}
+                {% if searchType == 'authors' %}
+                    <button type="submit" form="page-controls" class="btn btn-secondary ml-2 mr-2" onclick="updateSearchType('authors'); this.form.submit();">Authors</button>
+                {% else %}
+                    <button type="submit" form="page-controls" class="btn btn-outline-secondary ml-2 mr-2" onclick="updateSearchType('authors'); this.form.submit();">Authors</button>
+                {% endif %}
+                {% if searchType == 'publishers' %}
+                    <button type="submit" form="page-controls" class="btn btn-secondary ml-2" onclick="updateSearchType('publishers'); this.form.submit();">Publishers</button>
+                {% else %}
+                    <button type="submit" form="page-controls" class="btn btn-outline-secondary ml-2" onclick="updateSearchType('publishers'); this.form.submit();">Publishers</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="container-fluid d-flex pl-4 pr-4">
+        <div class="form-group form-inline mr-auto">
+            Show
+            <select class="form-control mr-1 ml-1" id="perPage" name="perPage" form="page-controls" onchange="this.form.submit()">
+                {% if perPage == 12 %}
+                    <option selected="selected" value="12">12</option>
+                {% else %}
+                    <option value="12">12</option>
+                {% endif %}
+                {% if perPage == 24 %}
+                    <option selected="selected" value="24">24</option>
+                {% else %}
+                    <option value="24">24</option>
+                {% endif %}
+                {% if perPage == 48 %}
+                    <option selected="selected" value="48">48</option>
+                {% else %}
+                    <option value="48">48</option>
+                {% endif %}
+            </select>
+            items per page
+        </div>
+        <div class="form-group form-inline">
+            <label for="sort-types">Sort by</label>
+            <select class="form-control ml-1" id="sort-types" name="sort-type" form="page-controls" onchange="this.form.submit()">
+                {% if searchType == 'books' %}
+                    {% if sortType == None %}
+                        <option selected="selected">Default</option>
+                    {% else %}
+                        <option>Default</option>
+                    {% endif %}
+                    {% if sortType == 'title' %}
+                        <option selected="selected" value="title">Title</option>
+                    {% else %}
+                        <option value="title">Title</option>
+                    {% endif %}
+                    {% if sortType == 'genre' %}
+                        <option selected="selected" value="genre">Genre</option>
+                    {% else %}
+                        <option value="genre">Genre</option>
+                    {% endif %}
+                    {% if sortType == 'rating' %}
+                        <option selected="selected" value="rating">Rating</option>
+                    {% else %}
+                        <option value="rating">Rating</option>
+                    {% endif %}
+                {% elif searchType == 'authors' %}
+                    {% if sortType == None %}
+                        <option selected="selected">Default</option>
+                    {% else %}
+                        <option>Default</option>
+                    {% endif %}
+                    {% if sortType == 'name' %}
+                        <option selected="selected" value="name">Name</option>
+                    {% else %}
+                        <option value="name">Name</option>
+                    {% endif %}
+                    {% if sortType == 'hometown' %}
+                        <option selected="selected" value="hometown">Hometown</option>
+                    {% else %}
+                        <option value="hometown">Hometown</option>
+                    {% endif %}
+                {% elif searchType == 'publishers' %}
+                    {% if sortType == None %}
+                        <option selected="selected">Default</option>
+                    {% else %}
+                        <option>Default</option>
+                    {% endif %}
+                    {% if sortType == 'name' %}
+                        <option selected="selected" value="name">Name</option>
+                    {% else %}
+                        <option value="name">Name</option>
+                    {% endif %}
+                    {% if sortType == 'hqLocation' %}
+                        <option selected="selected" value="hqLocation">Headquarters</option>
+                    {% else %}
+                        <option value="hqLocation">Headquarters</option>
+                    {% endif %}
+                {% endif %}
+            </select>
+        </div>
+    </div>
+
+    <div class="container-fluid p-4">
+        <div class="row">
+            <div class="container">
+                {% if searchType == 'books' %}
+                    <div class="row">
+                        {% for book in searchResults %}
+                            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                                <div class="card h-100 test-book-item">
+                                    <img class="card-img-top" src="{{ book['thumbnail_url'] }}" alt="">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ book['title'] }}</h4>
+                                        <h5 class="card-text">
+                                            {% for author in book['authors'] %}
+                                                {{ author['name'] }}
+                                                {%- if not loop.last  -%}
+                                                    ,
+                                                {% endif %}
+                                            {% endfor %}
+                                        </h5>
+                                        <p class="card-text">
+                                            <strong>Genre: </strong>{{ book['genre'] }} |</strong>
+                                            <strong> Rating: </strong>
+                                            {% if book['rating'] %}
+                                                {{ book['rating'] }}/5.0
+                                            {% endif %}
+                                        </p>
+                                        <a href="/books/{{ book['_id'] }}" class="stretched-link"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% elif searchType == 'authors' %}
+                    <div class="row">
+                        {% for author in searchResults %}
+                            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                                <div class="card h-100 test-author-item">
+                                    <img class="card-img-top" src="{{ author['thumbnail_url'] }}" alt="">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ author['name'] }}</h4>
+                                        <p class="card-text">{{ author['hometown'] }}</p>
+                                        <a href="/authors/{{ author['_id'] }}" class="stretched-link"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% elif searchType == 'publishers' %}
+                    <div class="row">
+                        {% for publisher in searchResults %}
+                            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                                <div class="card h-100 test-publisher-item">
+                                    <img class="card-img-top" src="{{ publisher['logo'] }}" alt="">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ publisher['name'] }}</h4>
+                                        <h5 class="card-text">{{ publisher['hq_location'] }}</h5>
+                                        <p class="card-text">Established {{ publisher['estYear'] }}</p>
+                                        <a href="/publishers/{{ publisher['_id'] }}" class="stretched-link"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <ul class="pagination pagination-sm mx-auto">
+                {% if pageNumber == 0 %}
+                    <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
+                {% else %}
+                    <li class="page-item">
+                        <button class="page-link" type="submit" form="page-controls" onclick="updatePageNumber({{ pageNumber - 1 }}); this.form.submit()">
+                            <span class="fas fa-angle-left"></span>
+                        </button>
+                    </li>
+                {% endif %}
+
+                {% if pageNumber == numPages %}
+                    <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
+                {% else %}
+                    <li class="page-item">
+                        <button class="page-link" type="submit" form="page-controls" onclick="updatePageNumber({{ pageNumber + 1 }}); this.form.submit()">
+                            <span class="fas fa-angle-right"></span>
+                        </button>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let search_form = document.getElementById('navbar-search-form');
+        search_form.hidden = true;
+
+        function resetSearchParams() {
+            updateSearchType('books');
+            updatePageNumber(0);
+        }
+
+        function updateSearchType(new_type) {
+            let search_type = document.getElementById('search-type');
+            search_type.value = new_type
+        }
+
+        function updatePageNumber(new_page_num) {
+            let page_number = document.getElementById('pageNumber');
+            page_number.value = parseInt(new_page_num, 10)
+        }
+    </script>
 {% endblock %}

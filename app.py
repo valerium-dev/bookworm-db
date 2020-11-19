@@ -271,10 +271,126 @@ def publisher_instance(pub_id):
     return render_template('publisher-instance.html', publisher=publisher)
 
 
-# TODO: Back-end work. Implement search algo
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    return render_template('search.html')
+    if request.method == 'GET':
+        return render_template('error.html', message="Search Error <hr> Please use the search bar to submit a request.")
+
+    search_input = request.form
+    if search_input['origin'] == 'navbar':
+        # Default search params
+        per_page = 12
+        page_num = 0
+        search_type = 'books'
+        sort_type = 'Default'
+    else:
+        # Use user selected inputs
+        per_page = int(search_input['perPage'])
+        page_num = int(search_input['pageNumber'])
+        search_type = search_input['search-type']
+        sort_type = search_input['sort-type']
+
+    search_query = search_input['search-text']
+    filters = getActiveFilters()
+    search_results = search_instances(search_type, search_query, page_num, per_page, sort_type, filters)
+    num_pages = len(search_results) // per_page
+
+    return render_template('search.html', searchResults=search_results, searchQuery=search_query,
+                           searchType=search_type, pageNumber=page_num, perPage=per_page, numPages=num_pages,
+                           sortType=sort_type)
+
+
+def search_instances(search_type, query, page_num, per_page, sort_type, filters):
+    search_results = []
+
+    if search_type == 'books':
+        if filters:
+            pass
+
+        else:
+            if sort_type != 'Default':
+                for book in books_collection.find({"title": {"$regex": query, "$options": 'i'}}).sort(sort_type).skip(
+                        page_num * per_page).limit(per_page):
+                    temp = dict()
+                    temp['_id'] = book['_id']
+                    temp['title'] = book['title']
+                    temp['authors'] = book['authors']
+                    temp['genre'] = book['genre']
+                    temp['rating'] = book['rating']
+                    temp['thumbnail_url'] = book['thumbnail']
+                    search_results.append(temp)
+
+            else:
+                for book in books_collection.find({"title": {"$regex": query, "$options": 'i'}}).skip(
+                        page_num * per_page).limit(per_page):
+                    temp = dict()
+                    temp['_id'] = book['_id']
+                    temp['title'] = book['title']
+                    temp['authors'] = book['authors']
+                    temp['genre'] = book['genre']
+                    temp['rating'] = book['rating']
+                    temp['thumbnail_url'] = book['thumbnail']
+                    search_results.append(temp)
+
+    elif search_type == 'authors':
+        if filters:
+            pass
+
+        else:
+            if sort_type != 'Default':
+                for author in authors_collection.find({"name": {"$regex": query, "$options": 'i'}}).sort(
+                        sort_type).skip(
+                        page_num * per_page).limit(per_page):
+                    temp = dict()
+                    temp['_id'] = author['_id']
+                    temp['name'] = author['name']
+                    temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
+                    temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',
+                                                                                                    filename='/avi/avi.png')
+                    search_results.append(temp)
+
+            else:
+                for author in authors_collection.find({"name": {"$regex": query, "$options": 'i'}}).skip(
+                        page_num * per_page).limit(per_page):
+                    temp = dict()
+                    temp['_id'] = author['_id']
+                    temp['name'] = author['name']
+                    temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
+                    temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',
+                                                                                                    filename='/avi/avi.png')
+                    search_results.append(temp)
+
+    elif search_type == 'publishers':
+        if filters:
+            pass
+
+        else:
+            if sort_type != 'Default':
+                for publisher in publishers_collection.find({"name": {"$regex": query, "$options": 'i'}}).sort(
+                        sort_type).skip(page_num * per_page).limit(per_page):
+                    temp = dict()
+                    temp['_id'] = publisher['_id']
+                    temp['name'] = publisher['name']
+                    temp['logo'] = publisher['logo']
+                    temp['hq_location'] = publisher['hqLocation']
+                    temp['estYear'] = publisher['estYear']
+                    search_results.append(temp)
+            else:
+                for publisher in publishers_collection.find({"name": {"$regex": query, "$options": 'i'}}).skip(
+                        page_num * per_page).limit(per_page):
+                    temp = dict()
+                    temp['_id'] = publisher['_id']
+                    temp['name'] = publisher['name']
+                    temp['logo'] = publisher['logo']
+                    temp['hq_location'] = publisher['hqLocation']
+                    temp['estYear'] = publisher['estYear']
+                    search_results.append(temp)
+
+    return search_results
+
+
+def getActiveFilters():
+    return None
 
 @app.route('/filter', methods=['GET', 'POST'])
 def filter():

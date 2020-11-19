@@ -4,7 +4,7 @@
     <style>
         .card-img-top {
             width: 100%;
-            object-fit: scale-down;
+            object-fit: cover;
         }
     </style>
 {% endblock %}
@@ -22,7 +22,7 @@
             <div class="input-group">
                 <input class="form-control" type="text" form="page-controls" placeholder="Search" id="search-text" name="search-text" value="{{ searchQuery }}">
                 <div class="input-group-append">
-                    <button type="submit" form="page-controls" class="input-group-text"><span class="fas fa-search"></span></button>
+                    <button type="submit" form="page-controls" class="input-group-text" onclick="resetSearchParams();"><span class="fas fa-search"></span></button>
                 </div>
             </div>
             <div class="input-group mt-2">
@@ -132,37 +132,6 @@
 
     <div class="container-fluid p-4">
         <div class="row">
-            <div class="col">
-                <form action ="/filter" method="post">
-                    <div class="card">
-                        <article class="filter-group">
-                            <header class="card-header">
-                                <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" id="test" class="collapsed">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Filter Type</h6>
-                                </a>
-                            </header>
-                            <div class="filter-content collapse" id="collapse_aside4">
-                                <div class="card-body">
-                                    <label class="custom-control">
-                                        <input type="checkbox" class="custom-control-input" name="option1">
-                                        <div class="custom-control-label">Filter Option 1</div>
-                                    </label>
-                                    <label class="custom-control">
-                                        <input type="checkbox" class="custom-control-input" name="option1">
-                                        <div class="custom-control-label">Filter Option 2</div>
-                                    </label>
-                                    <label class="custom-control">
-                                        <input type="checkbox" class="custom-control-input" name="option1">
-                                        <div class="custom-control-label">Filter Option 3</div>
-                                    </label>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    <input class="btn btn-primary"  type="submit" id=submit value="Submit">
-                </form>
-            </div>
             <div class="container">
                 {% if searchType == 'books' %}
                     <div class="row">
@@ -239,45 +208,6 @@
                     </li>
                 {% endif %}
 
-                {% for p in range(0, 4) if not p > numPages %}
-                    <li class="page-item">
-                        <button class="page-link" type="submit" form="page-controls" onclick="updatePageNumber({{ p }}); this.form.submit()">
-                            {{ p + 1 }}
-                        </button>
-                    </li>
-                {% endfor %}
-
-                <li class="page-item">
-                    <a class="page-link" href="">...</a>
-                </li>
-
-                {% if pageNumber > 3 and pageNumber < numPages - 3 %}
-                    <li class="page-item">
-                        <button class="page-link" type="submit" form="page-controls" onclick="updatePageNumber({{ pageNumber }}); this.form.submit()">
-                            {{ pageNumber + 1 }}
-                        </button>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="">...</a>
-                    </li>
-                {% endif %}
-
-                {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
-                    {% if not loop.last %}
-                        <li class="page-item">
-                            <button class="page-link" type="submit" form="page-controls" onclick="updatePageNumber({{ p }}); this.form.submit()">
-                                {{ p + 1 }}
-                            </button>
-                        </li>
-                    {% else %}
-                        <li class="page-item">
-                            <button class="page-link" type="submit" id="lastPageBtn" form="page-controls" onclick="updatePageNumber({{ p }}); this.form.submit()">
-                                {{ p + 1 }}
-                            </button>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-
                 {% if pageNumber == numPages %}
                     <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
                 {% else %}
@@ -294,6 +224,11 @@
     <script>
         let search_form = document.getElementById('navbar-search-form');
         search_form.hidden = true;
+
+        function resetSearchParams() {
+            updateSearchType('books');
+            updatePageNumber(0);
+        }
 
         function updateSearchType(new_type) {
             let search_type = document.getElementById('search-type');

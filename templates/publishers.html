@@ -207,68 +207,6 @@
             {% endfor %}
 
         </div>
-        <div class="row">
-            <ul class="pagination pagination-sm mx-auto">
-                {% if pageNumber == 0 %}
-                    <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
-                {% else %}
-                    <li class="page-item">
-                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ pageNumber - 1 }}" onclick="this.form.submit()">
-                            <span class="fas fa-angle-left"></span>
-                        </button>
-                    </li>
-                {% endif %}
-
-                {% for p in range(0, 4) if not p > numPages %}
-                    <li class="page-item">
-                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ p }}" onclick="this.form.submit()">
-                            {{ p + 1 }}
-                        </button>
-                    </li>
-                {% endfor %}
-
-                <li class="page-item">
-                    <a class="page-link" href="">...</a>
-                </li>
-
-                {% if pageNumber > 3 and pageNumber < numPages - 3 %}
-                    <li class="page-item">
-                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ pageNumber }}" onclick="this.form.submit()">
-                            {{ pageNumber + 1 }}
-                        </button>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="">...</a>
-                    </li>
-                {% endif %}
-
-                {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
-                    {% if not loop.last %}
-                        <li class="page-item">
-                            <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ p }}" onclick="this.form.submit()">
-                                {{ p + 1 }}
-                            </button>
-                        </li>
-                    {% else %}
-                        <li class="page-item">
-                            <button class="page-link" type="submit" name="pageNumber" id="lastPageBtn" form="page-controls" value="{{ p }}" onclick="this.form.submit()">
-                                {{ p + 1 }}
-                            </button>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-
-                {% if pageNumber == numPages %}
-                    <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
-                {% else %}
-                    <li class="page-item">
-                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ pageNumber + 1 }}" onclick="this.form.submit()">
-                            <span class="fas fa-angle-right"></span>
-                        </button>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
 
     </div>
 {% endblock %}

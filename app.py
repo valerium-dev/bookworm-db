@@ -119,9 +119,12 @@ def authors():
             temp = dict()
             temp['_id'] = author['_id']
             temp['name'] = author['name']
+            temp['genres'] = author['genres']
+            #temp['age'] = author['age'] if author['age'] else "___"
             temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
-            temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static', filename='/avi'
-                                                                                                               '/avi.png')
+            temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static', filename='/avi''/avi.png')
+            temp['followers'] = author['followers']
+            temp['website'] = author['website']
             author_list.append(temp)
         return render_template('authors.html', authors=author_list, pageNumber=0, perPage=10, numPages=num_pages)
     else:
@@ -133,9 +136,12 @@ def authors():
             temp = dict()
             temp['_id'] = author['_id']
             temp['name'] = author['name']
+            temp['genres'] = author['genres']
+            #temp['age'] = author['age'] if author['age'] else "___"
             temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
-            temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',
-                                                                                            filename='/avi/avi.png')
+            temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static', filename='/avi''/avi.png')
+            temp['followers'] = author['followers']
+            temp['website'] = author['website']
             author_list.append(temp)
         return render_template('authors.html', authors=author_list, pageNumber=page_number, perPage=per_page,
                                numPages=num_pages)

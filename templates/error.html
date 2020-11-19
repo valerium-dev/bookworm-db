@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>Page Error</title>
+{% endblock %}
+{% block body %}
+    <div class="container-fluid p-5 text-center">
+        <h1>{{ message|safe }}</h1>
+    </div>
+{% endblock %}

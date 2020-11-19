@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>All Books</title>
+<style>
+    .card-img-top {
+        width: 100%;
+        height: 40vh;
+        object-fit: cover;
+    }
+</style>
+{% endblock %}
+{% block body %}
+    <div class="container-fluid p-4">
+        <h1>All Books</h1>
+        <h6 id="entriesText">Showing entries {{ pageNumber * perPage + 1 }}-{{ pageNumber * perPage + perPage }}</h6>
+    </div>
+    <nav>
+          <ul class="pagination justify-content-center pagination-sm">
+              {% if pageNumber == 0 %}
+                <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
+              {% else %}
+                <li class="page-item">
+                    <form action="/filterr?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}" method="post"></form>
+                   <i class="fas fa-angle-left"></i>
+                </a>
+                </li>
+              {% endif %}
+              {% for p in range(0, 4) if not p > numPages %}
+                <li class="page-item">
+                    <form action ="/filterr?pageNumber={{ p }}&perPage={{ perPage }}&gen={{ gen }}" method="post">
+                        <input type ="submit" value="{{ p + 1 }}">
+
+                    </form>
+
+                </li>
+              {% endfor %}
+          </ul>
+    </nav>
+        <div class="container">
+            <div class="row">
+            {% for book in books %}
+                {% if loop.index <=10 %}
+                <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="{{ book['thumbnail_url'] }}" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ book['title'] }}</h4>
+                            <h5 class="card-text">
+                                {% for author in book['authors'] %}
+                                    {{ author['name'] }}
+                                    {%- if not loop.last  -%}
+                                        ,
+                                    {% endif %}
+                                {% endfor %}
+                            </h5>
+                            <p class="card-text">
+                                <strong>Genre: </strong>{{ book['genre'] }} |</strong>
+                                <strong> Rating: </strong>
+                                {% if book['rating'] %}
+                                    {{ book['rating'] }}/5.0
+                                {% endif %}
+                            </p>
+                            <a href="/books/{{ book['_id'] }}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+
+        </div>
+
+    </div>
+{% endblock %}

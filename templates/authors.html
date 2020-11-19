@@ -11,121 +11,198 @@
 </style>
 {% endblock %}
 {% block body %}
+    <form action="/authors" method="post" id="page-controls"></form>
     <div class="container-fluid p-4">
         <h1>All Authors</h1>
         <h6 id="entriesText">Showing entries {{ pageNumber * perPage + 1 }}-{{ pageNumber * perPage + perPage }}</h6>
     </div>
+    <div class="container-fluid d-flex pl-4 pr-4">
+        <div class="form-group form-inline mr-auto">
+            Show
+            <select class="form-control mr-1 ml-1" id="perPage" name="perPage" form="page-controls" onchange="this.form.submit()">
+                {% if perPage == 10 %}
+                    <option selected="selected" value="10">10</option>
+                {% else %}
+                    <option value="10">10</option>
+                {% endif %}
+                {% if perPage == 25 %}
+                    <option selected="selected" value="25">25</option>
+                {% else %}
+                    <option value="25">25</option>
+                {% endif %}
+                {% if perPage == 50 %}
+                    <option selected="selected" value="50">50</option>
+                {% else %}
+                    <option value="50">50</option>
+                {% endif %}
+            </select>
+            items per page
+        </div>
+        <div class="form-group form-inline">
+            <label for="sort-types">Sort by</label>
+            <select class="form-control ml-1" id="sort-types" name="sort-type" form="page-controls" onchange="this.form.submit()">
+                {% if sortType == None %}
+                    <option selected="selected">Default</option>
+                {% else %}
+                    <option>Default</option>
+                {% endif %}
+                {% if sortType == 'name' %}
+                    <option selected="selected" value="name">Name</option>
+                {% else %}
+                    <option value="name">Name</option>
+                {% endif %}
+                {% if sortType == 'hometown' %}
+                    <option selected="selected" value="hometown">Hometown</option>
+                {% else %}
+                    <option value="hometown">Hometown</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
     <div class="container-fluid p-4">
-        <nav>
-          <ul class="pagination justify-content-center pagination-sm">
-              {% if pageNumber == 0 %}
-                <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
-              {% else %}
-                <li class="page-item">
-                    <a class="page-link" id="prevPage" href="/authors?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-angle-left"></i>
-                    </a>
-                </li>
-              {% endif %}
-
-              {% for p in range(0, 4) if not p > numPages %}
-                <li class="page-item">
-                  <a class="page-link" href="/authors?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
-                </li>
-              {% endfor %}
-
-              <li class="page-item">
-                    <a class="page-link" href="">...</a>
-              </li>
-
-              {% if pageNumber > 3 and pageNumber < numPages - 3 %}
-              <li class="page-item">
-                    <a class="page-link" href="/authors?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber+1 }}</a>
-              </li>
-              <li class="page-item">
-                    <a class="page-link" href="">...</a>
-              </li>
-              {% endif %}
-
-              {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
-                <li class="page-item">
-                  <a class="page-link" href="/authors?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
-                </li>
-              {% endfor %}
-
-              {% if pageNumber == numPages %}
-                <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
-              {% else %}
-                <li class="page-item">
-                    <a class="page-link" id="nextPage" href="/authors?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-angle-right"></i>
-                    </a>
-                </li>
-              {% endif %}
-          </ul>
-        </nav>
         <div class="row">
+            <ul class="pagination pagination-sm mx-auto">
+                {% if pageNumber == 0 %}
+                    <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
+                {% else %}
+                    <li class="page-item">
+                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ pageNumber - 1 }}" onclick="this.form.submit()">
+                            <span class="fas fa-angle-left"></span>
+                        </button>
+                    </li>
+                {% endif %}
+
+                {% for p in range(0, 4) if not p > numPages %}
+                    <li class="page-item">
+                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ p }}" onclick="this.form.submit()">
+                            {{ p + 1 }}
+                        </button>
+                    </li>
+                {% endfor %}
+
+                <li class="page-item">
+                    <a class="page-link" href="">...</a>
+                </li>
+
+                {% if pageNumber > 3 and pageNumber < numPages - 3 %}
+                    <li class="page-item">
+                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ pageNumber }}" onclick="this.form.submit()">
+                            {{ pageNumber + 1 }}
+                        </button>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="">...</a>
+                    </li>
+                {% endif %}
+
+                {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
+                    {% if not loop.last %}
+                        <li class="page-item">
+                            <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ p }}" onclick="this.form.submit()">
+                                {{ p + 1 }}
+                            </button>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <button class="page-link" type="submit" name="pageNumber" id="lastPageBtn" form="page-controls" value="{{ p }}" onclick="this.form.submit()">
+                                {{ p + 1 }}
+                            </button>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if pageNumber == numPages %}
+                    <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
+                {% else %}
+                    <li class="page-item">
+                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ pageNumber + 1 }}" onclick="this.form.submit()">
+                            <span class="fas fa-angle-right"></span>
+                        </button>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="row">
+             <div class="col">
+                <form action ="/filterAuthor" method="post">
+                <div class="card">
+                     <article class="filter-group">
+                     <header class="card-header"> <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" class="collapsed" aria-expanded="false"> <i class="icon-control fa fa-chevron-down"></i>
+                             <h6 class="title">Author's in Genre </h6>
+                         </a> </header>
+                     <div class="filter-content collapse" id="collapse_aside4" style="">
+                         <div class="card-body">
+                             <label class="custom-control">
+                                 <input type="checkbox" name="History" class="custom-control-input">
+                                 <div class="custom-control-label">History </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Religion" class="custom-control-input">
+                                 <div class="custom-control-label">Religion </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Fiction" class="custom-control-input">
+                                 <div class="custom-control-label">Fiction</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Nonfiction" class="custom-control-input">
+                                 <div class="custom-control-label">Nonfiction</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Philosophy" class="custom-control-input">
+                                 <div class="custom-control-label">Philosophy</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Humor" class="custom-control-input">
+                                 <div class="custom-control-label">Humor</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="Poetry" class="custom-control-input">
+                                 <div class="custom-control-label">Poetry</div>
+                             </label>
+                         </div>
+                     </div>
+                 </article>
+                 <article class="filter-group">
+                     <header class="card-header"> <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" class="collapsed" aria-expanded="false"> <i class="icon-control fa fa-chevron-down"></i>
+                             <h6 class="title">Author</h6>
+                         </a> </header>
+                     <div class="filter-content collapse" id="collapse_aside4" style="">
+                         <div class="card-body">
+                             <label class="custom-control">
+                                 <input type="checkbox" name="alive" class="custom-control-input">
+                                 <div class="custom-control-label">Alive </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="dead" class="custom-control-input">
+                                 <div class="custom-control-label">Deceased</div>
+                             </label>
+                         </div>
+                     </div>
+                 </article>
+             </div>
+
+                    <input class="btn btn-primary"  type="submit" value="Submit">
+              </form>
+        </div>
+
+        <div class="container">
+            <div class="row">
             {% for author in authors %}
                 <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                    <div class="card h-100">
+                    <div class="card h-100 test-author-item">
                         <img class="card-img-top" src="{{ author['thumbnail_url'] }}" alt="">
                         <div class="card-body">
                             <h4 class="card-title">{{ author['name'] }}</h4>
-                            <h5 class="card-text">Age: {{ author['age'] }}</h5>
                             <p class="card-text">{{ author['hometown'] }}</p>
+                            <p class="card-text">Genres: {{ author['genres'] }} </p>
                             <a href="/authors/{{ author['_id'] }}" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
+            </div>
         </div>
-        <nav>
-          <ul class="pagination justify-content-center pagination-sm">
-              {% if pageNumber == 0 %}
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
-              {% else %}
-                <li class="page-item">
-                    <a class="page-link" href="/authors?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-angle-left"></i>
-                    </a>
-                </li>
-              {% endif %}
 
-              {% for p in range(0, 4) if not p > numPages %}
-                <li class="page-item">
-                  <a class="page-link" href="/authors?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
-                </li>
-              {% endfor %}
-
-              <li class="page-item">
-                    <a class="page-link" href="">...</a>
-              </li>
-
-              {% if pageNumber > 3 and pageNumber < numPages - 3 %}
-              <li class="page-item">
-                    <a class="page-link" href="/authors?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber+1 }}</a>
-              </li>
-              <li class="page-item">
-                    <a class="page-link" href="">...</a>
-              </li>
-              {% endif %}
-
-              {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
-                <li class="page-item">
-                  <a class="page-link" href="/authors?pageNumber={{ p }}&perPage={{ perPage }}">{{ p+1 }}</a>
-                </li>
-              {% endfor %}
-
-              {% if pageNumber == numPages %}
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
-              {% else %}
-                <li class="page-item">
-                    <a class="page-link" href="/authors?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-angle-right"></i>
-                    </a>
-                </li>
-              {% endif %}
-          </ul>
-        </nav>
     </div>
 {% endblock %}

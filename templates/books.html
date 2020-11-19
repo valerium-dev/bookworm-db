@@ -11,140 +11,249 @@
 </style>
 {% endblock %}
 {% block body %}
+    <form action="/books" method="post" id="page-controls"></form>
     <div class="container-fluid p-4">
         <h1>All Books</h1>
         <h6 id="entriesText">Showing entries {{ pageNumber * perPage + 1 }}-{{ pageNumber * perPage + perPage }}</h6>
     </div>
-    <div class="container-fluid p-4" id="team-info">
-        <nav>
-          <ul class="pagination justify-content-center pagination-sm">
-              {% if pageNumber == 0 %}
-                <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
-              {% else %}
-                <li class="page-item">
-                    <a class="page-link" id="prevPage" href="/books?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-angle-left"></i>
-                    </a>
-                </li>
-              {% endif %}
-
-              {% for p in range(0, 4) if not p > numPages %}
-                <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
-                </li>
-              {% endfor %}
-
-              <li class="page-item">
-                    <a class="page-link" href="">...</a>
-              </li>
-
-              {% if pageNumber > 3 and pageNumber < numPages - 3 %}
-              <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber + 1 }}</a>
-              </li>
-              <li class="page-item">
-                    <a class="page-link" href="">...</a>
-              </li>
-              {% endif %}
-
-              {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
-                  {% if not loop.last %}
-                <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
-                </li>
-                      {% else %}
-                      <li class="page-item">
-                  <a class="page-link" id="lastPageBtn" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
-                </li>
-                  {% endif %}
-              {% endfor %}
-
-              {% if pageNumber == numPages %}
-                <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
-              {% else %}
-                <li class="page-item">
-                    <a class="page-link" id="nextPage" href="/books?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-angle-right"></i>
-                    </a>
-                </li>
-              {% endif %}
-          </ul>
-        </nav>
+    <div class="container-fluid d-flex pl-4 pr-4">
+        <div class="form-group form-inline mr-auto">
+            Show
+            <select class="form-control mr-1 ml-1" id="perPage" name="perPage" form="page-controls" onchange="this.form.submit()">
+                {% if perPage == 10 %}
+                    <option selected="selected" value="10">10</option>
+                {% else %}
+                    <option value="10">10</option>
+                {% endif %}
+                {% if perPage == 25 %}
+                    <option selected="selected" value="25">25</option>
+                {% else %}
+                    <option value="25">25</option>
+                {% endif %}
+                {% if perPage == 50 %}
+                    <option selected="selected" value="50">50</option>
+                {% else %}
+                    <option value="50">50</option>
+                {% endif %}
+            </select>
+            items per page
+        </div>
+        <div class="form-group form-inline">
+            <label for="sort-types">Sort by</label>
+            <select class="form-control ml-1" id="sort-types" name="sort-type" form="page-controls" onchange="this.form.submit()">
+                {% if sortType == None %}
+                    <option selected="selected">Default</option>
+                {% else %}
+                    <option>Default</option>
+                {% endif %}
+                {% if sortType == 'title' %}
+                    <option selected="selected" value="title">Title</option>
+                {% else %}
+                    <option value="title">Title</option>
+                {% endif %}
+                {% if sortType == 'genre' %}
+                    <option selected="selected" value="genre">Genre</option>
+                {% else %}
+                    <option value="genre">Genre</option>
+                {% endif %}
+                {% if sortType == 'rating' %}
+                    <option selected="selected" value="rating">Rating</option>
+                {% else %}
+                    <option value="rating">Rating</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+    <div class="container-fluid p-4">
         <div class="row">
-            {% for book in books %}
-                <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="{{ book['thumbnail_url'] }}" alt="">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ book['title'] }}</h4>
-                            <h5 class="card-text">
-                                {% for author in book['authors'] %}
-                                    {{ author['name'] }}
-                                    {%- if not loop.last  -%}
-                                        ,
+            <ul class="pagination pagination-sm mx-auto">
+                {% if pageNumber == 0 %}
+                    <li class="page-item disabled"><a class="page-link" id="prevPage" href="#"><i class="fas fa-angle-left"></i></a></li>
+                {% else %}
+                    <li class="page-item">
+                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ pageNumber - 1 }}" onclick="this.form.submit()">
+                            <span class="fas fa-angle-left"></span>
+                        </button>
+                    </li>
+                {% endif %}
+
+                {% for p in range(0, 4) if not p > numPages %}
+                    <li class="page-item">
+                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ p }}" onclick="this.form.submit()">
+                            {{ p + 1 }}
+                        </button>
+                    </li>
+                {% endfor %}
+
+                <li class="page-item">
+                    <a class="page-link" href="">...</a>
+                </li>
+
+                {% if pageNumber > 3 and pageNumber < numPages - 3 %}
+                    <li class="page-item">
+                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ pageNumber }}" onclick="this.form.submit()">
+                            {{ pageNumber + 1 }}
+                        </button>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="">...</a>
+                    </li>
+                {% endif %}
+
+                {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
+                    {% if not loop.last %}
+                        <li class="page-item">
+                            <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ p }}" onclick="this.form.submit()">
+                                {{ p + 1 }}
+                            </button>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <button class="page-link" type="submit" name="pageNumber" id="lastPageBtn" form="page-controls" value="{{ p }}" onclick="this.form.submit()">
+                                {{ p + 1 }}
+                            </button>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if pageNumber == numPages %}
+                    <li class="page-item disabled"><a class="page-link" id="nextPage" href="#"><i class="fas fa-angle-right"></i></a></li>
+                {% else %}
+                    <li class="page-item">
+                        <button class="page-link" type="submit" name="pageNumber" form="page-controls" value="{{ pageNumber + 1 }}" onclick="this.form.submit()">
+                            <span class="fas fa-angle-right"></span>
+                        </button>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form action ="/filter" method="post">
+                <div class="card">
+                     <article class="filter-group">
+                     <header class="card-header"> <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" id="test" class="collapsed" aria-expanded="false"> <i class="icon-control fa fa-chevron-down"></i>
+                             <h6 class="title">Genre </h6>
+                         </a> </header>
+                     <div class="filter-content collapse" id="collapse_aside4" style="" >
+                         <div class="card-body">
+                             <label class="custom-control" id="history" >
+                                 <input type="checkbox" class="custom-control-input">
+                                 <div class="custom-control-label">History </div>
+                             </label>
+                             <label class="custom-control" >
+                                 <input id="religion" name="Religion" type="checkbox" class="custom-control-input">
+                                 <div class="custom-control-label">Religion </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=Fiction id=fiction class="custom-control-input">
+                                 <div class="custom-control-label">Fiction</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=Literary id="literary" class="custom-control-input">
+                                 <div class="custom-control-label">Literary Collections</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=Drama id=drama class="custom-control-input">
+                                 <div class="custom-control-label">Drama</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=Poetry id="poetry" class="custom-control-input">
+                                 <div class="custom-control-label">Poetry</div>
+                             </label>
+                         </div>
+                     </div>
+                 </article>
+                 <article class="filter-group">
+                     <header class="card-header"> <a href="#" data-toggle="collapse"  data-target="#collapse_aside4" data-abc="true" class="collapsed" aria-expanded="false"> <i class="icon-control fa fa-chevron-down"></i>
+                             <h6 class="title">Page Count</h6>
+                         </a> </header>
+                     <div class="filter-content collapse" id="collapse_aside4" style="">
+                         <div class="card-body">
+                             <label class="custom-control">
+                                 <input type="checkbox" name="0" id="lowpage" class="custom-control-input">
+                                 <div class="custom-control-label">0 - 300 pages </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="3" id="midpage" class="custom-control-input">
+                                 <div class="custom-control-label">300 - 600 pages </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="6"  class="custom-control-input">
+                                 <div class="custom-control-label">600 - 900 pages </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="9"  class="custom-control-input">
+                                 <div class="custom-control-label">900+ pages </div>
+                             </label>
+                         </div>
+                     </div>
+                 </article>
+                 <article class="filter-group">
+                     <header class="card-header"> <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" class="collapsed" aria-expanded="false"> <i class="icon-control fa fa-chevron-down"></i>
+                             <h6 class="title">Rating </h6>
+                         </a> </header>
+                     <div class="filter-content collapse" id="collapse_aside4" style="">
+                         <div class="card-body">
+                             <label class="custom-control">
+                                 <input type="checkbox" name="0.00" id="0rating" class="custom-control-input">
+                                 <div class="custom-control-label">0.00 - 1.00 </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name=1.00 id="1rating" class="custom-control-input">
+                                 <div class="custom-control-label">1.00 - 2.00 </div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="2.00" id="2rating" class="custom-control-input">
+                                 <div class="custom-control-label">2.00 - 3.00</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="3.00" id="3rating"class="custom-control-input">
+                                 <div class="custom-control-label">3.00 - 4.00</div>
+                             </label>
+                             <label class="custom-control">
+                                 <input type="checkbox" name="4.00" id="4rating"class="custom-control-input">
+                                 <div class="custom-control-label">4.00 - 5.00</div>
+                             </label> </div>
+
+                     </div>
+                 </article>
+                </div>
+                    <input class="btn btn-primary"  type="submit" id=submit value="Submit">
+                </form>
+            </div>
+
+
+        <div class="container">
+            <div class="row">
+                {% for book in books %}
+                    <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+                        <div class="card h-100 test-book-item">
+                            <img class="card-img-top" src="{{ book['thumbnail_url'] }}" alt="">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ book['title'] }}</h4>
+                                <h5 class="card-text">
+                                    {% for author in book['authors'] %}
+                                        {{ author['name'] }}
+                                        {%- if not loop.last  -%}
+                                            ,
+                                        {% endif %}
+                                    {% endfor %}
+                                </h5>
+                                <p class="card-text">
+                                    <strong>Genre: </strong>{{ book['genre'] }} |</strong>
+                                    <strong> Rating: </strong>
+                                    {% if book['rating'] %}
+                                        {{ book['rating'] }}/5.0
                                     {% endif %}
-                                {% endfor %}
-                            </h5>
-                            <p class="card-text">
-                                <strong>Genre: </strong>{{ book['genre'] }} |</strong>
-                                <strong> Rating: </strong>
-                                {% if book['rating'] %}
-                                    {{ book['rating'] }}/5.0
-                                {% endif %}
-                            </p>
-                            <a href="/books/{{ book['_id'] }}" class="stretched-link"></a>
+                                </p>
+                                <a href="/books/{{ book['_id'] }}" class="stretched-link"></a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-        <nav>
-          <ul class="pagination justify-content-center pagination-sm">
-              {% if pageNumber == 0 %}
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
-              {% else %}
-                <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber - 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-angle-left"></i>
-                    </a>
-                </li>
-              {% endif %}
 
-              {% for p in range(0, 4) if not p > numPages %}
-                <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
-                </li>
-              {% endfor %}
-
-              <li class="page-item">
-                    <a class="page-link" href="">...</a>
-              </li>
-
-              {% if pageNumber > 3 and pageNumber < numPages - 3 %}
-              <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber }}&perPage={{ perPage }}">{{ pageNumber + 1 }}</a>
-              </li>
-              <li class="page-item">
-                    <a class="page-link" href="">...</a>
-              </li>
-              {% endif %}
-
-              {% for p in range(numPages - 3, numPages + 1) if not p > numPages %}
-                <li class="page-item">
-                  <a class="page-link" href="/books?pageNumber={{ p }}&perPage={{ perPage }}">{{ p + 1 }}</a>
-                </li>
-              {% endfor %}
-
-              {% if pageNumber == numPages %}
-                <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
-              {% else %}
-                <li class="page-item">
-                    <a class="page-link" href="/books?pageNumber={{ pageNumber + 1 }}&perPage={{ perPage }}">
-                        <i class="fas fa-angle-right"></i>
-                    </a>
-                </li>
-              {% endif %}
-          </ul>
-        </nav>
     </div>
 {% endblock %}

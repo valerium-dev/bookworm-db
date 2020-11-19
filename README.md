@@ -82,7 +82,7 @@ Writing, validating, and running test | 1.5 hrs | 2.0 hrs
 Task | Estimated | Actual
 --- | --- | ---
 Repopulating our authors, publishers, and books database to follow desired functionality from Phase II ( reduce scope to 150 or more famous authors) | 7 hrs | 20 hrs
-Update the  Selenium bot to extract image urls in a google search for publisher logos for populating publishers 10 hrs | 4 hrs
+Update the  Selenium bot to extract image urls in a google search for publisher logos for populating publishers | 10 hrs | 4 hrs
 Learning how to use OAuth and secret login functionality for Goodreads API for additional attributes [user stories: 1,6]   | 5 hrs | 12 hrs
 
 

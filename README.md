@@ -72,7 +72,7 @@ Researching a new API to use for authors and making modifications to the data cl
 
 Task | Estimated | Actual
 --- | --- | ---
-Filtering implementation [user story: 2,3]| 3.5 hr | 4 hr
+Filtering implementation [user story: 2,3]| 3.5 hr | 6 hr
 Sorting implementation [user story: 2,5] | 3.5 hrs | 4.25 hrs
 Searching implementation [user story: 5,6] | 3.5 hrs | 4.25 hrs
 Writing, validating, and running test | 1.5 hrs | 2.0 hrs

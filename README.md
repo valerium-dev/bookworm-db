@@ -72,7 +72,7 @@ Researching a new API to use for authors and making modifications to the data cl
 
 Task | Estimated | Actual
 --- | --- | ---
-Filtering implementation [user story: 2,3]| 3.5 hr | 6 hr
+Filtering implementation [user story: 2,3]| 3.5 hr | 4 hr
 Sorting implementation [user story: 2,5] | 3.5 hrs | 4.25 hrs
 Searching implementation [user story: 5,6] | 3.5 hrs | 4.25 hrs
 Writing, validating, and running test | 1.5 hrs | 2.0 hrs
@@ -81,9 +81,8 @@ Writing, validating, and running test | 1.5 hrs | 2.0 hrs
 
 Task | Estimated | Actual
 --- | --- | ---
-Learning about extra features in Goodreads AP & populating authors database | 5 hrs | 16 hrs
-Learning how to use the Selenium bot to extract image urls in a google search for publisher logos [user story: 10] | 10 hrs | 12 hrs
-Learning how to use the GoogleBooks API and Goodreads API in conjunction  to extract all features for a particular instance [user stories: 8,9]   | 5 hrs | 3hrs
-Learning the advanced and intermediate commands for mongoDB for collection clustering  | 5 hrs | 8 hrs 
-Researching a new API to use for authors and making modifications to the data clusters to meet front-end requirements | 6 hrs | 17 hrs
+Repopulating our authors, publishers, and books database to follow desired functionality from Phase II ( reduce scope to 150 or more famous authors) | 7 hrs | 20 hrs
+Update the  Selenium bot to extract image urls in a google search for publisher logos for populating publishers 10 hrs | 4 hrs
+Learning how to use OAuth and secret login functionality for Goodreads API for additional attributes [user stories: 1,6]   | 5 hrs | 12 hrs
+
 

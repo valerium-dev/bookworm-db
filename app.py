@@ -383,7 +383,7 @@ def search_instances(search_type, query, page_num, per_page, sort_type, filters)
                     search_results.append(temp)
             else:
                 for publisher in publishers_collection.find({"name": {"$regex": query, "$options": 'i'}}).skip(
-                        page_num * per_page).limit(per_page):
+                    page_num * per_page).limit(per_page):
                     temp = dict()
                     temp['_id'] = publisher['_id']
                     temp['name'] = publisher['name']
@@ -421,42 +421,26 @@ def filter():
               for book in books_collection.find({"genre": {"$regex": key}}):
                   num_pages += 1
                   temp = dict()
-                  temp['_id'] = book['_id']
-                  temp['title'] = book['title']
-                  temp['authors'] = book['authors']
-                  temp['genre'] = book['genre']
-                  temp['rating'] = book['rating']
-                  temp['thumbnail_url'] = book['thumbnail']
+                  temp = populate_book_filter(temp, book)
                   book_list.append(temp)
         elif field == "rating":
-              print("is a rating")
+
               x = (1.01)+keyNumber
               for book in books_collection.find({"rating": {"$lt":x, "$gt": keyNumber}}):
                   num_pages += 1
                   temp = dict()
-                  temp['_id'] = book['_id']
-                  temp['title'] = book['title']
-                  temp['authors'] = book['authors']
-                  temp['genre'] = book['genre']
-                  temp['rating'] = book['rating']
-                  temp['thumbnail_url'] = book['thumbnail']
+                  temp = populate_book_filter(temp, book)
                   book_list.append(temp)
         else:
-              print("we get to page count")
+
               for book in books_collection.find({"pageCount": {"$gt":100 * keyNumber, "$lt": (100 * keyNumber) + 301}}):
                   num_pages += 1
                   temp = dict()
-                  temp['_id'] = book['_id']
-                  temp['title'] = book['title']
-                  temp['authors'] = book['authors']
-                  temp['genre'] = book['genre']
-                  temp['rating'] = book['rating']
-                  temp['thumbnail_url'] = book['thumbnail']
+                  temp = populate_book_filter(temp, book)
                   book_list.append(temp)
 
     num_pages = -(-num_pages//10)
-    print(num_pages)
-    print(len(book_list))
+
     if num_pages == 0:
         return render_template('noResults.html')
     return render_template('filterBooks.html', books=book_list, pageNumber=0, perPage=10, numPages=num_pages, gen=selectedArray)
@@ -465,38 +449,32 @@ def filter():
 @app.route('/filterBooks', methods=['GET', 'POST'])
 def filterBooks():
 
-
     page_number = request.args.get('pageNumber')
     num_pages = int(request.args.get('numPages'))
     book_list = []
     selectedArray = []
-    genre = request.args.get('gen')
-    selected = genre.split()
-    key2 = (selected[0])[2:-2]
+    requestArguement = request.args.get('gen')
+    requestArguement = requestArguement.split()
 
 
-    for i in range(len(selected)):
-        if key2.isalpha():
+
+    for i in range(len(requestArguement)):
+        if (requestArguement[0])[2:-2].isalpha():
             if i == 0:
-                key = (selected[i])[2:-2]
+                key = (requestArguement[i])[2:-2]
             else:
-                key = (selected[i])[1:-2]
+                key = (requestArguement[i])[1:-2]
             selectedArray.append(key)
             for book in books_collection.find({"genre": {"$regex": key} }):
                 temp = dict()
-                temp['_id'] = book['_id']
-                temp['title'] = book['title']
-                temp['authors'] = book['authors']
-                temp['genre'] = book['genre']
-                temp['rating'] = book['rating']
-                temp['thumbnail_url'] = book['thumbnail']
+                temp = populate_book_filter(temp,book)
                 book_list.append(temp)
         else:
             if i == 0:
-                key = (selected[i])[2:-2]
+                key = (requestArguement[i])[2:-2]
             else:
-                key = (selected[i])[1:-2]
-            if key2.find(".") == -1:
+                key = (requestArguement[i])[1:-2]
+            if (requestArguement[0])[2:-2].find(".") == -1:
                 field = "pageCount"
                 keyNumber = int(key)
             else:
@@ -504,38 +482,23 @@ def filterBooks():
                 keyNumber = float(key)
             if field == "rating":
                 x = (1.01) + keyNumber
-                selectedArray.append(key2)
+                selectedArray.append((requestArguement[0])[2:-2])
                 if keyNumber == 9:
                     for book in books_collection.find({"rating": {"$gt": keyNumber-1}}):
                         temp = dict()
-                        temp['_id'] = book['_id']
-                        temp['title'] = book['title']
-                        temp['authors'] = book['authors']
-                        temp['genre'] = book['genre']
-                        temp['rating'] = book['rating']
-                        temp['thumbnail_url'] = book['thumbnail']
+                        temp = populate_book_filter(temp, book)
                         book_list.append(temp)
                 else:
                     for book in books_collection.find({"rating": {"$lt":x, "$gt": keyNumber}}):
                         temp = dict()
-                        temp['_id'] = book['_id']
-                        temp['title'] = book['title']
-                        temp['authors'] = book['authors']
-                        temp['genre'] = book['genre']
-                        temp['rating'] = book['rating']
-                        temp['thumbnail_url'] = book['thumbnail']
+                        temp = populate_book_filter(temp, book)
                         book_list.append(temp)
             else:
                 keyNumber = int(key)
                 selectedArray.append(key)
                 for book in books_collection.find({"pageCount": {"$gt": 100 * keyNumber, "$lt": (100 * keyNumber) + 301}}):
                     temp = dict()
-                    temp['_id'] = book['_id']
-                    temp['title'] = book['title']
-                    temp['authors'] = book['authors']
-                    temp['genre'] = book['genre']
-                    temp['rating'] = book['rating']
-                    temp['thumbnail_url'] = book['thumbnail']
+                    temp = populate_book_filter(temp, book)
                     book_list.append(temp)
 
     if num_pages == 0:
@@ -547,121 +510,102 @@ def filterBooks():
         book_list = book_list[(int(page_number)*10):(10*int(page_number))+11]
         return render_template('filterBooks.html', books=book_list, pageNumber=page_number, perPage=10, numPages=num_pages,gen=selectedArray)
 
+def populate_book_filter(temp,book):
+    temp['_id'] = book['_id']
+    temp['title'] = book['title']
+    temp['authors'] = book['authors']
+    temp['genre'] = book['genre']
+    temp['rating'] = book['rating']
+    temp['thumbnail_url'] = book['thumbnail']
+    return temp
+
+
 @app.route('/filterPub', methods=['GET', 'POST'])
 def filterPub():
     publisher_list = []
-    genreArray = []
+    selectedArray = []
     num_pages = 0
     page_number = request.args.get('pageNumber')
     if page_number is None:
         page_number = '0'
         for key, value in request.form.items():
-            genreArray.append(key)
+            selectedArray.append(key)
             if key == "Newyork":
                 key = "New York"
             for publisher in publishers_collection.find({"hqLocation": {"$regex": key}}):
                 num_pages+=1
                 temp = dict()
-                temp['_id'] = publisher['_id']
-                temp['name'] = publisher['name']
-                temp['logo'] = publisher['logo']
-                temp['hq_location'] = publisher['hqLocation']
-                temp['estYear'] = publisher['estYear']
+                temp = populate_publisher_filter(temp, publisher)
                 publisher_list.append(temp)
         pprint(publisher_list)
         num_pages = -(-num_pages // 10)
     else:
         gen = request.args.get('gen')
-        print(gen)
         selected = gen.split()
-        print(len(selected))
         for i in range(len(selected)):
             if i == 0:
                 key = (selected[i])[2:-2]
             else:
                 key = (selected[i])[1:-2]
-            print(key)
-            genreArray.append(key)
+            selectedArray.append(key)
             if key == "Newyork":
                 key = "New York"
             num_pages = int(request.args.get('numPages'))
             for publisher in publishers_collection.find({"hqLocation": {"$regex": key}}):
                 temp = dict()
-                temp['_id'] = publisher['_id']
-                temp['name'] = publisher['name']
-                temp['logo'] = publisher['logo']
-                temp['hq_location'] = publisher['hqLocation']
-                temp['estYear'] = publisher['estYear']
+                temp = populate_publisher_filter(temp, publisher)
                 publisher_list.append(temp)
-        pprint(publisher_list)
-    print(num_pages)
-    print(len(publisher_list))
     if num_pages == 0:
         return render_template('noResults.html')
     if int(page_number) == 0:
-        return render_template('filterPub.html', publishers=publisher_list, pageNumber=0, perPage=10, numPages=num_pages, gen=genreArray)
+        return render_template('filterPub.html', publishers=publisher_list, pageNumber=0, perPage=10, numPages=num_pages, gen=selectedArray)
     else:
-        print("we should be in this else")
-        print(page_number)
         page_number = int(page_number)
         publisher_list = publisher_list[(int(page_number)*10):(10*int(page_number))+11]
-        print("printing publisher list")
-        pprint(publisher_list)
-        return render_template('filterPub.html', publishers=publisher_list, pageNumber=page_number, perPage=10, numPages=num_pages,gen=genreArray)
+        return render_template('filterPub.html', publishers=publisher_list, pageNumber=page_number, perPage=10, numPages=num_pages,gen=selectedArray)
+
+def populate_publisher_filter(temp,publisher):
+    temp['_id'] = publisher['_id']
+    temp['name'] = publisher['name']
+    temp['logo'] = publisher['logo']
+    temp['hq_location'] = publisher['hqLocation']
+    temp['estYear'] = publisher['estYear']
+    return temp
 
 @app.route('/filterAuthor', methods=['GET', 'POST'])
 def filterAuthor():
-    print(request.form)
-    print(request.args)
-    genreArray = []
+
+    selectedArray = []
     num_pages = 0
     author_list = []
-
     page_number = request.args.get('pageNumber')
 
     if page_number is None:
         page_number = '0'
         for key, value in request.form.items():
-            genreArray.append(key)
+            selectedArray.append(key)
             if key == "alive" or key == "dead":
                 if key == "dead":
-                    print("looking for dead peps")
                     key = None
-                    for author in authors_collection.find({"dod": {"$ne":key}}):
-                      num_pages+=1
-                      temp = dict()
-                      temp['_id'] = author['_id']
-                      temp['name'] = author['name']
-                      # temp['age'] = author['age'] if author['age'] else "___"
-                      temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
-                      temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',filename='/avi''/avi.png')
-                      author_list.append(temp)
+                    for author in authors_collection.find({"dod": {"$ne": key}}):
+                        num_pages += 1
+                        temp = dict()
+                        temp = populate_author_filter(temp, author)
+                        author_list.append(temp)
                 else:
                     key = None
-                    for author in authors_collection.find({"dod": key }):
-                      num_pages+=1
-                      temp = dict()
-                      temp['_id'] = author['_id']
-                      temp['name'] = author['name']
-                      temp['genres'] = author['genres']
-                      # temp['age'] = author['age'] if author['age'] else "___"
-                      temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
-                      temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',filename='/avi''/avi.png')
-                      temp['website'] = author['website']
-                      author_list.append(temp)
+                    for author in authors_collection.find({"dod": key}):
+                        num_pages += 1
+                        temp = dict()
+                        temp = populate_author_filter(temp, author)
+                        author_list.append(temp)
 
             else:
                 for author in authors_collection.find({"genres": {"$regex": key}}):
-                  num_pages+=1
-                  temp = dict()
-                  temp['_id'] = author['_id']
-                  temp['name'] = author['name']
-                  temp['genres'] = author['genres']
-                  # temp['age'] = author['age'] if author['age'] else "___"
-                  temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
-                  temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',filename='/avi''/avi.png')
-                  temp['website'] = author['website']
-                  author_list.append(temp)
+                    num_pages += 1
+                    temp = dict()
+                    temp = populate_author_filter(temp, author)
+                    author_list.append(temp)
         num_pages = -(-num_pages // 10)
     else:
         gen = request.args.get('gen')
@@ -671,54 +615,46 @@ def filterAuthor():
                 key = (selected[i])[2:-2]
             else:
                 key = (selected[i])[1:-2]
-            genreArray.append(key)
+            selectedArray.append(key)
             num_pages = int(request.args.get('numPages'))
             if key == "alive" or key == "dead":
                 if key == "dead":
-                    print("loking for dead folk")
                     key = None
-                    for author in authors_collection.find({"dod": {"$ne":key}}):
-                      temp = dict()
-                      temp['_id'] = author['_id']
-                      temp['name'] = author['name']
-                      temp['genres'] = author['genres']
-                      # temp['age'] = author['age'] if author['age'] else "___"
-                      temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
-                      temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',filename='/avi''/avi.png')
-                      temp['website'] = author['website']
-                      author_list.append(temp)
+                    for author in authors_collection.find({"dod": {"$ne": key}}):
+                        temp = dict()
+                        temp = populate_author_filter(temp, author)
+                        author_list.append(temp)
                 else:
                     key = None
-                    for author in authors_collection.find({"dod": key }):
-                      temp = dict()
-                      temp['_id'] = author['_id']
-                      temp['name'] = author['name']
-                      temp['genres'] = author['genres']
-                      # temp['age'] = author['age'] if author['age'] else "___"
-                      temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
-                      temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',filename='/avi''/avi.png')
-                      temp['website'] = author['website']
-                      author_list.append(temp)
+                    for author in authors_collection.find({"dod": key}):
+                        temp = dict()
+                        temp = populate_author_filter(temp, author)
+                        author_list.append(temp)
             else:
                 for author in authors_collection.find({"genres": {"$regex": key}}):
                     temp = dict()
-                    temp['_id'] = author['_id']
-                    temp['name'] = author['name']
-                    temp['genres'] = author['genres']
-                    # temp['age'] = author['age'] if author['age'] else "___"
-                    temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
-                    temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static',filename='/avi''/avi.png')
-                    temp['website'] = author['website']
+                    temp = populate_author_filter(temp, author)
                     author_list.append(temp)
 
     if num_pages == 0:
         return render_template('noResults.html')
     if int(page_number) == 0:
-        return render_template('filterAuthor.html', authors=author_list, pageNumber=0, perPage=10, numPages=num_pages, gen=genreArray)
+        return render_template('filterAuthor.html', authors=author_list, pageNumber=0, perPage=10, numPages=num_pages, gen=selectedArray)
     else:
         page_number = int(page_number)
         author_list = author_list[(int(page_number) * 10):(10 * int(page_number)) + 11]
-        return render_template('filterAuthor.html', authors=author_list, pageNumber=page_number, perPage=10,numPages=num_pages, gen=genreArray)
+        return render_template('filterAuthor.html', authors=author_list, pageNumber=page_number, perPage=10,numPages=num_pages, gen=selectedArray)
+
+
+def populate_author_filter(temp,author):
+    temp['_id'] = author['_id']
+    temp['name'] = author['name']
+    temp['genres'] = author['genres']
+    temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
+    temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static', filename='/avi''/avi.png')
+    temp['website'] = author['website']
+    return temp
+
 
 
 if __name__ == '__main__':

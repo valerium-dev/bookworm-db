@@ -415,14 +415,7 @@ def filterBooks():
         book_list = book_list[(int(page_number)*10):(10*int(page_number))+11]
         return render_template('filterBooks.html', books=book_list, pageNumber=page_number, perPage=10, numPages=num_pages,gen=selectedArray)
 
-def populate_book_filter(temp,book):
-    temp['_id'] = book['_id']
-    temp['title'] = book['title']
-    temp['authors'] = book['authors']
-    temp['genre'] = book['genre']
-    temp['rating'] = book['rating']
-    temp['thumbnail_url'] = book['thumbnail']
-    return temp
+
 
 
 @app.route('/filterPub', methods=['GET', 'POST'])
@@ -456,9 +449,7 @@ def filterPub():
             num_pages = int(request.args.get('numPages'))
             for publisher in publishers_collection.find({"hqLocation": {"$regex": key}}):
                 publisher_list.append(truncated_publisher(publisher))
-        pprint(publisher_list)
-    print(num_pages)
-    print(len(publisher_list))
+
 
     if num_pages == 0:
         return render_template('noResults.html')
@@ -469,13 +460,7 @@ def filterPub():
         publisher_list = publisher_list[(int(page_number)*10):(10*int(page_number))+11]
         return render_template('filterPub.html', publishers=publisher_list, pageNumber=page_number, perPage=10, numPages=num_pages,gen=selectedArray)
 
-def populate_publisher_filter(temp,publisher):
-    temp['_id'] = publisher['_id']
-    temp['name'] = publisher['name']
-    temp['logo'] = publisher['logo']
-    temp['hq_location'] = publisher['hqLocation']
-    temp['estYear'] = publisher['estYear']
-    return temp
+
 
 @app.route('/filterAuthor', methods=['GET', 'POST'])
 def filterAuthor():
@@ -540,14 +525,7 @@ def filterAuthor():
         return render_template('filterAuthor.html', authors=author_list, pageNumber=page_number, perPage=10,numPages=num_pages, gen=selectedArray)
 
 
-def populate_author_filter(temp,author):
-    temp['_id'] = author['_id']
-    temp['name'] = author['name']
-    temp['genres'] = author['genres']
-    temp['hometown'] = author['hometown'] if author['hometown'] else "Someplace, Earth"
-    temp['thumbnail_url'] = author['thumbnail'] if author['thumbnail'] else url_for('static', filename='/avi''/avi.png')
-    temp['website'] = author['website']
-    return temp
+
 
 
 

@@ -417,7 +417,6 @@ def filterBooks():
 
 
 
-
 @app.route('/filterPub', methods=['GET', 'POST'])
 def filterPub():
     publisher_list = []

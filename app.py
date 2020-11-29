@@ -188,6 +188,7 @@ def truncated_publisher(publisher):
     temp['logo'] = publisher['logo']
     temp['hq_location'] = publisher['hqLocation']
     temp['estYear'] = publisher['estYear']
+    temp['website'] = publisher['website']
     return temp
 
 

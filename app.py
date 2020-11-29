@@ -1,8 +1,7 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request
 from pymongo import MongoClient
 import os
 from bson.objectid import ObjectId
-from pprint import pprint
 
 app = Flask(__name__)
 
@@ -59,35 +58,33 @@ def truncated_book(book):
 
 
 @app.route('/books', methods=['POST'])
-def books_form_submit():
-    form_values = request.form
-    per_page = int(form_values['perPage'])
+def books_sort():
+    per_page = int(request.form['perPage'])
 
     try:
-        page_number = int(form_values['pageNumber'])
+        page_number = int(request.form['pageNumber'])
     except KeyError:
         page_number = 0
 
-    num_pages = books_collection.estimated_document_count() // per_page
-    sort_type = form_values['sort-type'] if form_values['sort-type'] != 'Default' else None
+    sort_type = request.form['sort-type'] if request.form['sort-type'] != 'Default' else None
 
-    book_list = []
+    num_pages = books_collection.estimated_document_count() // per_page
+    sorted_list = []
     if sort_type is not None:
         for book in books_collection.find().sort(sort_type).skip(page_number * per_page).limit(per_page):
-            book_list.append(truncated_book(book))
-        return render_template('books.html', books=book_list, pageNumber=page_number, perPage=per_page,
+            sorted_list.append(truncated_book(book))
+        return render_template('books.html', books=sorted_list, pageNumber=page_number, perPage=per_page,
                                numPages=num_pages, sortType=sort_type)
     else:
         for book in books_collection.find().skip(page_number * per_page).limit(per_page):
-            book_list.append(truncated_book(book))
-        return render_template('books.html', books=book_list, pageNumber=page_number, perPage=per_page,
+            sorted_list.append(truncated_book(book))
+        return render_template('books.html', books=sorted_list, pageNumber=page_number, perPage=per_page,
                                numPages=num_pages, sortType=sort_type)
 
 
 @app.route('/books/<string:book_id>')
 def book_instance(book_id):
     book = books_collection.find_one({"_id": ObjectId(book_id)})
-    pprint(book)
     return render_template('book-instance.html', book=book)
 
 
@@ -126,28 +123,27 @@ def truncated_author(author):
 
 
 @app.route('/authors', methods=['POST'])
-def authors_form_submit():
-    form_values = request.form
-    per_page = int(form_values['perPage'])
+def authors_sort():
+    per_page = int(request.form['perPage'])
 
     try:
-        page_number = int(form_values['pageNumber'])
+        page_number = int(request.form['pageNumber'])
     except KeyError:
         page_number = 0
 
-    num_pages = authors_collection.estimated_document_count() // per_page
-    sort_type = form_values['sort-type'] if form_values['sort-type'] != 'Default' else None
+    sort_type = request.form['sort-type'] if request.form['sort-type'] != 'Default' else None
 
-    author_list = []
+    num_pages = authors_collection.estimated_document_count() // per_page
+    sorted_list = []
     if sort_type is not None:
         for author in authors_collection.find().sort(sort_type).skip(page_number * per_page).limit(per_page):
-            author_list.append(truncated_author(author))
-        return render_template('authors.html', authors=author_list, pageNumber=page_number, perPage=per_page,
+            sorted_list.append(truncated_author(author))
+        return render_template('authors.html', authors=sorted_list, pageNumber=page_number, perPage=per_page,
                                numPages=num_pages, sortType=sort_type)
     else:
         for author in authors_collection.find().skip(page_number * per_page).limit(per_page):
-            author_list.append(truncated_author(author))
-        return render_template('authors.html', authors=author_list, pageNumber=page_number, perPage=per_page,
+            sorted_list.append(truncated_author(author))
+        return render_template('authors.html', authors=sorted_list, pageNumber=page_number, perPage=per_page,
                                numPages=num_pages, sortType=sort_type)
 
 
@@ -155,7 +151,6 @@ def authors_form_submit():
 def author_instance(author_id):
     author = authors_collection.find_one({"_id": ObjectId(author_id)})
     author['thumbnail'] = author['thumbnail'] if author['thumbnail'] else url_for('static', filename='/avi/avi.png')
-    pprint(author)
     return render_template('author-instance.html', author=author)
 
 
@@ -192,35 +187,33 @@ def truncated_publisher(publisher):
 
 
 @app.route('/publishers', methods=['POST'])
-def publishers_form_submit():
-    form_values = request.form
-    per_page = int(form_values['perPage'])
+def publishers_sort():
+    per_page = int(request.form['perPage'])
 
     try:
-        page_number = int(form_values['pageNumber'])
+        page_number = int(request.form['pageNumber'])
     except KeyError:
         page_number = 0
 
-    num_pages = publishers_collection.estimated_document_count() // per_page
-    sort_type = form_values['sort-type'] if form_values['sort-type'] != 'Default' else None
+    sort_type = request.form['sort-type'] if request.form['sort-type'] != 'Default' else None
 
-    publisher_list = []
+    num_pages = publishers_collection.estimated_document_count() // per_page
+    sorted_list = []
     if sort_type is not None:
         for publisher in publishers_collection.find().sort(sort_type).skip(page_number * per_page).limit(per_page):
-            publisher_list.append(truncated_publisher(publisher))
-        return render_template('publishers.html', publishers=publisher_list, pageNumber=page_number, perPage=per_page,
+            sorted_list.append(truncated_publisher(publisher))
+        return render_template('publishers.html', publishers=sorted_list, pageNumber=page_number, perPage=per_page,
                                numPages=num_pages, sortType=sort_type)
     else:
         for publisher in publishers_collection.find().skip(page_number * per_page).limit(per_page):
-            publisher_list.append(truncated_publisher(publisher))
-        return render_template('publishers.html', publishers=publisher_list, pageNumber=page_number, perPage=per_page,
+            sorted_list.append(truncated_publisher(publisher))
+        return render_template('publishers.html', publishers=sorted_list, pageNumber=page_number, perPage=per_page,
                                numPages=num_pages, sortType=sort_type)
 
 
 @app.route('/publishers/<string:pub_id>')
 def publisher_instance(pub_id):
     publisher = publishers_collection.find_one({"_id": ObjectId(pub_id)})
-    pprint(publisher)
     return render_template('publisher-instance.html', publisher=publisher)
 
 
@@ -244,8 +237,7 @@ def search():
         sort_type = search_input['sort-type']
 
     search_query = search_input['search-text']
-    filters = getActiveFilters()
-    search_results = search_instances(search_type, search_query, page_num, per_page, sort_type, filters)
+    search_results = search_instances(search_type, search_query, page_num, per_page, sort_type)
     num_pages = len(search_results) // per_page
 
     return render_template('search.html', searchResults=search_results, searchQuery=search_query,
@@ -253,7 +245,7 @@ def search():
                            sortType=sort_type)
 
 
-def search_instances(search_type, query, page_num, per_page, sort_type, filters):
+def search_instances(search_type, query, page_num, per_page, sort_type, filters=None):
     search_results = []
 
     if search_type == 'books':
@@ -278,8 +270,7 @@ def search_instances(search_type, query, page_num, per_page, sort_type, filters)
         else:
             if sort_type != 'Default':
                 for author in authors_collection.find({"name": {"$regex": query, "$options": 'i'}}).sort(
-                        sort_type).skip(
-                        page_num * per_page).limit(per_page):
+                        sort_type).skip(page_num * per_page).limit(per_page):
                     search_results.append(truncated_author(author))
 
             else:
@@ -301,137 +292,127 @@ def search_instances(search_type, query, page_num, per_page, sort_type, filters)
                         page_num * per_page).limit(per_page):
                     search_results.append(truncated_publisher(publisher))
 
-
     return search_results
 
 
-def getActiveFilters():
-    return None
-
-
 @app.route('/filter', methods=['GET', 'POST'])
-def filter():
-
+def filter_instances():
     book_list = []
-    selectedArray = []
+    selected_array = []
     num_pages = 0
-    keyNumber = 0
-    field = ""
+    key_number = 0
 
     for key, value in request.form.items():
-        selectedArray.append(key)
+        selected_array.append(key)
         field = "genre"
         if not key.isalpha():
             if key.find(".") == -1:
                 field = "pageCount"
-                keyNumber = int(key)
+                key_number = int(key)
             else:
                 field = "rating"
-                keyNumber = float(key)
+                key_number = float(key)
         if field == "genre":
-              for book in books_collection.find({"genre": {"$regex": key}}):
-                  num_pages += 1
+            for book in books_collection.find({"genre": {"$regex": key}}):
+                num_pages += 1
 
-                  book_list.append(truncated_book(book))
+                book_list.append(truncated_book(book))
 
         elif field == "rating":
 
-              x = (1.01)+keyNumber
-              for book in books_collection.find({"rating": {"$lt":x, "$gt": keyNumber}}):
-                  num_pages += 1
-
-                  book_list.append(truncated_book(book))
-
-        else:
-
-              for book in books_collection.find({"pageCount": {"$gt":100 * keyNumber, "$lt": (100 * keyNumber) + 301}}):
-                  num_pages += 1
-                  book_list.append(truncated_book(book))
-
-
-    num_pages = -(-num_pages//10)
-
-    if num_pages == 0:
-        return render_template('noResults.html')
-    return render_template('filterBooks.html', books=book_list, pageNumber=0, perPage=10, numPages=num_pages, gen=selectedArray)
-
-
-@app.route('/filterBooks', methods=['GET', 'POST'])
-def filterBooks():
-
-    page_number = request.args.get('pageNumber')
-    num_pages = int(request.args.get('numPages'))
-    book_list = []
-    selectedArray = []
-    requestArguement = request.args.get('gen')
-    requestArguement = requestArguement.split()
-
-
-
-    for i in range(len(requestArguement)):
-        if (requestArguement[0])[2:-2].isalpha():
-            if i == 0:
-                key = (requestArguement[i])[2:-2]
-            else:
-                key = (requestArguement[i])[1:-2]
-            selectedArray.append(key)
-            for book in books_collection.find({"genre": {"$regex": key} }):
+            x = 1.01 + key_number
+            for book in books_collection.find({"rating": {"$lt": x, "$gt": key_number}}):
+                num_pages += 1
 
                 book_list.append(truncated_book(book))
 
         else:
+
+            for book in books_collection.find({"pageCount": {"$gt": 100 * key_number,
+                                                             "$lt": (100 * key_number) + 301}}):
+                num_pages += 1
+                book_list.append(truncated_book(book))
+
+    num_pages = -(-num_pages // 10)
+
+    if num_pages == 0:
+        return render_template('noResults.html')
+    return render_template('filterBooks.html', books=book_list, pageNumber=0, perPage=10, numPages=num_pages,
+                           gen=selected_array)
+
+
+@app.route('/filterBooks', methods=['GET', 'POST'])
+def filter_books():
+    page_number = request.args.get('pageNumber')
+    num_pages = int(request.args.get('numPages'))
+    book_list = []
+    selected_array = []
+    request_argument = request.args.get('gen')
+    request_argument = request_argument.split()
+
+    for i in range(len(request_argument)):
+        if (request_argument[0])[2:-2].isalpha():
             if i == 0:
-                key = (requestArguement[i])[2:-2]
+                key = (request_argument[i])[2:-2]
             else:
-                key = (requestArguement[i])[1:-2]
-            if (requestArguement[0])[2:-2].find(".") == -1:
+                key = (request_argument[i])[1:-2]
+            selected_array.append(key)
+            for book in books_collection.find({"genre": {"$regex": key}}):
+                book_list.append(truncated_book(book))
+
+        else:
+            if i == 0:
+                key = (request_argument[i])[2:-2]
+            else:
+                key = (request_argument[i])[1:-2]
+            if (request_argument[0])[2:-2].find(".") == -1:
                 field = "pageCount"
-                keyNumber = int(key)
+                key_number = int(key)
             else:
                 field = "rating"
-                keyNumber = float(key)
+                key_number = float(key)
             if field == "rating":
-                x = (1.01) + keyNumber
-                selectedArray.append((requestArguement[0])[2:-2])
-                if keyNumber == 9:
-                    for book in books_collection.find({"rating": {"$gt": keyNumber-1}}):
+                x = 1.01 + key_number
+                selected_array.append((request_argument[0])[2:-2])
+                if key_number == 9:
+                    for book in books_collection.find({"rating": {"$gt": key_number - 1}}):
                         book_list.append(truncated_book(book))
                 else:
-                    for book in books_collection.find({"rating": {"$lt":x, "$gt": keyNumber}}):
+                    for book in books_collection.find({"rating": {"$lt": x, "$gt": key_number}}):
                         book_list.append(truncated_book(book))
             else:
-                keyNumber = int(key)
-                selectedArray.append(key)
-                for book in books_collection.find({"pageCount": {"$gt": 100 * keyNumber, "$lt": (100 * keyNumber) + 301}}):
+                key_number = int(key)
+                selected_array.append(key)
+                for book in books_collection.find(
+                        {"pageCount": {"$gt": 100 * key_number, "$lt": (100 * key_number) + 301}}):
                     book_list.append(truncated_book(book))
-
 
     if num_pages == 0:
         return render_template('noResults.html')
     if int(page_number) == 0:
-        return render_template('filterBooks.html', books=book_list, pageNumber=0, perPage=10, numPages=num_pages, gen=selectedArray)
+        return render_template('filterBooks.html', books=book_list, pageNumber=0, perPage=10, numPages=num_pages,
+                               gen=selected_array)
     else:
         page_number = int(page_number)
-        book_list = book_list[(int(page_number)*10):(10*int(page_number))+11]
-        return render_template('filterBooks.html', books=book_list, pageNumber=page_number, perPage=10, numPages=num_pages,gen=selectedArray)
-
-
+        book_list = book_list[(int(page_number) * 10):(10 * int(page_number)) + 11]
+        return render_template('filterBooks.html', books=book_list, pageNumber=page_number, perPage=10,
+                               numPages=num_pages, gen=selected_array)
 
 
 @app.route('/filterPub', methods=['GET', 'POST'])
-def filterPub():
+def filter_pub():
     publisher_list = []
-    selectedArray = []
+    selected_array = []
     num_pages = 0
     page_number = request.args.get('pageNumber')
     if page_number is None:
         page_number = '0'
         for key, value in request.form.items():
-            selectedArray.append(key)
+            selected_array.append(key)
             if key == "Newyork":
                 key = "New York"
             for publisher in publishers_collection.find({"hqLocation": {"$regex": key}}):
-                num_pages+=1
+                num_pages += 1
                 publisher_list.append(truncated_publisher(publisher))
 
         num_pages = -(-num_pages // 10)
@@ -443,29 +424,28 @@ def filterPub():
                 key = (selected[i])[2:-2]
             else:
                 key = (selected[i])[1:-2]
-            selectedArray.append(key)
+            selected_array.append(key)
             if key == "Newyork":
                 key = "New York"
             num_pages = int(request.args.get('numPages'))
             for publisher in publishers_collection.find({"hqLocation": {"$regex": key}}):
                 publisher_list.append(truncated_publisher(publisher))
 
-
     if num_pages == 0:
         return render_template('noResults.html')
     if int(page_number) == 0:
-        return render_template('filterPub.html', publishers=publisher_list, pageNumber=0, perPage=10, numPages=num_pages, gen=selectedArray)
+        return render_template('filterPub.html', publishers=publisher_list, pageNumber=0, perPage=10,
+                               numPages=num_pages, gen=selected_array)
     else:
         page_number = int(page_number)
-        publisher_list = publisher_list[(int(page_number)*10):(10*int(page_number))+11]
-        return render_template('filterPub.html', publishers=publisher_list, pageNumber=page_number, perPage=10, numPages=num_pages,gen=selectedArray)
-
+        publisher_list = publisher_list[(int(page_number) * 10):(10 * int(page_number)) + 11]
+        return render_template('filterPub.html', publishers=publisher_list, pageNumber=page_number, perPage=10,
+                               numPages=num_pages, gen=selected_array)
 
 
 @app.route('/filterAuthor', methods=['GET', 'POST'])
-def filterAuthor():
-
-    selectedArray = []
+def filter_author():
+    selected_array = []
     num_pages = 0
     author_list = []
     page_number = request.args.get('pageNumber')
@@ -473,23 +453,23 @@ def filterAuthor():
     if page_number is None:
         page_number = '0'
         for key, value in request.form.items():
-            selectedArray.append(key)
+            selected_array.append(key)
             if key == "alive" or key == "dead":
                 if key == "dead":
                     key = None
-                    for author in authors_collection.find({"dod": {"$ne":key}}):
-                      num_pages+=1
-                      author_list.append(truncated_author(author))
+                    for author in authors_collection.find({"dod": {"$ne": key}}):
+                        num_pages += 1
+                        author_list.append(truncated_author(author))
                 else:
                     key = None
-                    for author in authors_collection.find({"dod": key }):
-                      num_pages+=1
-                      author_list.append(truncated_author(author))
+                    for author in authors_collection.find({"dod": key}):
+                        num_pages += 1
+                        author_list.append(truncated_author(author))
 
             else:
                 for author in authors_collection.find({"genres": {"$regex": key}}):
-                  num_pages+=1
-                  author_list.append(truncated_author(author))
+                    num_pages += 1
+                    author_list.append(truncated_author(author))
         num_pages = -(-num_pages // 10)
     else:
         gen = request.args.get('gen')
@@ -499,34 +479,31 @@ def filterAuthor():
                 key = (selected[i])[2:-2]
             else:
                 key = (selected[i])[1:-2]
-            selectedArray.append(key)
+            selected_array.append(key)
             num_pages = int(request.args.get('numPages'))
             if key == "alive" or key == "dead":
                 if key == "dead":
                     key = None
-                    for author in authors_collection.find({"dod": {"$ne":key}}):
-                      author_list.append(truncated_author(author))
+                    for author in authors_collection.find({"dod": {"$ne": key}}):
+                        author_list.append(truncated_author(author))
                 else:
                     key = None
-                    for author in authors_collection.find({"dod": key }):
-                      author_list.append(truncated_author(author))
+                    for author in authors_collection.find({"dod": key}):
+                        author_list.append(truncated_author(author))
             else:
                 for author in authors_collection.find({"genres": {"$regex": key}}):
                     author_list.append(truncated_author(author))
 
-
     if num_pages == 0:
         return render_template('noResults.html')
     if int(page_number) == 0:
-        return render_template('filterAuthor.html', authors=author_list, pageNumber=0, perPage=10, numPages=num_pages, gen=selectedArray)
+        return render_template('filterAuthor.html', authors=author_list, pageNumber=0, perPage=10, numPages=num_pages,
+                               gen=selected_array)
     else:
         page_number = int(page_number)
         author_list = author_list[(int(page_number) * 10):(10 * int(page_number)) + 11]
-        return render_template('filterAuthor.html', authors=author_list, pageNumber=page_number, perPage=10,numPages=num_pages, gen=selectedArray)
-
-
-
-
+        return render_template('filterAuthor.html', authors=author_list, pageNumber=page_number, perPage=10,
+                               numPages=num_pages, gen=selected_array)
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 # Bookworm DB
-Central location to find information for books, authors, and publishers. Aggregates data from multiple sources. Inspired by IMDb. Class project for Software Engineering and Design Lab. 
+Central location to find information for books, authors, and publishers. Aggregates data from multiple sources. Inspired by IMDb. Class project for Software Engineering and Design Lab at UT Austin. 
 
-# Team E4
+## Team E4
 Name | EID | GitHub ID
 --- | --- | ---
 Jaelyn Bethea | jnb2634 | jaelynbethea
